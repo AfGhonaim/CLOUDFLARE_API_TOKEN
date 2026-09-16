@@ -16,7 +16,13 @@ const DATA = path.join(ROOT, 'data', 'companies.json');
 const EMAILS = path.join(ROOT, 'outreach', 'emails');
 const OUT = path.join(ROOT, 'site', 'index.html');
 
-const REQUIRED = ['slug', 'company', 'website', 'industry', 'opportunity', 'status'];
+const REQUIRED = ['slug', 'company', 'website', 'industry', 'status'];
+
+// Only demanded once a record claims to be reviewable — a seeded target has
+// none of this yet, and inventing it to satisfy the schema is the one thing
+// this pipeline must never do.
+const REQUIRED_FOR_REVIEW = ['opportunity', 'preview', 'subject'];
+const REVIEWABLE = new Set(['Ready for Review', 'Approved', 'Sent', 'Replied']);
 const STATUSES = [
   'Not started', 'Analyzed', 'Concept built', 'Ready for Review',
   'Approved', 'Sent', 'Replied', 'Declined', 'Skipped',
@@ -56,6 +62,14 @@ for (const [index, row] of companies.entries()) {
 
   for (const field of REQUIRED) {
     if (missing(row[field])) errors.push(`${label}: missing required field "${field}"`);
+  }
+  if (REVIEWABLE.has(row.status)) {
+    for (const field of REQUIRED_FOR_REVIEW) {
+      if (missing(row[field])) errors.push(`${label}: status is "${row.status}" but "${field}" is empty`);
+    }
+    if (!Array.isArray(row.findings) || row.findings.length === 0) {
+      errors.push(`${label}: status is "${row.status}" but no findings are recorded`);
+    }
   }
   if (row.status && !STATUSES.includes(row.status)) {
     errors.push(`${label}: unknown status "${row.status}"`);
