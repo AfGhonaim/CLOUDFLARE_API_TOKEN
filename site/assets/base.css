@@ -188,70 +188,259 @@ ol[role="list"] { list-style: none; padding: 0; }
   border: 0;
 }
 
-/* --- concept shell --------------------------------------------------------
-   Required on every concept page. Keeps the proposal unmistakably a proposal.
+/* --- motion layer ---------------------------------------------------------
+   Driven by motion.js. Transform and opacity only, so nothing here can trigger
+   layout during a scroll. All of it collapses under prefers-reduced-motion.
    -------------------------------------------------------------------------- */
 
-.rc-banner {
-  position: sticky;
-  top: 0;
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 240ms;
+  --dur-base: 620ms;
+  --dur-slow: 980ms;
+  --reveal-shift: 24px;
+}
+
+/* Hidden only once JS has confirmed it can reveal them again. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-shift), 0);
+  transition:
+    opacity var(--dur-base) var(--ease-out) var(--reveal-delay, 0ms),
+    transform var(--dur-base) var(--ease-out) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.js [data-reveal="fade"] { transform: none; }
+.js [data-reveal="left"] { transform: translate3d(calc(var(--reveal-shift) * -1.5), 0, 0); }
+.js [data-reveal="right"] { transform: translate3d(calc(var(--reveal-shift) * 1.5), 0, 0); }
+.js [data-reveal="scale"] { transform: scale(1.06); }
+
+.js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* Clip reveal for large visuals: the image scales back as its mask opens. */
+.js [data-reveal-clip] {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path var(--dur-slow) var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.js [data-reveal-clip].is-revealed { clip-path: inset(0 0 0 0); }
+
+.js [data-reveal-clip] > img,
+.js [data-reveal-clip] > picture > img {
+  transform: scale(1.12);
+  transition: transform calc(var(--dur-slow) * 1.4) var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.js [data-reveal-clip].is-revealed > img,
+.js [data-reveal-clip].is-revealed > picture > img { transform: none; }
+
+/* Split text. motion.js wraps each line in .rc-line > .rc-line__inner. */
+.rc-line {
+  display: block;
+  overflow: hidden;
+}
+
+.js .rc-line__inner {
+  display: block;
+  transform: translate3d(0, 110%, 0);
+  transition: transform var(--dur-slow) var(--ease-out) var(--line-delay, 0ms);
+}
+
+.js .is-revealed .rc-line__inner { transform: none; }
+
+.js [data-parallax] { will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal],
+  .js [data-reveal-clip],
+  .js .rc-line__inner {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+}
+
+/* --- concept shell --------------------------------------------------------
+   Required on every concept page: a discreet badge and a footer disclosure.
+   Namespaced .rc-* so per-concept CSS cannot collide with it. Concepts must
+   not restyle, hide, or reposition these.
+   -------------------------------------------------------------------------- */
+
+.rc-badge {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
   z-index: 9999;
+  max-width: min(23rem, calc(100vw - 2rem));
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #f4f4f5;
+  background: rgb(15 17 21 / 0.82);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(12px) saturate(140%);
+}
+
+.rc-badge > summary {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 0.75rem;
-  align-items: baseline;
-  justify-content: center;
-  padding: 0.6rem 1rem;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: 0.8125rem;
-  line-height: 1.4;
-  text-align: center;
-  color: #f8fafc;
-  background: #0b1220;
-  border-bottom: 2px solid #f59e0b;
-}
-
-.rc-banner__tag {
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: #fbbf24;
+  white-space: nowrap;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
 }
 
-.rc-banner__text { color: #cbd5e1; }
+.rc-badge > summary::-webkit-details-marker { display: none; }
 
-.rc-banner__link {
-  color: #f8fafc;
-  text-underline-offset: 2px;
+.rc-badge > summary::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #eab308;
+  flex: none;
 }
 
+.rc-badge > summary::after {
+  content: "?";
+  display: grid;
+  place-items: center;
+  width: 14px;
+  height: 14px;
+  margin-left: 0.15rem;
+  font-size: 0.625rem;
+  letter-spacing: 0;
+  color: rgb(244 244 245 / 0.75);
+  border: 1px solid rgb(255 255 255 / 0.3);
+  border-radius: 50%;
+}
+
+.rc-badge[open] > summary::after { content: "×"; font-size: 0.8rem; }
+
+.rc-badge__note {
+  padding: 0 0.8rem 0.8rem;
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: rgb(244 244 245 / 0.82);
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  margin-top: -0.15rem;
+  padding-top: 0.65rem;
+}
+
+.rc-badge__note p + p { margin-top: 0.5rem; }
+.rc-badge__note a { color: #f4f4f5; }
+
+@media print {
+  .rc-badge { position: static; }
+}
+
+/* Footer disclosure — quiet, but complete and always legible. */
 .rc-footer {
-  padding: var(--space-xl) 1rem;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: 0.8125rem;
-  line-height: 1.6;
-  color: #cbd5e1;
-  background: #0b1220;
+  padding: var(--space-xl) var(--gutter);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.7;
+  color: #8a9099;
+  background: #0b0c0e;
+  border-top: 1px solid rgb(255 255 255 / 0.07);
 }
 
 .rc-footer__inner {
-  max-width: 760px;
+  max-width: 720px;
   margin-inline: auto;
   display: grid;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
 
 .rc-footer__title {
   font-family: inherit;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #fbbf24;
+  color: #c7ccd3;
 }
 
-.rc-footer a { color: #f8fafc; }
+.rc-footer a { color: #c7ccd3; }
 
-@media print {
-  .rc-banner { position: static; }
+/* Custom cursor — opt in with data-cursor on <body>. Desktop pointers only. */
+.rc-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  width: 26px;
+  height: 26px;
+  pointer-events: none;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.55;
+  transition: width 260ms var(--ease-out), height 260ms var(--ease-out), opacity 260ms var(--ease-out);
+}
+
+.rc-cursor.is-grown {
+  width: 54px;
+  height: 54px;
+  opacity: 0.28;
+}
+
+@media (pointer: coarse) {
+  .rc-cursor { display: none; }
+}
+
+/* Horizontal scroll section: a tall element pins its track while it slides. */
+[data-hscroll] { position: relative; }
+
+[data-hscroll] > * {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  height: 100svh;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-hscroll] { height: auto !important; }
+  [data-hscroll] > * {
+    position: static;
+    height: auto;
+    overflow-x: auto;
+    transform: none !important;
+  }
+}
+
+/* Commercial CTA. Inherits the concept's own tokens so it reads as native. */
+.rc-cta { padding-block: var(--space-3xl); }
+
+.rc-cta__inner {
+  display: grid;
+  gap: var(--space-md);
+  max-width: 760px;
+}
+
+.rc-cta__price {
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.rc-cta__scope {
+  max-width: 56ch;
+  font-size: var(--text-sm);
+  opacity: 0.72;
 }

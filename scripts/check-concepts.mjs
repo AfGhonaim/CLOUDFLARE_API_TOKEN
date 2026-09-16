@@ -56,6 +56,23 @@ function checkPage(slug, html) {
     fail(slug, `unreplaced template placeholders: ${[...new Set(placeholders)].join(', ')}`);
   }
 
+  // The commercial CTA must state the price and its limits together, so no
+  // page can imply the fee covers backend, CMS, hosting, or maintenance.
+  const hasPrice = /EGP\s*5,?000/i.test(html);
+  if (!hasPrice) {
+    fail(slug, 'missing the "EGP 5,000" production CTA');
+  } else if (!/does not include/i.test(html) || !/frontend/i.test(html)) {
+    fail(slug, 'states a price without the frontend-only scope wording next to it');
+  }
+
+  // Previews must not expose the source or point anyone at the repository.
+  if (/github\.com|gitlab\.com|bitbucket\.org/i.test(html)) {
+    fail(slug, 'links to a code host — previews must not expose the source');
+  }
+  if (/\bdownload=|<a[^>]+\.zip["']/i.test(html)) {
+    fail(slug, 'offers a file download — previews must not hand over source');
+  }
+
   // A concept must not be able to collect anything from a visitor.
   if (/type=["']password["']/i.test(html)) {
     fail(slug, 'contains a password input — concepts must never collect credentials');

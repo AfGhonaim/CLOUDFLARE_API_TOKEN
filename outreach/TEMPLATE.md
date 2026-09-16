@@ -23,10 +23,10 @@ Six moves, in order, and nothing else:
 2. One or two **specific, observed** opportunities. Name the element and the
    behaviour — "the quote request sits three clicks in" beats "the UX could be
    better".
-3. One line: you built a redesign concept for them specifically.
+3. One line: you built a landing page redesign concept for them specifically.
 4. The preview link on its own line.
-5. The offer, stated plainly and with its limits: **$100 USD for the
-   production-ready frontend code** of the redesign.
+5. The offer, stated plainly and with its limits: **EGP 5,000 for the
+   production-ready frontend code** of the redesigned landing page.
 6. One question as the CTA. One. Not "let me know / happy to call / also I
    could do your SEO".
 
@@ -51,10 +51,10 @@ No more than one exclamation mark across the whole batch. No emojis.
 
 ## Scope discipline
 
-The $100 buys the production-ready frontend implementation of the concept.
+EGP 5,000 buys the responsive frontend implementation of the concept page.
 Say so, and do not imply it covers: backend or API work, CMS integration,
-hosting, domains, third-party integrations, content writing, SEO, or ongoing
-maintenance. If a company asks about those, they are quoted separately.
+hosting, domains, third-party integrations, content production, SEO, or
+ongoing maintenance. If a company asks about those, they are quoted separately.
 
 ## Compliance footer
 
@@ -85,15 +85,16 @@ that actually drive enquiries hard to find. And the quote request — the one
 action the site is built around — is three clicks from the homepage and is not
 mentioned above the fold.
 
-I put together a redesign concept for Example Co to show what a tighter version
-could look like. It keeps your brand and your existing content, and reorganises
+I put together a landing page redesign concept for Example Co to show what a
+tighter version could look like. It keeps your brand and your existing content, and reorganises
 the journey around the quote request:
 
 https://redesign-concepts.pages.dev/concepts/example-co/
 
 It is a concept, not a live site. If the direction works for you, I can deliver
-the production-ready frontend code for it for $100 USD. That covers the frontend
-implementation itself — backend work, CMS, and hosting would be separate.
+the production-ready frontend code for it for EGP 5,000. That covers the
+frontend implementation itself — backend work, CMS, and hosting would be
+separate.
 
 Worth a short reply either way: does this direction look right to you?
 

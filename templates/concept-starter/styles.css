@@ -1,15 +1,28 @@
-/* Per-concept styles for {{COMPANY}}.
-   Override the tokens in base.css here so each concept reads as its own brand,
-   then add page-specific rules below. Never restyle .rc-* shell classes. */
+/* Art direction for {{COMPANY}}.
+   Override the tokens from base.css so this page reads as this company's own
+   brand, then add the page-specific rules below. Never restyle .rc-* classes.
+
+   Locked direction: Apple-inspired premium minimal, bold oversized headlines,
+   premium/smooth motion, light or dark chosen to suit this brand.
+   See docs/CREATIVE-DIRECTION.md. */
 
 :root {
+  /* Derived from the company's existing identity. */
+  --bg: #ffffff;
+  --surface: #f5f5f4;
+  --fg: #0c0d0f;
+  --fg-muted: #5c6470;
+  --border: #e6e7ea;
   --brand: #1d4ed8;
   --brand-ink: #ffffff;
-  --brand-soft: #eef2ff;
-  --accent: #0f766e;
+  --focus: var(--brand);
 
-  --font-display: "Your Display Face", Georgia, serif;
-  --font-body: "Your Body Face", system-ui, sans-serif;
+  --font-display: "Display face", Georgia, serif;
+  --font-body: "Body face", system-ui, sans-serif;
 
-  --radius-md: 12px;
+  /* Oversized display scale — the locked typographic direction. */
+  --text-4xl: clamp(2.75rem, 1.6rem + 5vw, 6.5rem);
+  --text-3xl: clamp(2.1rem, 1.4rem + 3vw, 4rem);
 }
+
+/* Page-specific rules below. */
