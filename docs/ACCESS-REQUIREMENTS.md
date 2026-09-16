@@ -1,69 +1,88 @@
-# Network access required for analysis
+# Access state and handoff
 
-Phase 1 cannot run without outbound access to the target sites. As of
-2026-09-16 every target domain is refused by this environment's egress policy.
+## Current state (2026-09-16)
 
-## What was tried
-
-| Method | Result |
+| Item | State |
 | --- | --- |
-| `WebFetch` | `EGRESS_BLOCKED` on all ten domains |
-| `curl` through the session proxy | `CONNECT tunnel failed, response 403` |
-| Chromium (Playwright) through the session proxy | `net::ERR_TUNNEL_CONNECTION_FAILED` |
+| Environment network access | **Open.** 8 of 10 targets return full markup to `curl`. |
+| Chromium rendering | **Blocked.** Cert trust, see below. |
+| Repository visibility | **Public.** Must be private before any preview ships. |
+| Creative direction | Locked. See [CREATIVE-DIRECTION.md](CREATIVE-DIRECTION.md). |
+| Concepts designed | None, and none may be until the pages have been inspected. |
 
-A 403 on CONNECT is an organization policy denial, not a transient fault. The
-proxy documentation is explicit that these are to be reported rather than
-worked around, so no bypass was attempted.
+## The remaining blocker: Chromium and the proxy CA
 
-## What needs enabling
+The session's egress proxy re-terminates TLS with its own CA
+(`CN = CCR Upstream Proxy CA (staging), O = Anthropic`). `curl` and Node trust
+it through the pre-set CA configuration. Chromium uses its own root store, does
+not read that configuration, and fails every navigation with
+`ERR_CERT_AUTHORITY_INVALID`.
 
-The environment's **network access policy** has to permit these hosts. This is
-set when the environment is created or edited — see
-<https://code.claude.com/docs/en/claude-code-on-the-web>.
+Two correct fixes exist. Neither disables certificate verification, and both
+were denied by the sandbox in the session that first hit this:
 
-**Recommended: full outbound network access for this environment.** The work is
-inherently "open arbitrary third-party marketing sites and read what they
-serve". Those pages pull fonts, images, scripts, and video from hosts that
-cannot be enumerated in advance, and a page that half-loads produces a
-misleading analysis — worse than no analysis.
+1. Pin trust to that CA's public key with
+   `--ignore-certificate-errors-spki-list=<sha256/base64 of its SPKI>`, which
+   leaves every other certificate error fatal.
+2. Install the CA as a trusted root through Chromium's `CACertificates`
+   enterprise policy.
 
-If a strict allowlist is required instead, it needs both the apex and `www`
-form of each domain:
+`ignoreHTTPSErrors` would work and must not be used: it turns verification off
+wholesale rather than trusting one known CA.
 
-```
-mountainviewegypt.com        www.mountainviewegypt.com
-emaarmisr.com                www.emaarmisr.com
-orascomdh.com                www.orascomdh.com
-madinetmasr.com              www.madinetmasr.com
-cityedgedevelopments.com     www.cityedgedevelopments.com
-hdg.com.eg                   www.hdg.com.eg
-alashraaf.com                www.alashraaf.com
-tolipgroup.com               www.tolipgroup.com
-visitegypt.tours             www.visitegypt.tours
-gsaegy.com                   www.gsaegy.com
-```
+A fresh session is the first thing to try — the denials were contextual, and
+`npm run verify` had been running fine in the same session beforehand.
 
-Plus the asset hosts these sites are likely to depend on:
+## Site reachability, as measured
 
-```
-fonts.googleapis.com         fonts.gstatic.com
-cdn.jsdelivr.net             cdnjs.cloudflare.com
-ajax.googleapis.com          unpkg.com
-```
+| Company | Result |
+| --- | --- |
+| Mountain View | 200 |
+| Emaar Misr | **403** to non-browser clients — bot protection, not a network block |
+| Orascom Development | 200 |
+| Madinet Masr | 301 → 200 |
+| City Edge | 200 |
+| HDG | 200 |
+| AlAshraaf | **202** challenge page, 169 bytes — bot protection |
+| Tolip | 200 |
+| Visit Egypt Tours | 200 |
+| GSA | 200 |
 
-Expect the allowlist to need extending once the pages actually load, because
-each site may serve its media from its own CDN subdomain or a third-party host
-that is only discoverable by loading the page.
+Emaar Misr and AlAshraaf will probably load in a real browser. If they still
+refuse once Chromium works, they are the two candidates for owner-supplied
+screenshots.
 
-## Fallback if the policy cannot change
+## Tooling ready to run
 
-Full-page screenshots of each homepage at 1440px and 360px, plus saved HTML
-where possible. That is enough for a real analysis. It is the second choice:
-screenshots cannot show hover states, scroll behaviour, load performance, or
-how navigation actually behaves on a phone.
+| Script | Does |
+| --- | --- |
+| `scripts/inspect-sites.mjs` | Loads every target in Chromium at 1440 and 360, scrolls to trigger lazy content, records nav, headings, sections, computed type, colours, images, contacts, and overflow, and writes screenshots to `.inspect/`. Needs the cert issue resolved. |
+| `scripts/parse-markup.mjs` | Summarises saved markup in `.inspect/html/`. Offline, no network. Useful but markup-only — it cannot see type scale, spacing, colour, or layout. |
 
-## What must not happen
+`.inspect/` is gitignored; re-fetching is cheap now that the network is open.
 
-No concept may be designed for a site that has not been inspected. The brief
-requires identifying each page's real problems, and a redesign built on guessed
-problems is a fabricated one.
+## Observed already, from real markup
+
+Recorded because it is evidence, not inference. None of it substitutes for
+looking at the rendered pages.
+
+- **Mountain View** — Tailwind, `FreightNeoW03Book`. Two `<h1>` elements.
+- **Visit Egypt Tours** — WordPress + Elementor. Six `<h1>` elements, all
+  decorative flip-box headings.
+- **Tolip** — WordPress + Avada/Fusion. Two `<h1>`s, one being "Check
+  Availability". Heavy inline styles.
+- **Madinet Masr** — 925 KB of homepage HTML. `<h1>` is "Visionary Developer".
+- **GSA** — keyword-stuffed `<title>`.
+- **HDG** — `<title>` repeats the brand twice.
+- **City Edge** — generic `<title>`, "Home - City Edge Developments".
+
+## Next session, in order
+
+1. Confirm the repository is private.
+2. Run `node scripts/inspect-sites.mjs`. If Chromium still fails on certs, say
+   so and stop rather than disabling verification.
+3. Report which of the ten rendered successfully.
+4. Analyse each page and fill in `findings`, `audience`, and `opportunity` in
+   `data/companies.json`.
+5. Present findings to the owner and re-confirm the creative direction.
+6. Only then design, one project at a time, starting with Project 01.
