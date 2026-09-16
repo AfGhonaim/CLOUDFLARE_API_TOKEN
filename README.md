@@ -37,6 +37,12 @@ scripts/check-concepts.mjs   fails the build if a disclaimer or the CTA scope is
 scripts/smoke.mjs            renders every concept in Chromium at 360/768/1440
 ```
 
+## Blocked
+
+Phase 1 needs outbound access to the ten target sites, and every one of them is
+currently refused by the environment's egress policy. See
+[docs/ACCESS-REQUIREMENTS.md](docs/ACCESS-REQUIREMENTS.md).
+
 ## Pipeline
 
 | Phase | Output |
