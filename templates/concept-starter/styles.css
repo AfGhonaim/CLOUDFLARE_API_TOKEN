@@ -1,0 +1,15 @@
+/* Per-concept styles for {{COMPANY}}.
+   Override the tokens in base.css here so each concept reads as its own brand,
+   then add page-specific rules below. Never restyle .rc-* shell classes. */
+
+:root {
+  --brand: #1d4ed8;
+  --brand-ink: #ffffff;
+  --brand-soft: #eef2ff;
+  --accent: #0f766e;
+
+  --font-display: "Your Display Face", Georgia, serif;
+  --font-body: "Your Body Face", system-ui, sans-serif;
+
+  --radius-md: 12px;
+}

@@ -1,0 +1,5 @@
+# Concept previews are proposals, not live sites — keep them out of search.
+/*
+  X-Robots-Tag: noindex, nofollow
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

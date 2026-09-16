@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Redesign Outreach — Review Dashboard</title>
+<link rel="stylesheet" href="./assets/dashboard.css">
+</head>
+<body>
+<header class="head">
+  <div class="head__inner">
+    <div>
+      <h1>Redesign outreach — review dashboard</h1>
+      <p class="muted">Generated 2026-09-16 · nothing is sent until the batch is explicitly approved.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>0</b><span>companies</span></div>
+      <div class="stat"><b>0</b><span>previews</span></div>
+      <div class="stat"><b>0</b><span>emails found</span></div>
+      <div class="stat"><b>0</b><span>ready for review</span></div>
+      <div class="stat"><b>0</b><span>sent</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  
+  <p class="empty">No companies loaded yet. Add records to <code>data/companies.json</code> and run <code>npm run build</code>.</p>
+
+  <div class="controls">
+    <label class="field">
+      <span class="visually-hidden">Filter companies</span>
+      <input id="q" type="search" placeholder="Filter by company, domain, industry, contact…" autocomplete="off">
+    </label>
+    <label class="field">
+      <span class="visually-hidden">Filter by status</span>
+      <select id="status">
+        <option value="">All statuses</option>
+        
+      </select>
+    </label>
+    <button id="expand" type="button">Expand all emails</button>
+    <span id="shown" class="muted"></span>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Company</th><th>Website</th><th>Industry</th>
+          <th>Key UX opportunity</th><th>Preview</th><th>Contact</th>
+          <th>Email</th><th>Subject</th><th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+const q = document.getElementById('q');
+const status = document.getElementById('status');
+const shown = document.getElementById('shown');
+const rows = [...document.querySelectorAll('tr.row')];
+
+function apply() {
+  const term = q.value.trim().toLowerCase();
+  const want = status.value;
+  let visible = 0;
+  for (const row of rows) {
+    const ok = (!term || row.dataset.search.includes(term)) && (!want || row.dataset.status === want);
+    row.hidden = !ok;
+    const detail = row.nextElementSibling;
+    if (detail?.classList.contains('detail') && !ok) detail.hidden = true;
+    if (ok) visible++;
+  }
+  shown.textContent = visible + ' of ' + rows.length + ' shown';
+}
+
+q.addEventListener('input', apply);
+status.addEventListener('change', apply);
+apply();
+
+document.addEventListener('click', (event) => {
+  const button = event.target.closest('.toggle');
+  if (!button) return;
+  const detail = document.getElementById(button.dataset.target);
+  const open = detail.hidden;
+  detail.hidden = !open;
+  button.setAttribute('aria-expanded', String(open));
+  button.textContent = open ? 'hide email' : 'view email';
+});
+
+document.getElementById('expand').addEventListener('click', (event) => {
+  const open = event.target.dataset.open !== 'true';
+  event.target.dataset.open = String(open);
+  event.target.textContent = open ? 'Collapse all emails' : 'Expand all emails';
+  for (const button of document.querySelectorAll('.toggle')) {
+    const detail = document.getElementById(button.dataset.target);
+    if (button.closest('tr').hidden) continue;
+    detail.hidden = !open;
+    button.setAttribute('aria-expanded', String(open));
+    button.textContent = open ? 'hide email' : 'view email';
+  }
+});
+</script>
+</body>
+</html>

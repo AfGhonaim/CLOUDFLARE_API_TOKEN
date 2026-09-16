@@ -1,0 +1,16 @@
+{
+  "name": "website-redesign-outreach",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Productized website redesign outreach: concept previews, review dashboard, and personalized outreach drafts.",
+  "scripts": {
+    "build": "node scripts/build-dashboard.mjs",
+    "check": "node scripts/check-concepts.mjs",
+    "verify": "npm run build && npm run check",
+    "deploy": "wrangler pages deploy site --project-name=redesign-concepts"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
