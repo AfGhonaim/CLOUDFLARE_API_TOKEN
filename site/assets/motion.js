@@ -6,7 +6,11 @@
  *   - transform and opacity only, never a layout property;
  *   - one rAF-throttled scroll loop for every scroll-driven effect;
  *   - prefers-reduced-motion reveals everything in its final state;
- *   - pointer effects are switched off on coarse pointers, not degraded.
+ *   - pointer effects are switched off on coarse pointers, not degraded;
+ *   - below MOBILE_BREAKPOINT the scroll-driven effects (parallax, scale,
+ *     horizontal scroll) are dropped entirely. Reveals and text staggers stay.
+ *     Most of the audience for these pages is on mid-range Android, and these
+ *     are the effects that cost the most frames there.
  *
  * Markup hooks:
  *   [data-reveal]              reveal on enter. Value: up (default)|fade|left|right|scale
@@ -29,6 +33,11 @@ const fine = window.matchMedia('(pointer: fine)');
 root.classList.add('js');
 
 const STAGGER = 90;
+
+/** Below this width, scroll-driven transforms are switched off. */
+const MOBILE_BREAKPOINT = 768;
+
+const scrollEffectsAllowed = () => window.innerWidth >= MOBILE_BREAKPOINT;
 
 /* ---------------------------------------------------------------- split text */
 
@@ -117,8 +126,14 @@ function setupReveals() {
 const scrollItems = [];
 
 function collectScrollItems() {
+  // Clear anything a previous, wider layout left behind.
+  for (const item of scrollItems) {
+    item.el.style.transform = '';
+    if (item.track) item.track.style.transform = '';
+  }
   scrollItems.length = 0;
-  if (reduced.matches) return;
+
+  if (reduced.matches || !scrollEffectsAllowed()) return;
 
   for (const el of document.querySelectorAll('[data-parallax]')) {
     scrollItems.push({ el, kind: 'parallax', amount: parseFloat(el.dataset.parallax) || 0.15 });

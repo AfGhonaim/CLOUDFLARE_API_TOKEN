@@ -414,7 +414,9 @@ ol[role="list"] { list-style: none; padding: 0; }
   will-change: transform;
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* Horizontal scroll unpins below the mobile breakpoint and with motion off:
+   the track becomes an ordinary swipeable row. */
+@media (prefers-reduced-motion: reduce), (max-width: 767px) {
   [data-hscroll] { height: auto !important; }
   [data-hscroll] > * {
     position: static;

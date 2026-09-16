@@ -1,20 +1,32 @@
 # Creative direction — locked
 
-Approved by the project owner before design began. These decisions hold across
-all landing pages. Deviating from them on an individual company requires an
-explicit exception, recorded in that company's `notes` field.
+Approved by the project owner before design began, and revised once the target
+list was known. These decisions hold across all landing pages. Deviating from
+them on an individual company requires an explicit exception, recorded in that
+company's `notes` field.
+
+The list is nine Egyptian real estate and hospitality brands plus one design
+consultancy. That concentration is the main risk to the requirement that no two
+pages look alike, so differentiation is carried deliberately by typeface
+pairing, mode, grid, and imagery treatment per company — not left to chance.
 
 ## Scope
 
 **Landing page only.** One page per company: the homepage. Not the site. No
 inner pages, no navigation targets beyond in-page anchors.
 
-## 1. Visual direction — Apple-inspired premium minimal
+## 1. Visual direction — bold editorial, Apple pacing
 
-Restrained palette, generous whitespace, one idea per viewport, product-style
-presentation, progressive reveal, controlled motion.
+**The look is editorial.** Magazine logic: a strong, visible grid; decisive
+type pairing; generous measure; pull quotes and captions used as real
+hierarchy; typography carrying the page rather than decoration. This is also
+the pragmatic choice for this list, because developer photography is uneven and
+editorial layout survives weak imagery where a photo-led minimal layout does
+not.
 
-Apple is the reference for **interaction quality, pacing, and storytelling
+**The behaviour is Apple's.** One idea per viewport, progressive reveal,
+controlled motion, generous whitespace, sticky narrative where a sequence earns
+it. Apple is the reference for **interaction quality, pacing, and storytelling
 discipline only**. No Apple layout, component, asset, typeface, copy pattern, or
 brand element is reproduced. If a section would read as recognisably Apple's
 rather than as the company's own, it is wrong.
@@ -26,13 +38,23 @@ company's record. A luxury or technology brand may run dark; a healthcare or
 professional-services brand generally should not. The choice must be defensible
 from the company's existing identity, not from variety for its own sake.
 
-## 3. Typography — bold oversized headlines
+## 3. Typography — bold oversized headlines, Arabic-ready
 
 Display type carries the hierarchy. Tight tracking at large sizes, decisive
 scale jumps between levels, body text never below 16px.
 
 The typeface changes per company and must relate to that company's existing
-identity. The *scale and confidence* stay constant; the voice does not.
+identity. The *scale and confidence* stay constant; the voice does not. With
+an editorial system, type pairing is the primary means of making ten pages
+look like ten brands — so no pairing may be reused across companies.
+
+**Arabic-ready stack.** Every company on this list serves an Arabic-speaking
+audience. Concepts ship in English, but each display and body face must have a
+genuine Arabic companion (IBM Plex Sans Arabic, Cairo, Almarai, Noto Kufi
+Arabic, Baloo Bhaijaan 2 and similar), recorded in that company's `notes`, so
+an Arabic/RTL version is a real follow-on rather than a retrofit. Logical
+properties (`margin-inline`, `padding-inline`, `text-align: start`) are used
+throughout for the same reason.
 
 ## 4. Motion — premium / smooth
 
@@ -49,12 +71,19 @@ Approved techniques, applied only where they serve the company's story:
 | Hover micro-interactions | Buttons, links, cards, nav. Desktop only. |
 | Magnetic buttons | Primary CTA only. |
 | Image zoom on hover | Project and product cards. |
-| Horizontal scroll | Only for a genuinely visual company with a gallery. |
-| Custom cursor | Only where the brand is visual and expressive. |
+Horizontal scroll and the custom cursor are **not in the approved set**. The
+engine still supports both; neither ships without the owner asking for it.
 
-The last two are opt-in per company and must be justified in `notes`. Motion
-communicates hierarchy and sequence. Motion that only demonstrates motion is
-removed.
+Motion communicates hierarchy and sequence. Motion that only demonstrates
+motion is removed.
+
+### Mobile motion — reduced set
+
+Below 768px, parallax, scroll-driven scale, and horizontal scroll are switched
+off entirely. Scroll reveals and text staggers stay. Pointer effects are
+already off on touch. This is enforced centrally in `motion.js`, not per page:
+most of this audience is on mid-range Android, and those three effects are what
+cost frames there.
 
 ## 5. Performance — balanced impact and performance
 
