@@ -11,21 +11,12 @@
 
 import { chromium, devices } from 'playwright';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
-import { readdirSync, existsSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
+import { launchOptions } from './lib/chromium.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, '.inspect');
-
-function findChromium() {
-  const base = process.env.PLAYWRIGHT_BROWSERS_PATH;
-  if (!base) return undefined;
-  const build = readdirSync(base)
-    .filter((n) => /^chromium-\d+$/.test(n))
-    .sort((a, b) => Number(b.split('-')[1]) - Number(a.split('-')[1]))[0];
-  return build ? path.join(base, build, 'chrome-linux', 'chrome') : undefined;
-}
 
 /** Runs in the page. Reports what is on screen, not what the markup implies. */
 function extract() {
@@ -127,38 +118,12 @@ function extract() {
   };
 }
 
-/**
- * The session's egress proxy re-terminates TLS with its own CA, which is
- * configured for curl and Node but is not in Chromium's root store.
- *
- * Rather than turning certificate checking off, trust is pinned to that one
- * CA's public key. Any certificate chain that does not include this exact key
- * still fails the navigation, so a genuinely bad certificate on a target site
- * is still caught. `ignoreHTTPSErrors` would disable verification wholesale
- * and must not be used here.
- */
-function proxyCaSpkiHash() {
-  const ca = '/root/.ccr/agent-proxy-ca.crt';
-  if (!existsSync(ca)) return null;
-  try {
-    const pubkey = execFileSync('openssl', ['x509', '-in', ca, '-pubkey', '-noout']);
-    const der = execFileSync('openssl', ['pkey', '-pubin', '-outform', 'der'], { input: pubkey });
-    return execFileSync('openssl', ['dgst', '-sha256', '-binary'], { input: der }).toString('base64');
-  } catch {
-    return null;
-  }
-}
-
 const targets = JSON.parse(await readFile(path.join(ROOT, 'data', 'companies.json'), 'utf8'));
 const only = process.argv[2];
 const list = only ? targets.filter((t) => t.slug === only) : targets;
 
 await mkdir(OUT, { recursive: true });
-const spki = proxyCaSpkiHash();
-const args = ['--no-sandbox'];
-if (spki) args.push(`--ignore-certificate-errors-spki-list=${spki}`);
-
-const browser = await chromium.launch({ executablePath: findChromium(), args });
+const browser = await chromium.launch(launchOptions());
 const summary = [];
 
 for (const target of list) {

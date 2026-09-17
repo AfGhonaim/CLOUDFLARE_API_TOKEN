@@ -19,7 +19,7 @@
     "preview": "",
     "subject": "",
     "status": "Analyzed",
-    "notes": "Tailwind; display face FreightNeoW03Book at 88px. Published hotline 16201. Arabic companion face still to be chosen."
+    "notes": "Mode: light (their existing identity is white and navy). Tailwind; display face FreightNeoW03Book at 88px. Published hotline 16201. Arabic companion face still to be chosen."
   },
   {
     "slug": "emaar-misr",
@@ -35,8 +35,8 @@
     "contactSource": "",
     "preview": "",
     "subject": "",
-    "status": "Not started",
-    "notes": "NOT INSPECTED. Returns 403 Forbidden to automated clients on every attempt — a WAF rule, not a network block. Their bot protection will not be evaded. Needs owner-supplied screenshots, or analysis from a normal browser."
+    "status": "Skipped",
+    "notes": "DROPPED from the batch by owner decision. NOT INSPECTED. Returns 403 Forbidden to automated clients on every attempt — a WAF rule, not a network block. Their bot protection will not be evaded. Needs owner-supplied screenshots, or analysis from a normal browser."
   },
   {
     "slug": "orascom-development",
@@ -59,7 +59,7 @@
     "preview": "",
     "subject": "",
     "status": "Analyzed",
-    "notes": "Multi-country portfolio (El Gouna, Taba Heights, Makadi Heights, Byoum, Andermatt, Jebel Sifah, Hawana Salalah, Lustica Bay, The Cove). Hero currently leads on Switzerland, not Egypt."
+    "notes": "Mode: dark (destination photography carries a dark ground well). Multi-country portfolio (El Gouna, Taba Heights, Makadi Heights, Byoum, Andermatt, Jebel Sifah, Hawana Salalah, Lustica Bay, The Cove). Hero currently leads on Switzerland, not Egypt."
   },
   {
     "slug": "madinet-masr",
@@ -82,7 +82,7 @@
     "preview": "",
     "subject": "",
     "status": "Analyzed",
-    "notes": "Next.js app router. Custom face monte_regular. Formerly Madinet Nasr for Housing and Development."
+    "notes": "Mode: light (heritage developer with long factual content). Next.js app router. Custom face monte_regular. Formerly Madinet Nasr for Housing and Development."
   },
   {
     "slug": "city-edge",
@@ -105,7 +105,7 @@
     "preview": "",
     "subject": "",
     "status": "Analyzed",
-    "notes": "EN/AR switcher already present — the Arabic companion face matters more here than elsewhere. Body face AeonikTRIAL, which is a trial licence name and may not be licensed for production. Published hotline 16044."
+    "notes": "Mode: light (state-affiliated, institutional credibility, Arabic readability). EN/AR switcher already present — the Arabic companion face matters more here than elsewhere. Body face AeonikTRIAL, which is a trial licence name and may not be licensed for production. Published hotline 16044."
   },
   {
     "slug": "hdg",
@@ -130,7 +130,7 @@
     "preview": "",
     "subject": "",
     "status": "Analyzed",
-    "notes": "Site email is obfuscated in markup (in**@hd*.eg) so it is NOT a usable address — recorded as Not found. Published hotline 16613. Arabic switcher present. Tajawal already has full Arabic coverage, so it is a natural companion. Hero render contains Lloyds Bank signage."
+    "notes": "Mode: light (medical and commercial buyers need a trustworthy, legible ground). Site email is obfuscated in markup (in**@hd*.eg) so it is NOT a usable address — recorded as Not found. Published hotline 16613. Arabic switcher present. Tajawal already has full Arabic coverage, so it is a natural companion. Hero render contains Lloyds Bank signage."
   },
   {
     "slug": "alashraaf",
@@ -146,8 +146,8 @@
     "contactSource": "",
     "preview": "",
     "subject": "",
-    "status": "Not started",
-    "notes": "NOT INSPECTED. Serves a \"Robot Challenge Screen\" (HTTP 202) to automated clients on every attempt. Their bot protection will not be evaded. Needs owner-supplied screenshots, or analysis from a normal browser."
+    "status": "Skipped",
+    "notes": "DROPPED from the batch by owner decision. NOT INSPECTED. Serves a \"Robot Challenge Screen\" (HTTP 202) to automated clients on every attempt. Their bot protection will not be evaded. Needs owner-supplied screenshots, or analysis from a normal browser."
   },
   {
     "slug": "tolip",
@@ -171,7 +171,7 @@
     "preview": "",
     "subject": "",
     "status": "Analyzed",
-    "notes": "WordPress + Avada/Fusion. Display face Philosopher, body Source Sans Pro. EN/عربي switcher present. Verify the current property list against the live site — several properties moved to Gewan management in 2025."
+    "notes": "Mode: dark (hospitality reads more premium dark). WordPress + Avada/Fusion. Display face Philosopher, body Source Sans Pro. EN/عربي switcher present. Verify the current property list against the live site — several properties moved to Gewan management in 2025."
   },
   {
     "slug": "visit-egypt-tours",
@@ -193,8 +193,8 @@
     "contactSource": "",
     "preview": "",
     "subject": "",
-    "status": "Analyzed",
-    "notes": "WordPress + Elementor with Essential Addons. The only non-property, non-hotel brand on the list alongside GSA, so it carries the most room for a distinct art direction."
+    "status": "Concept built",
+    "notes": "Type pairing: Fraunces display + Inter body (Arabic companions: Noto Naskh Arabic, IBM Plex Sans Arabic). Typography-led with no photography — the live site carries three images across 6044px and nothing was invented to fill the gap. Packages section dropped: no package content could be observed, and it will not be fabricated. Mode: light (to escape the flat indigo that currently flattens every section). WordPress + Elementor with Essential Addons. The only non-property, non-hotel brand on the list alongside GSA, so it carries the most room for a distinct art direction."
   },
   {
     "slug": "gsa",
@@ -217,6 +217,6 @@
     "preview": "",
     "subject": "",
     "status": "Analyzed",
-    "notes": "Body and display both Rubik. Renders are strong and under-used. Mixed audience — clients, course applicants, job applicants — competing on one page."
+    "notes": "Mode: dark (their renders are predominantly night scenes). Body and display both Rubik. Renders are strong and under-used. Mixed audience — clients, course applicants, job applicants — competing on one page."
   }
 ]

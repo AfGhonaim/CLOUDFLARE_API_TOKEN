@@ -15,10 +15,10 @@
 
 import { chromium } from 'playwright';
 import { readdir, mkdir, stat } from 'node:fs/promises';
-import { readdirSync } from 'node:fs';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { launchOptions } from './lib/chromium.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const CONCEPTS = path.join(ROOT, 'site', 'concepts');
@@ -29,26 +29,6 @@ const VIEWPORTS = [
   { name: 'tablet', width: 768, height: 1024 },
   { name: 'desktop', width: 1440, height: 900 },
 ];
-
-/**
- * The sandbox ships a Chromium build that may not match the one this
- * Playwright version expects, so prefer whatever is actually on disk.
- */
-function findChromium() {
-  if (process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE) return process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE;
-
-  const base = process.env.PLAYWRIGHT_BROWSERS_PATH;
-  if (!base) return undefined;
-
-  try {
-    const build = readdirSync(base)
-      .filter((name) => /^chromium-\d+$/.test(name))
-      .sort((a, b) => Number(b.split('-')[1]) - Number(a.split('-')[1]))[0];
-    return build ? path.join(base, build, 'chrome-linux', 'chrome') : undefined;
-  } catch {
-    return undefined;
-  }
-}
 
 const only = process.argv[2];
 const problems = [];
@@ -62,7 +42,9 @@ async function scrollThrough(page) {
       await new Promise((r) => setTimeout(r, 90));
     }
     window.scrollTo(0, document.body.scrollHeight);
-    await new Promise((r) => setTimeout(r, 400));
+    // Long enough for the slowest reveal transition to finish, so the
+    // screenshots show the settled page rather than elements mid-fade.
+    await new Promise((r) => setTimeout(r, 1600));
   });
 }
 
@@ -110,6 +92,18 @@ async function run(browser, slug, viewport) {
     warnings.push(`${label}: body copy is ${result.bodySize}px, under the 16px floor`);
   }
 
+  // Back to the top before capturing: a sticky header photographs in the wrong
+  // place in a full-page shot taken mid-scroll. Forced instant, because a page
+  // using scroll-behavior: smooth is still easing when the shutter opens.
+  await page.evaluate(() => {
+    const previous = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    document.documentElement.style.scrollBehavior = previous;
+  });
+  await page.waitForTimeout(600);
+
+  await page.screenshot({ path: path.join(SHOTS, `${slug}-${viewport.name}-hero.png`) });
   await page.screenshot({
     path: path.join(SHOTS, `${slug}-${viewport.name}.png`),
     fullPage: true,
@@ -154,8 +148,7 @@ if (slugs.length === 0) {
 }
 
 await mkdir(SHOTS, { recursive: true });
-const executablePath = findChromium();
-const browser = await chromium.launch(executablePath ? { executablePath } : {});
+const browser = await chromium.launch(launchOptions());
 
 for (const slug of slugs) {
   for (const viewport of VIEWPORTS) await run(browser, slug, viewport);

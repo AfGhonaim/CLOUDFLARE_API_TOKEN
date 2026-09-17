@@ -240,10 +240,16 @@ ol[role="list"] { list-style: none; padding: 0; }
 .js [data-reveal-clip].is-revealed > img,
 .js [data-reveal-clip].is-revealed > picture > img { transform: none; }
 
-/* Split text. motion.js wraps each line in .rc-line > .rc-line__inner. */
+/* Split text. motion.js wraps each line in .rc-line > .rc-line__inner.
+   The mask needs room below the baseline or it shears the descenders off
+   display type, which is exactly where this effect gets used. The padding
+   opens that room and the negative margin takes the space back out of the
+   layout, so line spacing is unchanged. */
 .rc-line {
   display: block;
   overflow: hidden;
+  padding-block-end: 0.16em;
+  margin-block-end: -0.16em;
 }
 
 .js .rc-line__inner {

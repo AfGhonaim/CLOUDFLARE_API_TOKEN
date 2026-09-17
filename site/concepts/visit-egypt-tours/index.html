@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- A concept must never be indexed or mistaken for the live site. -->
+<meta name="robots" content="noindex, nofollow">
+
+<title>Visit Egypt Tours — Website Redesign Concept</title>
+<meta name="description" content="An independent landing page redesign concept prepared for Visit Egypt Tours. Not the official Visit Egypt Tours website.">
+
+<!-- Set before paint so revealed elements never flash in their final state. -->
+<script>document.documentElement.classList.add('js');</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Inter:wght@400;500;600&display=swap">
+
+<link rel="stylesheet" href="../../assets/base.css">
+<link rel="stylesheet" href="./styles.css">
+<script src="../../assets/motion.js" defer></script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="#main">
+      <span class="nav__mark" aria-hidden="true"></span>
+      <span class="nav__name">Visit Egypt <em>Tours</em></span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#travel">Travel</a>
+      <a href="#why">Why us</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn--sm" href="#contact">Plan a trip</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===== Hero. One idea: they do one country, and have done for decades. ===== -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <p class="eyebrow" data-reveal>Inbound tour operator · Egypt</p>
+
+      <h1 class="hero__title" data-split>We only do Egypt.</h1>
+
+      <div class="hero__rule" data-reveal="left" data-reveal-delay="300"></div>
+
+      <p class="hero__lede" data-reveal data-reveal-delay="420">
+        Over twenty years of inbound tourism experience, in a single destination.
+        One country, known properly — rather than fifty known in passing.
+      </p>
+
+      <div class="hero__actions" data-reveal data-reveal-delay="540">
+        <a class="btn" href="#contact" data-magnetic>Plan a trip</a>
+        <a class="link-quiet" href="#travel">See how people travel with us</a>
+      </div>
+    </div>
+
+    <div class="hero__foot" aria-hidden="true">
+      <span class="hero__scroll">Scroll</span>
+      <span class="hero__line"></span>
+    </div>
+  </section>
+
+  <!-- ===== The three facts the company actually states about itself. ===== -->
+  <section class="facts">
+    <div class="container facts__grid" data-reveal-group>
+      <div class="fact" data-reveal>
+        <span class="fact__figure">20<sup>+</sup></span>
+        <span class="fact__label">Years of inbound tourism experience</span>
+      </div>
+      <div class="fact" data-reveal>
+        <span class="fact__figure">01</span>
+        <span class="fact__label">Destination, and only one</span>
+      </div>
+      <div class="fact" data-reveal>
+        <span class="fact__figure">06</span>
+        <span class="fact__label">Ways to travel with us</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== The six travel types, as an editorial index rather than flip cards. ===== -->
+  <section class="travel section" id="travel">
+    <div class="container">
+      <div class="section__head" data-reveal>
+        <p class="eyebrow">What kind of travel</p>
+        <h2 class="section__title" data-split>Six ways to see the country.</h2>
+      </div>
+
+      <ol class="index" data-reveal-group>
+        <li class="index__row" data-reveal>
+          <span class="index__num">01</span>
+          <span class="index__name">Leisure Travel</span>
+        </li>
+        <li class="index__row" data-reveal>
+          <span class="index__num">02</span>
+          <span class="index__name">Short Breaks</span>
+        </li>
+        <li class="index__row" data-reveal>
+          <span class="index__num">03</span>
+          <span class="index__name">City Breaks</span>
+        </li>
+        <li class="index__row" data-reveal>
+          <span class="index__num">04</span>
+          <span class="index__name">Leisure Countryside Breaks</span>
+        </li>
+        <li class="index__row" data-reveal>
+          <span class="index__num">05</span>
+          <span class="index__name">Special Events</span>
+        </li>
+        <li class="index__row" data-reveal>
+          <span class="index__num">06</span>
+          <span class="index__name">Corporate Travel</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== Why partner. Built from the two claims the company makes itself. ===== -->
+  <section class="why section" id="why">
+    <div class="container why__grid">
+      <div class="why__head" data-reveal>
+        <p class="eyebrow">Why travel and partner with us</p>
+      </div>
+
+      <div class="why__body">
+        <p class="statement" data-reveal>
+          Specialists don&rsquo;t need a map of the world on the wall.
+        </p>
+        <p class="why__text" data-reveal data-reveal-delay="120">
+          Visit Egypt Tours operates in one destination only. Two decades of
+          inbound work in the same country means the ground knowledge, the
+          operators and the fixers are ours rather than a third party&rsquo;s —
+          and that is what a reliable itinerary is actually built on.
+        </p>
+        <p class="why__text" data-reveal data-reveal-delay="200" id="about">
+          The company works across leisure and corporate travel, from short city
+          stays to special events, for travellers arriving in Egypt and for the
+          trade partners who send them.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== One action. No functional form: fields are decorative and disabled. ===== -->
+  <section class="contact section" id="contact">
+    <div class="container contact__inner">
+      <h2 class="contact__title" data-split>Tell us when you want to come.</h2>
+      <p class="contact__lede" data-reveal data-reveal-delay="240">
+        Send the dates and the shape of the trip. You get an itinerary and a
+        price from the people who will actually run it.
+      </p>
+
+      <form class="enquiry" data-reveal data-reveal-delay="340" onsubmit="return false">
+        <label class="visually-hidden" for="enquiry-email">Your email address</label>
+        <input id="enquiry-email" type="email" placeholder="you@company.com" disabled>
+        <button type="button" class="btn" data-magnetic disabled>Start an enquiry</button>
+      </form>
+      <p class="enquiry__note" data-reveal data-reveal-delay="420">
+        Illustrative only — this concept page collects nothing.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== Commercial CTA. Price and scope wording are fixed. ===== -->
+<section class="rc-cta section">
+  <div class="container rc-cta__inner" data-reveal-group>
+    <h2 class="rc-cta__title" data-reveal>Like this direction?</h2>
+    <p class="rc-cta__price" data-reveal>Production version — EGP 5,000</p>
+    <p class="rc-cta__scope" data-reveal>
+      Covers the responsive frontend implementation and production-ready frontend
+      code of this page. It does not include backend development, CMS integration,
+      hosting, domains, third-party integrations, content production, SEO, or
+      ongoing maintenance.
+    </p>
+    <p data-reveal>
+      <a class="btn btn--ghost" href="mailto:Ahmed.Gonim@al-hadathmatrix.sa?subject=Redesign%20concept%20for%20Visit%20Egypt%20Tours" data-magnetic>
+        Turn this concept into your new landing page
+      </a>
+    </p>
+  </div>
+</section>
+
+<!-- ===== REQUIRED: concept badge. Discreet, but never removed or hidden. ===== -->
+<details class="rc-badge" data-rc-disclaimer>
+  <summary>Website Redesign Concept</summary>
+  <div class="rc-badge__note">
+    <p>
+      An independent redesign proposal for Visit Egypt Tours, created by Ahmed
+      Ghonaim. Not affiliated with or endorsed by Visit Egypt Tours, and not
+      their official website.
+    </p>
+    <p><a href="#rc-about">Full details</a></p>
+  </div>
+</details>
+
+<!-- ===== REQUIRED: footer disclosure. Do not remove or hide. ===== -->
+<footer class="rc-footer" id="rc-about" data-rc-disclaimer>
+  <div class="rc-footer__inner">
+    <h2 class="rc-footer__title">About this page</h2>
+    <p>
+      This is an unsolicited landing page redesign concept created for Visit
+      Egypt Tours by Ahmed Ghonaim. It is a design proposal only. It is
+      <strong>not</strong> the official Visit Egypt Tours website, and it is not
+      affiliated with, authorised by, or endorsed by Visit Egypt Tours.
+    </p>
+    <p>
+      The company name and the wording of its travel categories remain the
+      property of their owners and are reproduced solely to illustrate the
+      proposed design. Content was taken from the company&rsquo;s public website
+      and may be out of date. This page collects no personal data and processes
+      no transactions.
+    </p>
+    <p>
+      Questions, or want this taken down? Email
+      <a href="mailto:Ahmed.Gonim@al-hadathmatrix.sa">Ahmed.Gonim@al-hadathmatrix.sa</a>
+      and it will be removed the same day.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
