@@ -6,7 +6,7 @@ WhatsApp Cloud API.
 Setup, configuration, and costs: **[docs/WHATSAPP-BOT.md](../docs/WHATSAPP-BOT.md)**.
 
 ```bash
-npm install
+./setup.sh      # first run: KV, config, secrets, deploy, self-test
 npm test        # no network, no credentials needed
 npm run dev     # local, needs .dev.vars
 npm run deploy
@@ -20,4 +20,5 @@ src/claude.js        the Messages API call
 src/conversation.js  KV-backed history and webhook de-duplication
 src/signature.js     X-Hub-Signature-256 verification
 src/config.js        env bindings, defaults, the number allowlist
+setup.sh             one-shot Cloudflare setup
 ```

@@ -25,6 +25,19 @@ deliveries, mark read, replay the thread from KV, call Claude, send the reply in
 
 ## Setup
 
+Two consoles need a human: Meta's and Anthropic's. Collect five values there,
+and [`worker/setup.sh`](../worker/setup.sh) does the whole Cloudflare side in
+one pass — namespace, config, secrets, deploy, and a live check that the Worker
+answers Meta's handshake:
+
+```bash
+cd worker && ./setup.sh
+```
+
+It is safe to re-run and asks before overwriting anything already set. The
+sections below are what it automates, if you would rather do it by hand or need
+to debug a step.
+
 ### 1. Meta: create the app
 
 1. At [developers.facebook.com](https://developers.facebook.com/apps) create an
@@ -41,6 +54,8 @@ give it the `whatsapp_business_messaging` permission, and generate a token with
 no expiry.
 
 ### 2. Cloudflare: deploy the Worker
+
+`./setup.sh` does everything in this section. By hand:
 
 ```bash
 cd worker
