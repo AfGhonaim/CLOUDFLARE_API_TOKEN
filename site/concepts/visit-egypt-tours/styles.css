@@ -1,0 +1,490 @@
+/* Art direction for Visit Egypt Tours.
+
+   Light mode, chosen to escape the flat indigo ground that currently flattens
+   every section of the live site. Their indigo and orange are kept, but demoted
+   to accents on warm paper so they read as brand rather than as background.
+
+   Typography-led by necessity and by choice: the live homepage carries three
+   images across 6044px, so there is nothing to build a photographic layout from
+   and nothing will be invented to fill the gap. Scale, rule and space do the
+   work instead.
+
+   Type pairing (not reused on any other concept in this batch):
+     Display — Fraunces      Arabic companion: Noto Naskh Arabic
+     Body    — Inter         Arabic companion: IBM Plex Sans Arabic
+   Logical properties throughout so an RTL build is a follow-on, not a rewrite.
+*/
+
+:root {
+  /* Warm paper, so the indigo reads as ink rather than as a backdrop. */
+  --bg: #faf7f2;
+  --surface: #f2ede5;
+  --ink: #14162b;
+  --fg: var(--ink);
+  --fg-muted: #5e6275;
+  --rule: #ded6c9;
+
+  /* Both taken from the existing brand. */
+  --brand: #2e3192;
+  --accent: #e0703c;
+  --brand-ink: #ffffff;
+  --focus: var(--brand);
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --weight-display: 600;
+
+  /* Oversized display scale — the locked typographic direction. */
+  --text-4xl: clamp(3rem, 1.1rem + 8.2vw, 9.5rem);
+  --text-3xl: clamp(2.1rem, 1.1rem + 4.2vw, 5rem);
+  --text-2xl: clamp(1.5rem, 1.1rem + 1.8vw, 2.5rem);
+
+  --container: 1240px;
+  --tracking-tight: -0.03em;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+.skip {
+  position: absolute;
+  inset-inline-start: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--ink);
+  color: #fff;
+}
+
+.skip:focus { inset-inline-start: 0; }
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* --- buttons --------------------------------------------------------------- */
+
+.btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--brand-ink);
+  background: var(--brand);
+  border: 1px solid var(--brand);
+  border-radius: 2px;
+  transition: background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+
+.btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn--sm { padding: 0.6rem 1.25rem; font-size: 0.85rem; }
+
+.btn--ghost {
+  color: var(--ink);
+  background: transparent;
+  border-color: var(--ink);
+}
+
+.btn--ghost:hover {
+  color: #fff;
+  background: var(--ink);
+}
+
+.btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.link-quiet {
+  font-size: 0.95rem;
+  color: var(--fg-muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 2px;
+  transition: color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+
+.link-quiet:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+/* --- navigation ------------------------------------------------------------
+   Visible at every width. The live site hides all navigation behind a
+   hamburger even at 1440px, which is the single biggest thing to fix.
+   --------------------------------------------------------------------------- */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: 0.9rem var(--gutter);
+}
+
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--ink);
+  margin-inline-end: auto;
+}
+
+.nav__mark {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 32%, var(--accent) 0 42%, var(--brand) 43% 100%);
+}
+
+.nav__name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.nav__name em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--fg-muted);
+}
+
+.nav__links {
+  display: flex;
+  gap: clamp(1rem, 2.5vw, 2.25rem);
+}
+
+.nav__links a {
+  font-size: 0.9rem;
+  color: var(--fg-muted);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.nav__links a:hover { color: var(--ink); }
+
+@media (max-width: 720px) {
+  /* The links stay on the page rather than disappearing behind a button. */
+  .nav__inner { flex-wrap: wrap; gap: 0.75rem var(--space-md); }
+  .nav__links { order: 3; width: 100%; justify-content: space-between; gap: 0.5rem; }
+  .nav__links a { font-size: 0.82rem; }
+}
+
+/* --- hero ------------------------------------------------------------------ */
+
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: min(92svh, 900px);
+  padding-block: clamp(4rem, 12vh, 9rem) var(--space-xl);
+  overflow: hidden;
+}
+
+/* A single quiet field of colour, drawn rather than photographed. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset-block-start: -22%;
+  inset-inline-end: -14%;
+  width: min(60vw, 720px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.hero__inner { position: relative; }
+
+.hero__title {
+  margin-top: var(--space-md);
+  font-size: var(--text-4xl);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: var(--tracking-tight);
+  font-variation-settings: "opsz" 144, "SOFT" 0;
+  max-width: 14ch;
+}
+
+.hero__rule {
+  width: min(320px, 55%);
+  height: 1px;
+  margin-block: clamp(1.75rem, 4vh, 2.75rem);
+  background: linear-gradient(90deg, var(--accent), var(--rule));
+  transform-origin: left center;
+}
+
+.hero__lede {
+  max-width: 46ch;
+  font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.3rem);
+  line-height: 1.65;
+  color: var(--fg-muted);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md) var(--space-lg);
+  align-items: center;
+  margin-top: clamp(2rem, 5vh, 3rem);
+}
+
+.hero__foot {
+  position: absolute;
+  inset-block-end: var(--space-lg);
+  inset-inline-start: var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero__scroll {
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.hero__line {
+  width: 64px;
+  height: 1px;
+  background: var(--rule);
+}
+
+@media (max-width: 720px) {
+  .hero { min-height: auto; padding-block: 3.5rem 4rem; }
+  .hero__foot { display: none; }
+  .hero__title { max-width: 100%; }
+}
+
+/* --- facts ----------------------------------------------------------------- */
+
+.facts {
+  padding-block: clamp(2.5rem, 6vh, 4rem);
+  border-block: 1px solid var(--rule);
+  background: var(--surface);
+}
+
+.facts__grid {
+  display: grid;
+  gap: var(--space-lg) var(--space-xl);
+  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+}
+
+.fact {
+  display: grid;
+  gap: 0.5rem;
+  padding-inline-start: var(--space-md);
+  border-inline-start: 2px solid var(--accent);
+}
+
+.fact__figure {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 1.8rem + 3.4vw, 4.5rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--brand);
+  font-variation-settings: "opsz" 144;
+}
+
+.fact__figure sup { font-size: 0.42em; vertical-align: super; }
+
+.fact__label {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--fg-muted);
+  max-width: 24ch;
+}
+
+/* --- section furniture ------------------------------------------------------ */
+
+.section__head { margin-bottom: clamp(2.5rem, 6vh, 4.5rem); }
+
+.section__title {
+  margin-top: var(--space-sm);
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: var(--tracking-tight);
+  max-width: 18ch;
+}
+
+/* --- the six travel types, as an index --------------------------------------
+   The live site renders these as six competing <h1> flip-boxes. Here they are
+   one ordered list with one heading above it.
+   ---------------------------------------------------------------------------- */
+
+.index {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.index__row {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(1rem, 4vw, 3.5rem);
+  padding-block: clamp(1.1rem, 2.6vh, 1.9rem);
+  border-bottom: 1px solid var(--rule);
+  transition: padding-inline-start var(--dur-base) var(--ease-out);
+}
+
+.index__num {
+  flex: none;
+  width: 2.5rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.index__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 0.9rem + 2.6vw, 3.25rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  transition: color var(--dur-base) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .index__row:hover { padding-inline-start: 1.25rem; }
+  .index__row:hover .index__name { color: var(--brand); }
+}
+
+/* --- why -------------------------------------------------------------------- */
+
+.why { background: var(--surface); }
+
+.why__grid {
+  display: grid;
+  gap: var(--space-xl) clamp(2rem, 6vw, 5rem);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 900px) {
+  .why__grid { grid-template-columns: 16rem minmax(0, 1fr); }
+  .why__head { position: sticky; top: 7rem; align-self: start; }
+}
+
+.statement {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  max-width: 22ch;
+  margin-bottom: var(--space-lg);
+  color: var(--brand);
+}
+
+.why__text {
+  max-width: 54ch;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.1rem);
+  line-height: 1.75;
+  color: var(--fg-muted);
+}
+
+.why__text + .why__text { margin-top: var(--space-md); }
+
+/* --- contact ---------------------------------------------------------------- */
+
+.contact__inner { max-width: 760px; }
+
+.contact__title {
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: var(--tracking-tight);
+}
+
+.contact__lede {
+  max-width: 44ch;
+  margin-top: var(--space-md);
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+  line-height: 1.7;
+  color: var(--fg-muted);
+}
+
+.enquiry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-xl);
+}
+
+.enquiry input {
+  flex: 1 1 18rem;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+
+.enquiry input::placeholder { color: color-mix(in srgb, var(--fg-muted) 65%, transparent); }
+
+.enquiry__note {
+  margin-top: var(--space-sm);
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+}
+
+/* --- commercial CTA --------------------------------------------------------- */
+
+.rc-cta {
+  border-top: 1px solid var(--rule);
+  background: var(--surface);
+}
+
+.rc-cta__title {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+}
+
+.rc-cta__price {
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--brand);
+}
+
+.rc-cta__scope { color: var(--fg-muted); line-height: 1.7; }

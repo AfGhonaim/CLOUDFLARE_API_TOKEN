@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "example-co",
+    "company": "Example Co",
+    "website": "https://example.com",
+    "industry": "B2B logistics",
+    "audience": "Operations managers at mid-size importers",
+    "findings": [
+      "Primary navigation holds 11 top-level items, so the two revenue pages sit below the fold of the dropdown.",
+      "Body copy is set at 13px on a 1440px viewport, well under the 16px readability floor.",
+      "The quote request is four clicks from the homepage and is never mentioned above the fold."
+    ],
+    "opportunity": "Surface the quote request in the hero and cut navigation to five items.",
+    "contactName": "Not found",
+    "contactRole": "Not found",
+    "contactEmail": "Not found",
+    "contactSource": "",
+    "preview": "https://redesign-concepts.pages.dev/concepts/example-co/",
+    "subject": "A redesign concept for the Example Co homepage",
+    "status": "Ready for Review",
+    "notes": "Contact page lists a form only — no address published."
+  }
+]
