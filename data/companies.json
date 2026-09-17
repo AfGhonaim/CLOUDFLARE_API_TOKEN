@@ -192,9 +192,9 @@
     "contactEmail": "Not found",
     "contactSource": "",
     "preview": "",
-    "subject": "",
+    "subject": "A redesign concept for the Visit Egypt Tours homepage",
     "status": "Concept built",
-    "notes": "Type pairing: Fraunces display + Inter body (Arabic companions: Noto Naskh Arabic, IBM Plex Sans Arabic). Typography-led with no photography — the live site carries three images across 6044px and nothing was invented to fill the gap. Packages section dropped: no package content could be observed, and it will not be fabricated. Mode: light (to escape the flat indigo that currently flattens every section). WordPress + Elementor with Essential Addons. The only non-property, non-hotel brand on the list alongside GSA, so it carries the most room for a distinct art direction."
+    "notes": "DRAFT NOT SENDABLE: no published contact address was found on their site, the preview link is still a placeholder pending the Cloudflare deploy, and the sender postal address required by anti-spam rules is not filled in. Type pairing: Fraunces display + Inter body (Arabic companions: Noto Naskh Arabic, IBM Plex Sans Arabic). Typography-led with no photography — the live site carries three images across 6044px and nothing was invented to fill the gap. Packages section dropped: no package content could be observed, and it will not be fabricated. Mode: light (to escape the flat indigo that currently flattens every section). WordPress + Elementor with Essential Addons. The only non-property, non-hotel brand on the list alongside GSA, so it carries the most room for a distinct art direction."
   },
   {
     "slug": "gsa",
