@@ -35,6 +35,9 @@ site/assets/motion.js      shared motion engine, driven by data attributes
 scripts/build-dashboard.mjs  regenerates the dashboard, validates the data
 scripts/check-concepts.mjs   fails the build if a disclaimer or the CTA scope is missing
 scripts/smoke.mjs            renders every concept in Chromium at 360/768/1440
+scripts/render-scene.mjs     renders a scene through Cloudflare Workers AI
+scenes/<id>/scene.json     unrelated: the prompt, framings, and model settings for one scene
+scenes/<id>/BRIEF.md       art direction and the review list for that scene
 worker/                    unrelated: the WhatsApp bot (see below)
 ```
 
@@ -81,6 +84,13 @@ result is ever invented. A contact that is not published is recorded as
 Sending happens once, per company, after explicit approval.
 
 ## Also in this repository
+
+[`scenes/`](scenes) holds generated image scenes — a prompt, its framings, and
+its model settings in `scene.json`, the art direction and the review list in
+`BRIEF.md`. `node scripts/render-scene.mjs <scene> --dry-run` prints the prompt
+for any generator; without the flag it renders through Cloudflare Workers AI
+into `build/scenes/`. Every scene is a synthetic visualisation and is labelled
+as one. Nothing here feeds the outreach pipeline.
 
 [`worker/`](worker) is a Cloudflare Worker that answers WhatsApp messages with
 Claude, through the Meta WhatsApp Cloud API. It shares nothing with the outreach

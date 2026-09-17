@@ -1,0 +1,25 @@
+{
+  "id": "uae-railway",
+  "title": "UAE railway — Emirati traveller on the platform",
+  "summary": "One Emirati man beside a modern intercity passenger train at a contemporary UAE station. Premium government infrastructure campaign photography, not a game render.",
+  "aspect": "21:9",
+  "prompt": "Photorealistic full-frame editorial photograph of one Emirati man in his mid-thirties standing calmly on the platform of a modern railway station in the United Arab Emirates. He wears a pristine white kandura with a crisp stitched collar placket, a soft white ghutra draped naturally over his shoulders, and a level black agal; short neatly trimmed dark beard, warm olive Middle Eastern features, natural build and natural proportions, relaxed confident posture with one hand resting at his side, calm unforced expression, looking slightly off camera. Real human skin with visible pores, fine surface texture and natural specular highlights; cotton fabric with real weight, soft folds and a subtle sheen. He stands at the left of frame, several metres clear of a modern intercity passenger train that occupies the right of the composition — brushed aluminium and white livery with a slim horizontal accent stripe, a tapered aerodynamic nose, panel seams, door seals, bogies and pantograph all built like real engineering, standing at the platform with its row of windows receding into the haze. The station is contemporary and understated: a high white steel-and-glass canopy, perforated mashrabiya-inspired screens throwing soft geometric patterns across polished stone, a tactile yellow platform edge, clean signage with no legible lettering, steel rails and catenary drawing the eye into the distance. Late-afternoon sunlight rakes warm through the canopy while cool blue ambient light fills the shadows; soft volumetric shafts, gentle atmospheric haze, and real cumulus clouds visible through the open end of the station. Shot on a full-frame camera with a 50mm prime at f/2.8, ISO 100, the man sharp from head to feet, the background gently softened, strong sense of scale, cinematic depth, restrained blue-neutral grade with warm highlights, fine natural film grain, high-end commercial infrastructure campaign photography.",
+  "negativePrompt": "cartoon, anime, comic, illustration, painting, concept art, 3D render, CGI, videogame character, game asset, Unreal Engine, Blender render, plastic skin, waxy skin, airbrushed skin, doll face, mannequin, exaggerated muscles, bodybuilder physique, fantasy costume, armour, cape, turban, red-and-white shemagh, military uniform, sci-fi train, spaceship, pod, monorail capsule, cyberpunk, futuristic neon, glowing panels, holograms, LED strips, oversaturated colours, HDR halo, heavy vignette, lens flare, bokeh balls, tilt-shift, motion blur, crowd, second person, people in the background, extra limbs, extra fingers, deformed hands, malformed face, asymmetrical eyes, text, lettering, garbled arabic script, watermark, logo, signature, stock-photo smile, thumbs up, posed catalogue pose, low resolution, jpeg artifacts, blurry, oversharpened, chromatic aberration",
+  "framings": {
+    "hero": "Three-quarter body framing, camera at chest height on a 50mm lens, the man on the left third, the train nose and first two carriages filling the right of the frame.",
+    "wide": "Full body in a wide establishing frame on a 35mm lens, camera further back, the whole canopy and the length of the train visible, the man small against the architecture to sell the scale of the station.",
+    "low": "Full body from slightly below eye height on a 40mm lens, the platform edge line leading from the bottom corner to the nose of the train, the canopy arching overhead."
+  },
+  "defaultFraming": "hero",
+  "models": {
+    "@cf/black-forest-labs/flux-1-schnell": {
+      "params": { "steps": 8 },
+      "supports": { "negativePrompt": false, "dimensions": false, "seed": false }
+    },
+    "@cf/stabilityai/stable-diffusion-xl-base-1.0": {
+      "params": { "num_steps": 20, "guidance": 6.5, "width": 1280, "height": 704 },
+      "supports": { "negativePrompt": true, "dimensions": true, "seed": true }
+    }
+  },
+  "defaultModel": "@cf/black-forest-labs/flux-1-schnell"
+}
