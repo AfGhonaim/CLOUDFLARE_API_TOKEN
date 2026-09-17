@@ -136,6 +136,8 @@ Cloudflare's free tier covers a personal bot comfortably.
 
 ## Local development
 
+Needs Node 22 or newer — that is Wrangler's own floor, not this bot's.
+
 ```bash
 cd worker
 cp .dev.vars.example .dev.vars    # fill in the four secrets; gitignored
