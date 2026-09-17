@@ -11,7 +11,8 @@
 
 import { chromium, devices } from 'playwright';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
-import { readdirSync } from 'node:fs';
+import { readdirSync, existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -126,12 +127,38 @@ function extract() {
   };
 }
 
+/**
+ * The session's egress proxy re-terminates TLS with its own CA, which is
+ * configured for curl and Node but is not in Chromium's root store.
+ *
+ * Rather than turning certificate checking off, trust is pinned to that one
+ * CA's public key. Any certificate chain that does not include this exact key
+ * still fails the navigation, so a genuinely bad certificate on a target site
+ * is still caught. `ignoreHTTPSErrors` would disable verification wholesale
+ * and must not be used here.
+ */
+function proxyCaSpkiHash() {
+  const ca = '/root/.ccr/agent-proxy-ca.crt';
+  if (!existsSync(ca)) return null;
+  try {
+    const pubkey = execFileSync('openssl', ['x509', '-in', ca, '-pubkey', '-noout']);
+    const der = execFileSync('openssl', ['pkey', '-pubin', '-outform', 'der'], { input: pubkey });
+    return execFileSync('openssl', ['dgst', '-sha256', '-binary'], { input: der }).toString('base64');
+  } catch {
+    return null;
+  }
+}
+
 const targets = JSON.parse(await readFile(path.join(ROOT, 'data', 'companies.json'), 'utf8'));
 const only = process.argv[2];
 const list = only ? targets.filter((t) => t.slug === only) : targets;
 
 await mkdir(OUT, { recursive: true });
-const browser = await chromium.launch({ executablePath: findChromium(), args: ['--no-sandbox'] });
+const spki = proxyCaSpkiHash();
+const args = ['--no-sandbox'];
+if (spki) args.push(`--ignore-certificate-errors-spki-list=${spki}`);
+
+const browser = await chromium.launch({ executablePath: findChromium(), args });
 const summary = [];
 
 for (const target of list) {
@@ -142,6 +169,14 @@ for (const target of list) {
     locale: 'en-US',
   });
   const page = await context.newPage();
+
+  // A page that renders an error shell usually failed on a subresource — often
+  // a host the environment's allowlist is missing. Record them so the cause is
+  // visible instead of guessed at.
+  const failures = [];
+  page.on('requestfailed', (request) => {
+    failures.push(`${request.failure()?.errorText ?? 'failed'} ${request.url().slice(0, 120)}`);
+  });
 
   try {
     const response = await page.goto(target.website, { waitUntil: 'domcontentloaded', timeout: 60000 });
@@ -161,6 +196,17 @@ for (const target of list) {
 
     record.desktop = await page.evaluate(extract);
 
+    // A client-rendered site can lose a bundle to an aborted request and land
+    // on the browser's own error shell. One reload settles that. This is not
+    // used to push past a site's bot protection — a challenge page is reported
+    // as a challenge page.
+    if (/couldn.t load|can.t be reached|ERR_/i.test(record.desktop.h1 ?? '')) {
+      await page.reload({ waitUntil: 'domcontentloaded', timeout: 60000 });
+      await page.waitForTimeout(5000);
+      record.desktop = await page.evaluate(extract);
+      record.reloaded = true;
+    }
+
     await page.screenshot({ path: path.join(OUT, `${target.slug}-desktop-hero.png`) });
     await page.screenshot({ path: path.join(OUT, `${target.slug}-desktop-full.png`), fullPage: true });
 
@@ -173,8 +219,12 @@ for (const target of list) {
     await mobilePage.screenshot({ path: path.join(OUT, `${target.slug}-mobile-full.png`), fullPage: true });
     await mobile.close();
 
+    record.failedRequests = [...new Set(failures)].slice(0, 15);
     record.ok = true;
     console.log(`OK    ${target.slug.padEnd(20)} ${record.status}  "${record.desktop.title.slice(0, 55)}"`);
+    if (record.failedRequests.length) {
+      console.log(`      ${record.failedRequests.length} failed request(s), first: ${record.failedRequests[0]}`);
+    }
   } catch (error) {
     record.ok = false;
     record.error = String(error).split('\n')[0];
