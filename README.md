@@ -35,6 +35,7 @@ site/assets/motion.js      shared motion engine, driven by data attributes
 scripts/build-dashboard.mjs  regenerates the dashboard, validates the data
 scripts/check-concepts.mjs   fails the build if a disclaimer or the CTA scope is missing
 scripts/smoke.mjs            renders every concept in Chromium at 360/768/1440
+worker/                    unrelated: the WhatsApp bot (see below)
 ```
 
 ## Blocked
@@ -78,3 +79,10 @@ Nothing about a company, a contact, a problem, a statistic, a testimonial, or a
 result is ever invented. A contact that is not published is recorded as
 `"Not found"`. Findings describe things actually observed on the live site.
 Sending happens once, per company, after explicit approval.
+
+## Also in this repository
+
+[`worker/`](worker) is a Cloudflare Worker that answers WhatsApp messages with
+Claude, through the Meta WhatsApp Cloud API. It shares nothing with the outreach
+pipeline — no data, no build step, its own dependencies — and is documented in
+[docs/WHATSAPP-BOT.md](docs/WHATSAPP-BOT.md).

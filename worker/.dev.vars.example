@@ -1,0 +1,14 @@
+# Local-only secrets for `wrangler dev`. Copy to worker/.dev.vars (gitignored).
+# In production these are Worker secrets: `wrangler secret put <NAME>`.
+
+# console.anthropic.com > API keys
+ANTHROPIC_API_KEY=
+
+# Meta > WhatsApp > API Setup. Use a System User token, not the 24h temp one.
+WHATSAPP_TOKEN=
+
+# Meta > App settings > Basic > App secret. Signs every inbound webhook.
+WHATSAPP_APP_SECRET=
+
+# Any random string you invent; paste the same value into Meta's webhook form.
+WHATSAPP_VERIFY_TOKEN=

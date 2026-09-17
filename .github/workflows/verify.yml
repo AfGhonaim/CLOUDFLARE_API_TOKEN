@@ -29,3 +29,24 @@ jobs:
 
       - name: Render every concept at 360/768/1440
         run: node scripts/smoke.mjs
+
+  whatsapp-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install the bot's dependencies
+        working-directory: worker
+        run: npm ci
+
+      - name: Test signature verification, parsing, chunking, and routing
+        working-directory: worker
+        run: npm test
+
+      - name: Check the Worker still bundles
+        working-directory: worker
+        run: npx wrangler deploy --dry-run --outdir=/tmp/worker-build
