@@ -1,0 +1,22 @@
+{
+  "name": "whatsapp-claude-bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A WhatsApp bot backed by the Claude API, running on Cloudflare Workers.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail",
+    "test": "node --test \"test/**/*.test.mjs\""
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.126.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.133.0"
+  }
+}

@@ -1,0 +1,38 @@
+name = "whatsapp-claude-bot"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Conversation history and webhook de-duplication.
+# Create it with:  npx wrangler kv namespace create CHATS
+# then paste the printed id below.
+[[kv_namespaces]]
+binding = "CHATS"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+
+[vars]
+# --- WhatsApp ---
+# The "Phone number ID" from Meta > WhatsApp > API Setup. Not the phone number.
+WHATSAPP_PHONE_NUMBER_ID = "REPLACE_WITH_YOUR_PHONE_NUMBER_ID"
+GRAPH_API_VERSION = "v23.0"
+WEBHOOK_PATH = "/webhook"
+
+# Who may talk to the bot: comma-separated numbers in full international form.
+# Anything not listed is ignored, so a stranger who finds the number cannot
+# spend your API credits. Set it to "*" to deliberately run an open bot.
+ALLOWED_NUMBERS = "REPLACE_WITH_YOUR_NUMBER"
+
+# --- Claude ---
+CLAUDE_MODEL = "claude-opus-5"
+# low | medium | high | xhigh | max — "low" keeps chat replies quick and cheap.
+CLAUDE_EFFORT = "low"
+CLAUDE_MAX_TOKENS = "4096"
+
+# --- Conversation memory ---
+HISTORY_MESSAGES = "20"
+HISTORY_TTL_SECONDS = "86400"
+
+# SYSTEM_PROMPT is optional; src/config.js ships a WhatsApp-tuned default.
+
+# Secrets are NOT set here. Use `wrangler secret put <NAME>` for each of:
+#   ANTHROPIC_API_KEY, WHATSAPP_TOKEN, WHATSAPP_APP_SECRET, WHATSAPP_VERIFY_TOKEN
