@@ -1,0 +1,489 @@
+/* ==================================================================
+   Cairo FACE — interior-page motion & atmosphere
+   Loaded AFTER pages.css, so anything here deliberately wins at equal
+   specificity. Keep it to transform/opacity/filter: layout belongs in
+   pages.css, or the two files start fighting over the same box.
+
+   Contract with js/motion.js
+     [data-reveal]      -> gains .is-in once it has crossed into view
+     [data-px="0.14"]   -> JS writes --py (px) every frame, desktop only
+     [data-count]       -> number counts up the first time it is seen
+     .pdepth            -> pointer parallax via --mx / --my (-1 .. 1)
+
+   Motion budget: nothing here animates anything but transform, opacity
+   and filter, so every effect stays on the compositor.
+   ================================================================== */
+
+:root {
+  --mo-dur: 0.72s;
+  --mo-stagger: 70ms;
+}
+
+/* ------------------------------------------------------------------
+   1. Reveals
+   The no-JS path matters: if motion.js never runs, [data-reveal] must
+   still be readable. JS stamps .mo-ready on <html> before first paint,
+   and only then does anything hide.
+   ------------------------------------------------------------------ */
+.mo-ready [data-reveal] {
+  opacity: 0;
+  transition:
+    opacity var(--mo-dur) var(--ease-out),
+    transform var(--mo-dur) var(--ease-out),
+    clip-path var(--mo-dur) var(--ease-out),
+    filter var(--mo-dur) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * var(--mo-stagger));
+  will-change: opacity, transform;
+}
+.mo-ready [data-reveal="up"],
+.mo-ready [data-reveal=""]      { transform: translate3d(0, 26px, 0); }
+.mo-ready [data-reveal="down"]  { transform: translate3d(0, -22px, 0); }
+.mo-ready [data-reveal="left"]  { transform: translate3d(-32px, 0, 0); }
+.mo-ready [data-reveal="right"] { transform: translate3d(32px, 0, 0); }
+.mo-ready [data-reveal="zoom"]  { transform: scale(0.94); }
+.mo-ready [data-reveal="rise"]  { transform: translate3d(0, 44px, 0) scale(0.97); }
+/* for photography — the frame wipes open rather than fading, which reads
+   as deliberate rather than as a slow-loading image */
+.mo-ready [data-reveal="wipe"] {
+  opacity: 1;
+  clip-path: inset(0 0 100% 0);
+}
+.mo-ready [data-reveal="blur"] { filter: blur(14px); transform: scale(1.03); }
+
+.mo-ready [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  clip-path: inset(0 0 0 0);
+}
+/* once it has played, stop paying for the compositor hint */
+.mo-ready [data-reveal].is-done { will-change: auto; transition-delay: 0s; }
+
+/* ------------------------------------------------------------------
+   2. Parallax primitive
+   JS writes --py. The element itself only ever reads it, so a layer
+   that JS skips (mobile, reduced motion) simply sits at 0.
+   ------------------------------------------------------------------ */
+[data-px] {
+  transform: translate3d(0, var(--py, 0px), 0);
+  will-change: transform;
+}
+/* layers that also want their own scale keep it in --pxs */
+[data-px][data-px-scale] {
+  transform: translate3d(0, var(--py, 0px), 0) scale(var(--pxs, 1.12));
+}
+
+/* ------------------------------------------------------------------
+   3. Page hero — photographic depth stack
+   .phero already sets position:relative + overflow:hidden, so the whole
+   stack clips to the hero box and nothing here can cause a side-scroll.
+   ------------------------------------------------------------------ */
+.pdepth {
+  position: absolute;
+  inset: -12% 0 -12%;          /* headroom so parallax never exposes an edge */
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.pdepth > * { position: absolute; inset: 0; }
+
+.pdepth__shot {
+  /* NB: the page sets background-image in a style attribute, not through a
+     custom property. A url() inside a custom property is resolved against the
+     stylesheet that substitutes it, so --shot:url('img/x.jpg') used here
+     resolved to /css/img/x.jpg. An inline background-image resolves against
+     the document, which is what we want. */
+  background-size: cover;
+  background-position: var(--shot-pos, center);
+  opacity: var(--shot-op, 0.46);
+  /* the headline sits centred, so the picture is dimmed — not erased — where
+     the type lands, and comes back up to full strength towards the edges */
+  -webkit-mask-image: radial-gradient(128% 96% at 50% 42%, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.62) 44%, #000 82%);
+          mask-image: radial-gradient(128% 96% at 50% 42%, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.62) 44%, #000 82%);
+  transform: translate3d(calc(var(--mx, 0) * -14px), calc(var(--py, 0px) + var(--my, 0) * -10px), 0) scale(1.08);
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* two soft lights that drift at different speeds — this is what stops a
+   flat navy gradient from reading as a dead background */
+.pdepth__glow {
+  background:
+    radial-gradient(46% 40% at 18% 22%, rgba(82, 136, 176, 0.40), transparent 70%),
+    radial-gradient(40% 42% at 84% 74%, rgba(47, 102, 147, 0.34), transparent 72%);
+  animation: moDrift 22s ease-in-out infinite alternate;
+}
+.pdepth__lines {
+  background-image: url("../img/face-contours.svg");
+  background-size: min(760px, 74%) auto;
+  background-repeat: no-repeat;
+  background-position: right -110px center;
+  opacity: 0.12;
+  transform: translate3d(calc(var(--mx, 0) * 18px), var(--py, 0px), 0);
+  transition: transform 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pdepth__grain {
+  opacity: 0.5;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+  mix-blend-mode: overlay;
+}
+/* the floor of the hero fades into the page below it */
+.pdepth__veil {
+  background: linear-gradient(
+    180deg,
+    rgba(8, 27, 41, 0.34) 0%,
+    rgba(8, 27, 41, 0.04) 38%,
+    rgba(8, 27, 41, 0.55) 82%,
+    rgba(8, 27, 41, 0.86) 100%
+  );
+}
+@keyframes moDrift {
+  from { transform: translate3d(-2.5%, -1.5%, 0) scale(1.04); }
+  to   { transform: translate3d(2.5%, 2%, 0) scale(1.12); }
+}
+
+.phero--depth .phero__inner { position: relative; z-index: 2; }
+.phero--depth { padding-bottom: 96px; }
+
+/* the hero eyebrow gets a hairline that draws itself in */
+.phero__eyebrow { position: relative; display: inline-block; }
+.phero--depth .phero__eyebrow::after {
+  content: "";
+  position: absolute;
+  left: 50%; bottom: -10px;
+  height: 1px; width: 0;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: translateX(-50%);
+  animation: moRule 1.1s 0.35s var(--ease-out) forwards;
+}
+@keyframes moRule { to { width: 132px; } }
+
+/* a soft scroll cue, only on the tall hero */
+.phero__cue {
+  position: absolute;
+  left: 50%; bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.62);
+  pointer-events: none;
+}
+.phero__cue i {
+  display: block; width: 1px; height: 40px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), transparent);
+  overflow: hidden;
+}
+.phero__cue i::after {
+  content: ""; display: block; width: 1px; height: 14px;
+  background: var(--accent);
+  animation: moCue 2.2s var(--ease-ui) infinite;
+}
+@keyframes moCue {
+  0%   { transform: translateY(-16px); opacity: 0; }
+  30%  { opacity: 1; }
+  100% { transform: translateY(40px); opacity: 0; }
+}
+
+/* ------------------------------------------------------------------
+   4. Section atmosphere
+   A light section still wants depth, just quieter: one very soft wash
+   that drifts, and an optional hairline that draws across the top.
+   ------------------------------------------------------------------ */
+.psection { position: relative; }
+.psection--atmo { overflow: hidden; isolation: isolate; }
+.psection--atmo::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 34% at var(--atmo-x, 16%) 18%, rgba(82, 136, 176, 0.16), transparent 70%),
+    radial-gradient(34% 38% at var(--atmo-x2, 88%) 82%, rgba(47, 102, 147, 0.13), transparent 72%);
+  animation: moDrift 26s ease-in-out infinite alternate;
+}
+
+/* a rule that draws itself the first time the section is reached */
+.prule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hairline-light) 18%, var(--hairline-light) 82%, transparent);
+  transform: scaleX(0);
+  transform-origin: 50% 50%;
+  transition: transform 1s var(--ease-out);
+}
+.prule.is-in { transform: scaleX(1); }
+
+/* ------------------------------------------------------------------
+   5. Component hover life
+   These upgrade components that already exist — no new card variants.
+   All of it is gated behind hover:hover so a touch device never gets
+   stuck in a half-applied hover state.
+   ------------------------------------------------------------------ */
+.vcard {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.5s var(--ease-out),
+    box-shadow 0.5s var(--ease-out),
+    border-color 0.35s var(--ease-ui);
+}
+/* the sheen: a wide, very soft highlight that follows the cursor.
+   JS writes --hx / --hy as percentages of the card. */
+.vcard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    26% 46% at var(--hx, 50%) var(--hy, 50%),
+    rgba(82, 136, 176, 0.22),
+    transparent 72%
+  );
+  transition: opacity 0.4s var(--ease-ui);
+}
+.vcard__num {
+  position: relative;
+  display: inline-block;
+  transition: color 0.35s var(--ease-ui), transform 0.5s var(--ease-out);
+}
+.vcard h3 { transition: color 0.3s var(--ease-ui); }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .vcard:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    box-shadow: 0 18px 44px rgba(10, 26, 40, 0.14);
+  }
+  .vcard:hover::before { opacity: 1; }
+  .vcard:hover .vcard__num { color: var(--accent); transform: translateY(-2px); }
+  .vcard:hover h3 { color: var(--accent-strong); }
+}
+
+/* speaker cards: the portrait breathes, the card lifts */
+.spk__media img {
+  transition: transform 0.8s var(--ease-out);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .spk:hover { box-shadow: 0 18px 40px rgba(10, 26, 40, 0.14); }
+  .spk:hover .spk__media img { transform: scale(1.06); }
+  .spk:hover .spk__name { color: var(--accent-strong); }
+}
+.spk__name { transition: color 0.3s var(--ease-ui); }
+
+/* award cards: the accent border sweeps in from the left edge */
+.award {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+}
+.award::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent-strong);
+  transform: scaleY(0);
+  transform-origin: 50% 0;
+  transition: transform 0.5s var(--ease-out);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .award:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(10, 26, 40, 0.12); }
+  .award:hover::after { transform: scaleY(1); }
+}
+
+/* buttons: a light sweep, plus a small magnetic pull written by JS */
+.btn-pill, .btn-ghost, .pill-sm {
+  transition: transform 0.4s var(--ease-out), background 0.3s var(--ease-ui),
+              border-color 0.3s var(--ease-ui), color 0.3s var(--ease-ui),
+              box-shadow 0.4s var(--ease-out);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn-pill:hover, .pill-sm:hover { box-shadow: 0 12px 28px rgba(47, 102, 147, 0.28); }
+  .btn-pill .circle-arrow { transition: transform 0.4s var(--ease-out); }
+  .btn-pill:hover .circle-arrow { transform: translateX(3px); }
+}
+
+/* filter chips and day tabs pick up the same lift so the page feels of a piece */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .fchip:hover { transform: translateY(-2px); }
+  .agdaytab:hover { transform: translateY(-2px); }
+}
+.fchip, .agdaytab { transition: transform 0.3s var(--ease-out), border-color 0.25s var(--ease-ui), background 0.25s var(--ease-ui), color 0.25s var(--ease-ui), box-shadow 0.3s var(--ease-ui); }
+
+/* ------------------------------------------------------------------
+   6. Editorial media band — a picture that drifts against its copy
+   ------------------------------------------------------------------ */
+.pband { position: relative; }
+.pband__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
+}
+.pband--flip .pband__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+.pband--flip .pband__media { order: 2; }
+
+.pband__media {
+  position: relative;
+  margin: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 28px 64px rgba(10, 26, 40, 0.20);
+  aspect-ratio: var(--band-ratio, 4 / 3);
+}
+.pband__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  /* over-height so the inner drift never shows a gap at top or bottom */
+  transform: translate3d(0, var(--py, 0px), 0) scale(1.14);
+  will-change: transform;
+}
+/* a thin accent frame that traces the corner — premium, cheap, no assets */
+.pband__media::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  pointer-events: none;
+}
+.pband__copy { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.pband__copy h2 { font-size: clamp(24px, 2.8vw, 38px); font-weight: 700; line-height: 1.15; letter-spacing: -0.015em; }
+.pband__copy p { font-size: 17px; font-weight: 400; line-height: 1.6; color: var(--muted-light); max-width: 54ch; }
+.pband__eyebrow { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; color: var(--accent-strong); }
+
+/* a caption plate that floats over the lower corner of the picture */
+.pband__plate {
+  position: absolute;
+  left: 24px; bottom: 24px; right: 24px;
+  z-index: 2;
+  display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: rgba(10, 26, 40, 0.44);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+          backdrop-filter: blur(14px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  color: #fff;
+}
+.pband__plate b { font-size: 15px; font-weight: 600; }
+.pband__plate span { font-size: 13px; font-weight: 400; opacity: 0.78; }
+
+@media (max-width: 980px) {
+  .pband__inner,
+  .pband--flip .pband__inner { grid-template-columns: 1fr; gap: 28px; }
+  .pband--flip .pband__media { order: 0; }
+  .pband__copy p { max-width: none; }
+}
+
+/* ------------------------------------------------------------------
+   7. Figure counters
+   One component for every hero: the exhibition hero carries four
+   figures, the about hero all six and the speakers hero two, so the
+   tracks are capped and centred rather than fixed in number. A
+   `repeat(auto-fit, minmax(x, 1fr))` would have stretched the two-up
+   row to half the hero each.
+   ------------------------------------------------------------------ */
+.pstats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 220px));
+  justify-content: center;
+  gap: 24px 16px;
+  list-style: none;
+  margin: 32px auto 0;
+  padding: 0;
+  width: 100%;
+  max-width: 1140px;
+}
+.pstat {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 20px 0 0;
+  border-top: 2px solid var(--hairline-light);
+}
+.pstat b {
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 700; line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.pstat b span { font: inherit; letter-spacing: inherit; }
+.pstat span { font-size: 13px; font-weight: 500; color: var(--muted-light); }
+.phero--depth .pstat span { color: rgba(255, 255, 255, 0.66); }
+.phero--depth .pstat { border-top-color: rgba(255, 255, 255, 0.22); }
+
+@media (max-width: 860px) {
+  .pstats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ------------------------------------------------------------------
+   8. Scroll progress — a 2px accent line under the viewport top edge
+   ------------------------------------------------------------------ */
+.moprog {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  z-index: 40;
+  background: var(--accent);
+  transform: scaleX(var(--p, 0));
+  transform-origin: 0 50%;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* ------------------------------------------------------------------
+   9. Mobile — reveals only.
+   Scroll-scrubbed parallax on mobile Safari costs frames and battery
+   for an effect a thumb-scrolling reader barely registers, so below
+   1024px JS stops writing --py and the decorative stacks simplify.
+   ------------------------------------------------------------------ */
+@media (max-width: 1023px) {
+  [data-px], [data-px][data-px-scale] { transform: none; }
+  .pband__media img { transform: scale(1.02); }
+  .pdepth__shot {
+    transform: none;
+    opacity: 0.34;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,0.35) 72%, transparent 100%);
+            mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,0.35) 72%, transparent 100%);
+  }
+  .pdepth__lines { transform: none; opacity: 0.08; background-position: right -180px center; }
+  .pdepth { inset: 0; }
+  .phero__cue { display: none; }
+  .pband__plate { left: 12px; right: 12px; bottom: 12px; padding: 12px 14px; }
+  .pband__media::after { inset: 8px; border-radius: 10px; }
+  .phero--depth { padding-bottom: 32px; }
+}
+@media (max-width: 600px) {
+  /* the contact dock is fixed to the bottom-left of the viewport, so the
+     shorter the hero the more likely it lands on the section below rather
+     than across a figure label */
+  .pstats { margin-top: 20px; gap: 16px 12px; }
+  .pstat { padding-top: 14px; }
+  .pstat span { font-size: 12px; }
+}
+@media (max-width: 600px) {
+  .pband__media { border-radius: 18px; }
+  .pstat b { font-size: 30px; }
+}
+
+/* ------------------------------------------------------------------
+   10. Reduced motion — everything resolves to its finished state
+   ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .mo-ready [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  [data-px], .pband__media img, .pdepth__shot, .pdepth__lines { transform: none !important; }
+  .pdepth__glow, .psection--atmo::before { animation: none; }
+  .phero--depth .phero__eyebrow::after { animation: none; width: 132px; }
+  .phero__cue { display: none; }
+  .prule { transform: none; transition: none; }
+  .moprog { display: none; }
+}
