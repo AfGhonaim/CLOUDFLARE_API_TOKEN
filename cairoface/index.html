@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cairo FACE World Summit 2027</title>
+  <meta name="description" content="Cairo FACE World Summit 2027. Where the world's leading minds in facial aesthetics meet. 3 days of live surgery, advanced training, and global networking. 21–23 April 2027, Cairo, Egypt." />
+  <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
+  <link href="https://fonts.cdnfonts.com/css/graphik" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=303" />
+</head>
+<body class="film-flat">
+  <script>
+    /* the face-only intro: gate the chrome until face.js finishes the
+       opening sequence (hard fallback so content can never stay hidden) */
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.body.classList.add("intro");
+      setTimeout(function () { document.body.classList.remove("intro"); }, 5200);
+    }
+  </script>
+
+  <!-- z-0 · the film -->
+  <canvas id="film" aria-hidden="true"></canvas>
+
+  <!-- z-20 · header -->
+  <header class="header" id="header" data-theme="dark">
+    <div class="nav-container">
+      <div class="menu-pill" id="menuPill">
+        <a class="header__brand" href="#top" aria-label="Cairo FACE — home">
+          <img class="header__logo header__logo--full" src="img/logo-blue.png" alt="Cairo FACE — Facial Aesthetic Conference and Exhibition" />
+          <img class="header__logo header__logo--mark" src="img/logo-white.png" alt="Cairo FACE" />
+        </a>
+        <nav class="header__nav" aria-label="Primary">
+          <a class="navpill" href="agenda.html"><span class="navpill__flip"><span>Agenda</span><span aria-hidden="true">Agenda</span></span></a>
+          <a class="navpill" href="abstract.html"><span class="navpill__flip"><span>Abstract</span><span aria-hidden="true">Abstract</span></span></a>
+          <a class="navpill" href="#gain"><span class="navpill__flip"><span>Courses</span><span aria-hidden="true">Courses</span></span></a>
+          <a class="navpill" href="#events"><span class="navpill__flip"><span>Events</span><span aria-hidden="true">Events</span></span></a>
+          <a class="navpill" href="speakers.html"><span class="navpill__flip"><span>Speakers</span><span aria-hidden="true">Speakers</span></span></a>
+          <a class="navpill" href="exhibition.html"><span class="navpill__flip"><span>Exhibition</span><span aria-hidden="true">Exhibition</span></span></a>
+          <a class="navpill" href="register.html"><span class="navpill__flip"><span>Registration</span><span aria-hidden="true">Registration</span></span></a>
+          <a class="navpill" href="about.html"><span class="navpill__flip"><span>About us</span><span aria-hidden="true">About us</span></span></a>
+        </nav>
+        <div class="nav-ctas">
+          <a class="nav-cta nav-cta--secondary" href="login.html">Log in / signup</a>
+          <a class="nav-cta nav-cta--primary" href="register.html">Get your ticket</a>
+        </div>
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="sidemenu">
+          <span class="menu-btn__bar" aria-hidden="true"></span>
+          <span class="menu-btn__bar" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- z-60 · mobile side menu -->
+  <div class="sidemenu" id="sidemenu" aria-hidden="true">
+    <div class="sidemenu__scrim" data-close></div>
+    <nav class="sidemenu__panel" aria-label="Mobile">
+      <div class="sidemenu__head">
+        <img class="sidemenu__logo" src="img/logo-white.png" alt="Cairo FACE" />
+        <button class="sidemenu__close" data-close aria-label="Close menu">
+          <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="sidemenu__links">
+        <a href="agenda.html">Agenda</a>
+        <a href="abstract.html">Abstract</a>
+        <a href="#gain">Courses</a>
+        <a href="#events">Events</a>
+        <a href="#speakers">Speakers</a>
+        <a href="exhibition.html">Exhibition</a>
+        <a href="register.html">Registration</a>
+        <a href="#about">About us</a>
+        <a href="#faq">FAQ</a>
+        <a href="login.html">Log in / signup</a>
+      </div>
+      <a class="btn-pill sidemenu__cta" href="registration.html">Register now<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
+      <p class="label label--dim sidemenu__meta">21–23 April 2027 · Cairo, Egypt</p>
+    </nav>
+  </div>
+
+  <!-- z-30 · scene-dot rail -->
+  <nav class="rail" id="rail" aria-label="Scenes">
+    <button class="rail__dot" data-go="top" aria-label="Opening"></button>
+    <button class="rail__dot" data-go="summit" aria-label="The summit in numbers"></button>
+    <button class="rail__dot" data-go="about" aria-label="Why Cairo FACE"></button>
+    <button class="rail__dot" data-go="gain" aria-label="What you'll gain"></button>
+    <button class="rail__dot" data-go="speakers" aria-label="Meet our experts"></button>
+    <button class="rail__dot" data-go="events" aria-label="The event experience"></button>
+    <button class="rail__dot" data-go="pricing" aria-label="Registration"></button>
+    <button class="rail__dot" data-go="faq" aria-label="FAQ"></button>
+  </nav>
+
+  <!-- z-30 · sticky contact dock -->
+  <div class="contactdock" id="contactDock" aria-label="Contact Cairo FACE">
+    <div class="contactdock__list" id="contactDockList" hidden>
+    <a class="contactdock__btn contactdock__btn--wa" href="https://wa.me/qr/TYQGNUY3ONVZC1" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.89-.79-1.48-1.76-1.66-2.06-.17-.3-.02-.46.13-.6.14-.14.3-.35.45-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.91-2.21-.25-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.07.15.2 2.1 3.2 5.08 4.49.7.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.89-9.88 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg>
+    </a>
+    <a class="contactdock__btn contactdock__btn--tel" href="tel:+201555207091" aria-label="Call Cairo FACE">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.28-.28.68-.36 1.02-.25 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02z"/></svg>
+    </a>
+    </div>
+    <button class="contactdock__toggle" id="contactDockToggle" type="button"
+            aria-expanded="false" aria-controls="contactDockList" aria-label="Contact Cairo FACE"><svg class="contactdock__ico contactdock__ico--menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 12.3c0 3.8-3.8 6.9-8.5 6.9a9.8 9.8 0 0 1-2.7-.4L4 21l1.4-4a6.4 6.4 0 0 1-1.9-4.7c0-3.8 3.8-6.9 8.5-6.9s8.5 3.1 8.5 6.9z"/></svg><svg class="contactdock__ico contactdock__ico--close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+
+  <!-- z-30 · CTA pill stack -->
+  <div class="pillstack" id="pillstack">
+    <a class="pill-cta pill-cta--front" href="register.html">
+      <span class="pill-cta__label">Register now</span>
+      <span class="pill-cta__arrow" aria-hidden="true">→</span>
+    </a>
+    <a class="pill-cta pill-cta--back" href="register.html" tabindex="-1" aria-hidden="true">
+      <span class="pill-cta__label">Register now</span>
+      <span class="pill-cta__arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+
+  <main id="top">
+
+<!-- ===== scene 1 · OPENING ===== -->
+    <section class="scene scene--dark" data-scene="hero" data-theme="dark" id="hero">
+      <div class="beat beat--tall" data-beat>
+        <div class="beat__inner beat__inner--hero container">
+          <div class="hero__bg" aria-hidden="true">
+            <span class="hero__bg-layer hero__bg--model"></span>
+            <video class="hero__reel" id="heroReel" muted playsinline loop preload="none"
+                   poster="img/model-hero.jpg?v=303" aria-hidden="true" tabindex="-1">
+              <source src="media/hero-reel.mp4" type="video/mp4" />
+            </video>
+            <span class="hero__bg-layer hero__bg--surgery"></span>
+            <span class="hero__bg-layer hero__bg--training"></span>
+            <span class="hero__bg-layer hero__bg--network"></span>
+          </div>
+          <div class="hero__face" aria-hidden="true">
+            <canvas id="faceCanvas" class="hero__face-canvas"></canvas>
+          </div>
+          <div class="hero__copy">
+          <div class="hero__act hero__act--1">
+            <h1 class="hero__title">
+              <span class="hero__title-text">Cairo FACE World Summit 2027</span>
+            </h1>
+            <p class="hero__tagline">Where the world's leading minds in facial aesthetics meet.</p>
+            <p class="body-l hero__welcome">Join <strong>3 days of</strong> cutting-edge education</p>
+            <div class="hero__tags" role="list">
+              <span class="hero__tag hero__tag--surgery" role="listitem"><span>Live surgery</span></span>
+              <span class="hero__tag hero__tag--training" role="listitem"><span>Advanced training</span></span>
+              <span class="hero__tag hero__tag--network" role="listitem"><span>Global networking</span></span>
+            </div>
+          </div>
+          <div class="hero__act hero__act--2">
+            <p class="hero__lead">with the leaders shaping the future of facial aesthetics.</p>
+            <div class="hero__cal">
+              <div class="hero__cal-date">
+                <span class="hero__cal-month">April 2027</span>
+                <span class="hero__cal-days">21–23</span>
+              </div>
+              <div class="hero__cal-place">
+                <span class="heading">Cairo, Egypt</span>
+                <span class="label label--dim">Waldorf Astoria — Hilton Heliopolis</span>
+              </div>
+            </div>
+            <div class="hero__orgs" aria-label="Endorsed by">
+              <span class="label label--dim hero__orgs-label">Endorsed by</span>
+              <a class="orgchip" href="https://www.isaps.org/" target="_blank" rel="noopener"><img src="img/logos/isaps.png?v=303" alt="ISAPS — International Society of Aesthetic Plastic Surgery" loading="lazy" /></a>
+              <a class="orgchip" href="https://eafps.org/" target="_blank" rel="noopener"><img src="img/logos/eafps.png?v=303" alt="EAFPS — European Academy of Facial Plastic Surgery" loading="lazy" /></a>
+            </div>
+            <div class="hero__ctas">
+              <a class="btn-ghost" href="agenda.html">Explore the programme</a>
+              <a class="btn-pill" href="registration.html">Register now<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== tail · SPONSORS & EXHIBITORS ===== -->
+    <section class="tail logos" data-theme="light" id="sponsors">
+      <div class="container logos__head">
+        <span class="label label--dim label--head" data-reveal>Our partners</span>
+      </div>
+      <div class="container tierboard">
+      <div class="tiergroup" data-reveal="up">
+        <div class="tiergroup__head">
+          <h3 class="tiergroup__label">Strategic partners</h3>
+          <div class="railnav tiergroup__nav" data-rail="#home-tier-0">
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="-1" aria-label="Previous strategic partners">&#8592;</button>
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="1" aria-label="Next strategic partners">&#8594;</button>
+          </div>
+        </div>
+        <div class="tierrow" id="home-tier-0">
+          <span class="logoplate logoplate--xl"><img src="img/logos/attica.png?v=303" alt="Attica" loading="lazy" /><span class="logoplate__name">Attica</span></span>
+          <span class="logoplate logoplate--xl"><img src="img/logos/majestic.png?v=303" alt="Majestic" loading="lazy" /><span class="logoplate__name">Majestic</span></span>
+          <span class="logoplate logoplate--xl logoplate--mark"><span class="logoplate__mark">Ultimate</span><span class="logoplate__name">Ultimate</span></span>
+          <span class="logoplate logoplate--xl"><img src="img/logos/croma.png?v=303" alt="Croma" loading="lazy" /><span class="logoplate__name">Croma</span></span>
+        </div>
+      </div>
+      <div class="tiergroup" data-reveal="up">
+        <div class="tiergroup__head">
+          <h3 class="tiergroup__label">Platinum partners</h3>
+          <div class="railnav tiergroup__nav" data-rail="#home-tier-1">
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="-1" aria-label="Previous platinum partners">&#8592;</button>
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="1" aria-label="Next platinum partners">&#8594;</button>
+          </div>
+        </div>
+        <div class="tierrow" id="home-tier-1">
+          <span class="logoplate"><img src="img/logos/btl.png?v=303" alt="BTL" loading="lazy" /><span class="logoplate__name">BTL</span></span>
+          <span class="logoplate"><img src="img/logos/vuture.png?v=303" alt="Vuture" loading="lazy" /><span class="logoplate__name">Vuture</span></span>
+          <span class="logoplate"><img src="img/logos/proderma.png?v=303" alt="ProDerma" loading="lazy" /><span class="logoplate__name">ProDerma</span><span class="logoplate__brands">IBSA · LC Cell · Fusion · Reversa</span></span>
+          <span class="logoplate"><img src="img/logos/medical-vision.png?v=303" alt="Medical Vision" loading="lazy" /><span class="logoplate__name">Medical Vision</span></span>
+          <span class="logoplate logoplate--ink" style="--plate: #000000"><img src="img/logos/teoxane.png?v=303" alt="Teoxane" loading="lazy" /><span class="logoplate__name">Teoxane</span></span>
+          <span class="logoplate"><img src="img/logos/clarius.png?v=303" alt="Clarius" loading="lazy" /><span class="logoplate__name">Clarius</span></span>
+          <span class="logoplate"><img src="img/logos/skinfill.png?v=303" alt="Skinfill" loading="lazy" /><span class="logoplate__name">Skinfill</span></span>
+          <span class="logoplate"><img src="img/logos/promoitalia.png?v=303" alt="Promoitalia" loading="lazy" /><span class="logoplate__name">Promoitalia</span></span>
+          <span class="logoplate"><img src="img/logos/rich-pl.png?v=303" alt="Rich PL" loading="lazy" /><span class="logoplate__name">Rich PL</span></span>
+          <span class="logoplate"><img src="img/logos/vision-group.png?v=303" alt="Vision Group" loading="lazy" /><span class="logoplate__name">Vision Group</span></span>
+          <span class="logoplate logoplate--ink" style="--plate: #020000"><img src="img/logos/g-cell.png?v=303" alt="G Cell" loading="lazy" /><span class="logoplate__name">G Cell</span></span>
+        </div>
+      </div>
+      <div class="tiergroup" data-reveal="up">
+        <div class="tiergroup__head">
+          <h3 class="tiergroup__label">Gold partners</h3>
+          <div class="railnav tiergroup__nav" data-rail="#home-tier-2">
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="-1" aria-label="Previous gold partners">&#8592;</button>
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="1" aria-label="Next gold partners">&#8594;</button>
+          </div>
+        </div>
+        <div class="tierrow" id="home-tier-2">
+          <span class="logoplate logoplate--md"><img src="img/logos/v-tech.png?v=303" alt="V-Tech" loading="lazy" /><span class="logoplate__name">V-Tech</span></span>
+          <span class="logoplate logoplate--md"><img src="img/logos/mesoestetic.png?v=303" alt="Mesoestetic" loading="lazy" /><span class="logoplate__name">Mesoestetic</span></span>
+          <span class="logoplate logoplate--md logoplate--mark"><span class="logoplate__mark">Galderma</span><span class="logoplate__name">Galderma</span><span class="logoplate__brands">Restylane · N Phonics</span></span>
+          <span class="logoplate logoplate--md"><img src="img/logos/alma-laser.png?v=303" alt="Alma Laser" loading="lazy" /><span class="logoplate__name">Alma Laser</span></span>
+          <span class="logoplate logoplate--md"><img src="img/logos/allergan.png?v=303" alt="Allergan" loading="lazy" /><span class="logoplate__name">Allergan</span></span>
+          <span class="logoplate logoplate--md"><img src="img/logos/igenetx.png?v=303" alt="iGenetx" loading="lazy" /><span class="logoplate__name">iGenetx</span></span>
+          <span class="logoplate logoplate--md"><img src="img/logos/eucerin.png?v=303" alt="Eucerin" loading="lazy" /><span class="logoplate__name">Eucerin</span></span>
+          <span class="logoplate logoplate--md logoplate--mark"><span class="logoplate__mark">L&#x27;Oréal</span><span class="logoplate__name">L&#x27;Oréal</span><span class="logoplate__brands">Vichy · La Roche-Posay · Dercos · Eyeluminate</span></span>
+          <span class="logoplate logoplate--md logoplate--mark"><span class="logoplate__mark">Parkville</span><span class="logoplate__name">Parkville</span></span>
+          <span class="logoplate logoplate--md logoplate--ink" style="--plate: #030505"><img src="img/logos/cutec.png?v=303" alt="Cutec" loading="lazy" /><span class="logoplate__name">Cutec</span></span>
+          <span class="logoplate logoplate--md"><img src="img/logos/advance-medical.png?v=303" alt="Advance Medical" loading="lazy" /><span class="logoplate__name">Advance Medical</span></span>
+          <span class="logoplate logoplate--md"><img src="img/logos/amico.png?v=303" alt="Amico" loading="lazy" /><span class="logoplate__name">Amico</span></span>
+          <span class="logoplate logoplate--md logoplate--ink" style="--plate: #421D50"><img src="img/logos/univa.png?v=303" alt="Univa" loading="lazy" /><span class="logoplate__name">Univa</span></span>
+          <span class="logoplate logoplate--md"><img src="img/logos/mg-healthcare.png?v=303" alt="MG" loading="lazy" /><span class="logoplate__name">MG</span></span>
+        </div>
+      </div>
+      <div class="tiergroup" data-reveal="up">
+        <div class="tiergroup__head">
+          <h3 class="tiergroup__label">Silver partners</h3>
+          <div class="railnav tiergroup__nav" data-rail="#home-tier-3">
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="-1" aria-label="Previous silver partners">&#8592;</button>
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="1" aria-label="Next silver partners">&#8594;</button>
+          </div>
+        </div>
+        <div class="tierrow" id="home-tier-3">
+          <span class="logoplate logoplate--sm logoplate--ink" style="--plate: #020404"><img src="img/logos/surgical-academy.png?v=303" alt="Surgical Academy" loading="lazy" /><span class="logoplate__name">Surgical Academy</span></span>
+          <span class="logoplate logoplate--sm"><img src="img/logos/elixer-md.png?v=303" alt="Elixir MD" loading="lazy" /><span class="logoplate__name">Elixir MD</span></span>
+          <span class="logoplate logoplate--sm"><img src="img/logos/hansbiomed.png?v=303" alt="HansBiomed" loading="lazy" /><span class="logoplate__name">HansBiomed</span></span>
+          <span class="logoplate logoplate--sm"><img src="img/logos/brandatomy.png?v=303" alt="BrandAtomy" loading="lazy" /><span class="logoplate__name">BrandAtomy</span></span>
+          <span class="logoplate logoplate--sm"><img src="img/logos/avento.png?v=303" alt="Avento" loading="lazy" /><span class="logoplate__name">Avento</span></span>
+          <span class="logoplate logoplate--sm"><img src="img/logos/alkan-medical.png?v=303" alt="Alkan Medical" loading="lazy" /><span class="logoplate__name">Alkan Medical</span></span>
+          <span class="logoplate logoplate--sm"><img src="img/logos/griffin.png?v=303" alt="Griffin Publisher" loading="lazy" /><span class="logoplate__name">Griffin Publisher</span></span>
+          <span class="logoplate logoplate--sm"><img src="img/logos/fidia.png?v=303" alt="Fidia" loading="lazy" /><span class="logoplate__name">Fidia</span></span>
+          <span class="logoplate logoplate--sm"><img src="img/logos/infinity.png?v=303" alt="Infinity" loading="lazy" /><span class="logoplate__name">Infinity</span></span>
+          <span class="logoplate logoplate--sm"><img src="img/logos/dermafocus.png?v=303" alt="Dermafocus" loading="lazy" /><span class="logoplate__name">Dermafocus</span></span>
+        </div>
+      </div>
+      <div class="tiergroup" data-reveal="up">
+        <div class="tiergroup__head">
+          <h3 class="tiergroup__label">Official carrier</h3>
+          <div class="railnav tiergroup__nav" data-rail="#home-tier-4">
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="-1" aria-label="Previous official carrier">&#8592;</button>
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="1" aria-label="Next official carrier">&#8594;</button>
+          </div>
+        </div>
+        <div class="tierrow" id="home-tier-4">
+          <span class="logoplate logoplate--sm"><img src="img/logos/egyptair.png?v=303" alt="EgyptAir" loading="lazy" /><span class="logoplate__name">EgyptAir</span></span>
+        </div>
+      </div>
+      <div class="tiergroup" data-reveal="up">
+        <div class="tiergroup__head">
+          <h3 class="tiergroup__label">Media partner</h3>
+          <div class="railnav tiergroup__nav" data-rail="#home-tier-5">
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="-1" aria-label="Previous media partner">&#8592;</button>
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="1" aria-label="Next media partner">&#8594;</button>
+          </div>
+        </div>
+        <div class="tierrow" id="home-tier-5">
+          <span class="logoplate logoplate--sm"><img src="img/logos/loop-ventures.png?v=303" alt="Loop" loading="lazy" /><span class="logoplate__name">Loop</span></span>
+        </div>
+      </div>
+      <div class="tiergroup" data-reveal="up">
+        <div class="tiergroup__head">
+          <h3 class="tiergroup__label">Also exhibiting</h3>
+          <div class="railnav tiergroup__nav" data-rail="#home-tier-6">
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="-1" aria-label="Previous also exhibiting">&#8592;</button>
+            <button class="circle-arrow circle-arrow--sm railnav__btn" data-dir="1" aria-label="Next also exhibiting">&#8594;</button>
+          </div>
+        </div>
+        <div class="tierrow" id="home-tier-6">
+          <span class="logoplate logoplate--sm logoplate--mark"><span class="logoplate__mark">Grand Fest</span><span class="logoplate__name">Grand Fest</span></span>
+          <span class="logoplate logoplate--sm"><img src="img/logos/merz.png?v=303" alt="Merz" loading="lazy" /><span class="logoplate__name">Merz</span></span>
+          <span class="logoplate logoplate--sm"><img src="img/logos/reap-medical.png?v=303" alt="Reap Medical" loading="lazy" /><span class="logoplate__name">Reap Medical</span></span>
+          <span class="logoplate logoplate--sm"><img src="img/logos/molecularity.png?v=303" alt="Molecularity" loading="lazy" /><span class="logoplate__name">Molecularity</span></span>
+        </div>
+      </div>
+      </div>
+      <div class="container logos__foot">
+        <a class="btn-pill" href="exhibition.html">Become a sponsor<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <!-- ===== scene 2 · KEY STATISTICS ===== -->
+    <section class="scene scene--white" data-scene="manifesto" data-theme="light" id="summit">
+      <div class="beat beat--tall" data-beat>
+        <div class="beat__inner container">
+          <svg class="motif" viewBox="0 0 140 60" aria-hidden="true"><path d="M2 56 C 44 10, 92 2, 138 30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <span class="label label--dim label--head">The summit in numbers</span>
+          <dl class="stats statrail" id="statRail" aria-label="Cairo FACE in numbers">
+            <div class="stat"><dt class="label label--dim">Immersive learning experience</dt><dd><span data-count="3">0</span><small>days</small></dd></div>
+            <div class="stat"><dt class="label label--dim">Attendees</dt><dd><span data-count="3000">0</span>+</dd></div>
+            <div class="stat"><dt class="label label--dim">International faculty</dt><dd><span data-count="150">0</span>+</dd></div>
+            <div class="stat"><dt class="label label--dim">Distinguished national faculty</dt><dd><span data-count="50">0</span>+</dd></div>
+            <div class="stat"><dt class="label label--dim">Workshops</dt><dd><span data-count="100">0</span>+</dd></div>
+            <div class="stat"><dt class="label label--dim">Cadaveric courses</dt><dd><span data-count="10">0</span>+</dd></div>
+          </dl>
+          <a class="pill-sm lateshow" href="#speakers">Meet the experts<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== scene 3 · WHY CAIRO FACE ===== -->
+    <section class="scene scene--pale" data-scene="numbers" data-theme="light" id="about">
+      <div class="beat" data-beat>
+        <div class="beat__inner beat__inner--left container">
+          <span class="label label--dim label--head">Why Cairo FACE?</span>
+          <h2 class="display-l manifesto" data-split-progress>
+            More than a conference. A complete facial aesthetics experience.
+          </h2>
+          <p class="body-l lateshow manifesto__vision">
+            <strong>Cairo FACE</strong> brings together the <strong>world's
+            leading surgeons, dermatologists, aesthetic practitioners and
+            innovators</strong> for an immersive experience combining advanced
+            science, live procedures and hands-on education.
+          </p>
+        </div>
+      </div>
+      <div class="beat" data-beat>
+        <div class="beat__inner container">
+          <div class="cardgrid cardgrid--4 lateshow" data-par="-0.045">
+<article class="infocard"><span class="infocard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="8" r="3.4"/><path d="M5 19c1.4-3.2 4-4.6 7-4.6s5.6 1.4 7 4.6"/></svg></span><h3 class="body-l">Learn from leading experts</h3><p class="body">Get insights from globally recognized surgeons and aesthetic specialists.</p></article>
+<article class="infocard"><span class="infocard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="3"/><path d="M4.5 12C6.6 8 9.1 6 12 6s5.4 2 7.5 6c-2.1 4-4.6 6-7.5 6s-5.4-2-7.5-6Z"/></svg></span><h3 class="body-l">See techniques live</h3><p class="body">Experience live surgeries, demonstrations, and real clinical discussions.</p></article>
+<article class="infocard"><span class="infocard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 17 17 7"/><path d="M14.5 7H17v2.5"/><circle cx="7" cy="17" r="2.6"/></svg></span><h3 class="body-l">Build practical skills</h3><p class="body">Develop your expertise through hands-on courses, masterclasses, and workshops.</p></article>
+<article class="infocard"><span class="infocard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="6" cy="7" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M7.8 8.4 10.8 16M16.4 7.6l-3.3 8.3M8.2 7.3l7.6-.9"/></svg></span><h3 class="body-l">Expand your network</h3><p class="body">Connect with thousands of professionals shaping the future of facial aesthetics.</p></article>
+          </div>
+          <a class="pill-sm lateshow" href="agenda.html">Explore the agenda<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== tail · OUR LEADERSHIP ===== -->
+    <section class="tail leadership" data-theme="light" id="leadership">
+      <div class="container leadership__head">
+        <span class="label label--dim label--head" data-reveal>Our leadership</span>
+        <h2 class="display-l" data-split>The vision behind Cairo FACE.</h2>
+      </div>
+      <div class="container leadership__lede" data-reveal>
+        <figure class="leadfeature">
+          <span class="leadfeature__flag">
+            <img src="img/lead/samir-ghoraba.jpg?v=303" alt="Dr. Samir Ghoraba" loading="lazy" />
+            <span class="leadfeature__badge">Founder</span>
+          </span>
+          <figcaption>
+            <span class="heading">Dr. Samir Ghoraba</span>
+            <span class="label label--dim">Founder &amp; President</span>
+            <p class="body">Cairo FACE was founded to give the region a stage equal to its talent — and to bring the world's leading faculty to it.</p>
+            <a class="pill-sm" href="about.html">Learn more<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
+          </figcaption>
+        </figure>
+      </div>
+      <div class="leadrail" data-speed="72">
+        <div class="leadrail__track" id="leadTrack">
+          <a class="leadcard" href="doctor.html?id=samir-ghoraba-committee" >
+            <span class="leadcard__media"><img src="img/lead/samir-ghoraba.jpg?v=303" alt="Samir Ghoraba" loading="lazy" /></span>
+            <span class="leadcard__body">
+              <span class="heading leadcard__name">Samir Ghoraba</span>
+              <span class="label label--dim">Founder &amp; president</span>
+              <span class="leadcard__more">Learn more</span>
+            </span>
+          </a>
+          <a class="leadcard" href="doctor.html?id=hani-nabil-committee" >
+            <span class="leadcard__media"><img src="img/lead/hani-nabil.jpg?v=303" alt="Hani Nabil" loading="lazy" /></span>
+            <span class="leadcard__body">
+              <span class="heading leadcard__name">Hani Nabil</span>
+              <span class="label label--dim">Honorary president</span>
+              <span class="leadcard__more">Learn more</span>
+            </span>
+          </a>
+          <a class="leadcard" href="doctor.html?id=khaled-sami-committee" >
+            <span class="leadcard__media"><img src="img/lead/khaled-sami.jpg?v=303" alt="Khaled Sami" loading="lazy" /></span>
+            <span class="leadcard__body">
+              <span class="heading leadcard__name">Khaled Sami</span>
+              <span class="label label--dim">Founding member</span>
+              <span class="leadcard__more">Learn more</span>
+            </span>
+          </a>
+          <a class="leadcard" href="doctor.html?id=mohamed-abdelkader-committee" >
+            <span class="leadcard__media"><img src="img/lead/mohamed-abdelkader.jpg?v=303" alt="Mohamed Abdelkader" loading="lazy" /></span>
+            <span class="leadcard__body">
+              <span class="heading leadcard__name">Mohamed Abdelkader</span>
+              <span class="label label--dim">Founding member</span>
+              <span class="leadcard__more">Learn more</span>
+            </span>
+          </a>
+          <a class="leadcard" href="doctor.html?id=sherif-wasief-committee" >
+            <span class="leadcard__media"><img src="img/lead/sherif-wasief.jpg?v=303" alt="Sherif Wasief" loading="lazy" /></span>
+            <span class="leadcard__body">
+              <span class="heading leadcard__name">Sherif Wasief</span>
+              <span class="label label--dim">Founding member</span>
+              <span class="leadcard__more">Learn more</span>
+            </span>
+          </a>
+          <a class="leadcard" href="doctor.html?id=tarek-zahra-committee" >
+            <span class="leadcard__media"><img src="img/lead/tarek-zahra.jpg?v=303" alt="Tarek Zahra" loading="lazy" /></span>
+            <span class="leadcard__body">
+              <span class="heading leadcard__name">Tarek Zahra</span>
+              <span class="label label--dim">Founding member</span>
+              <span class="leadcard__more">Learn more</span>
+            </span>
+          </a>
+          <a class="leadcard" href="doctor.html?id=ahmed-mansour-committee" >
+            <span class="leadcard__media"><img src="img/lead/ahmed-mansour.jpg?v=303" alt="Ahmed Mansour" loading="lazy" /></span>
+            <span class="leadcard__body">
+              <span class="heading leadcard__name">Ahmed Mansour</span>
+              <span class="label label--dim">Executive board</span>
+              <span class="leadcard__more">Learn more</span>
+            </span>
+          </a>
+          <a class="leadcard" href="doctor.html?id=islam-gawish-committee" >
+            <span class="leadcard__media"><img src="img/lead/islam-gawish.jpg?v=303" alt="Islam Gawish" loading="lazy" /></span>
+            <span class="leadcard__body">
+              <span class="heading leadcard__name">Islam Gawish</span>
+              <span class="label label--dim">Executive board</span>
+              <span class="leadcard__more">Learn more</span>
+            </span>
+          </a>
+          <a class="leadcard" href="doctor.html?id=reem-nouman-committee" >
+            <span class="leadcard__media"><img src="img/lead/reem-nouman.jpg?v=303" alt="Reem Nouman" loading="lazy" /></span>
+            <span class="leadcard__body">
+              <span class="heading leadcard__name">Reem Nouman</span>
+              <span class="label label--dim">Executive board</span>
+              <span class="leadcard__more">Learn more</span>
+            </span>
+          </a>
+          <a class="leadcard" href="doctor.html?id=hossam-foda-committee" >
+            <span class="leadcard__media"><img src="img/lead/hossam-foda.jpg?v=303" alt="Hossam Foda" loading="lazy" /></span>
+            <span class="leadcard__body">
+              <span class="heading leadcard__name">Hossam Foda</span>
+              <span class="label label--dim">International coordinator</span>
+              <span class="leadcard__more">Learn more</span>
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="railnav leadrail__nav" data-marquee="#leadTrack" data-reveal>
+        <button class="circle-arrow railnav__btn" data-dir="-1" aria-label="Previous">&#8592;</button>
+        <button class="circle-arrow railnav__btn" data-dir="1" aria-label="Next">&#8594;</button>
+      </div>
+    </section>
+
+    <!-- ===== scene 4 · THE EDUCATIONAL EXPERIENCE =====
+         One section: the intro copy shares the pinned stage with the five
+         chapters, which reveal one per scroll step. -->
+    <section class="scene scene--dark" data-scene="plan" data-theme="dark" id="gain">
+      <div class="beat" data-beat>
+        <div class="beat__inner container">
+          <div class="gainscene__atmo" data-par="-0.05" aria-hidden="true">
+            <span class="ga-head"></span>
+            <span class="ga-source"></span>
+            <span class="ga-beam"></span>
+            <span class="ga-haze ga-haze--1"></span>
+            <span class="ga-haze ga-haze--2"></span>
+            <span class="ga-pool"></span>
+            </div>
+          <div class="gainhead">
+            <span class="label label--dim label--head">What you'll gain</span>
+            <h2 class="display-l" data-split-progress>Masterclasses, courses, live surgeries and live demonstrations.</h2>
+            <p class="body-l gainhead__lede">Three days of hands-on education led by a global faculty &mdash; cadaveric courses, workshops, interactive live surgery, and panel discussions.</p>
+          </div>
+          <div class="gainscene" id="gainscene">
+            <svg class="gconnect" id="gconnect" aria-hidden="true" preserveAspectRatio="none">
+              <path class="gconnect__line" pathLength="1" d="" />
+              <circle class="gconnect__end" r="3.4" cx="-99" cy="-99" />
+            </svg>
+            <div class="gainscene__stage" data-par="-0.04" aria-hidden="true">
+              <img class="gv gv-base" src="img/who-face.jpg?v=303" alt="" loading="lazy" />
+
+              <!-- 01 live surgeries — the contour is traced out along the face -->
+              <svg class="gv gv-lines" viewBox="0 0 630 840" fill="none">
+                <path pathLength="1" d="M262 118 C 300 176, 306 232, 286 286" />
+                <path pathLength="1" d="M228 330 C 268 372, 300 404, 336 428" />
+                <path pathLength="1" d="M164 496 C 224 470, 286 448, 336 428" />
+                <path pathLength="1" d="M286 286 C 250 330, 206 372, 168 404" />
+                <path class="gv-lines__dash" pathLength="1" d="M196 560 C 250 600, 288 660, 300 742" />
+              </svg>
+
+              <!-- 02 masterclasses — a slow read down the face -->
+              <span class="gv gv-scan"></span>
+
+              <!-- 03 hands-on — treatment points, pulsing -->
+              <svg class="gv gv-pts" viewBox="0 0 630 840" fill="none">
+                <circle style="--i:0" cx="252" cy="196" r="3"/><circle style="--i:1" cx="228" cy="300" r="3"/>
+                <circle style="--i:2" cx="204" cy="392" r="3"/><circle style="--i:3" cx="264" cy="352" r="3"/>
+                <circle style="--i:4" cx="176" cy="470" r="3"/><circle style="--i:5" cx="300" cy="452" r="3"/>
+                <circle style="--i:6" cx="240" cy="536" r="3"/>
+              </svg>
+
+              <!-- 04 panels — the points start talking to each other -->
+              <svg class="gv gv-net" viewBox="0 0 630 840" fill="none">
+                <line x1="252" y1="196" x2="264" y2="352" pathLength="1"/><line x1="264" y1="352" x2="300" y2="452" pathLength="1"/>
+                <line x1="228" y1="300" x2="264" y2="352" pathLength="1"/><line x1="204" y1="392" x2="240" y2="536" pathLength="1"/>
+                <line x1="176" y1="470" x2="240" y2="536" pathLength="1"/><line x1="228" y1="300" x2="204" y2="392" pathLength="1"/>
+                <circle style="--i:0" cx="252" cy="196" r="2.4"/><circle style="--i:1" cx="264" cy="352" r="2.4"/>
+                <circle style="--i:2" cx="300" cy="452" r="2.4"/><circle style="--i:3" cx="204" cy="392" r="2.4"/>
+                <circle style="--i:4" cx="240" cy="536" r="2.4"/><circle style="--i:5" cx="176" cy="470" r="2.4"/>
+              </svg>
+
+              <!-- 05 global network — it widens out past the face -->
+              <svg class="gv gv-orbit" viewBox="0 0 630 840" fill="none">
+                <ellipse cx="290" cy="420" rx="196" ry="264"/>
+                <ellipse cx="290" cy="420" rx="252" ry="330"/>
+                <circle class="gv-orbit__dot" cx="290" cy="156" r="4"/>
+                <circle class="gv-orbit__dot gv-orbit__dot--b" cx="486" cy="420" r="3.4"/>
+                <circle class="gv-orbit__dot gv-orbit__dot--c" cx="290" cy="684" r="3.4"/>
+              </svg>
+
+              <!-- the chapter markers stay as the index into all of it -->
+              <svg class="gv gv-map" viewBox="0 0 630 840" fill="none">
+                <g class="gpt" data-pt="live">
+                  <circle class="gpt__wave" cx="296" cy="330" r="12"/><circle class="gpt__halo" cx="296" cy="330" r="26"/>
+                  <circle class="gpt__ring" cx="296" cy="330" r="12"/>
+                  <circle class="gpt__core" cx="296" cy="330" r="3.6"/>
+                </g>
+                <g class="gpt" data-pt="class">
+                  <circle class="gpt__wave" cx="262" cy="150" r="12"/><circle class="gpt__halo" cx="262" cy="150" r="26"/>
+                  <circle class="gpt__ring" cx="262" cy="150" r="12"/>
+                  <circle class="gpt__core" cx="262" cy="150" r="3.6"/>
+                </g>
+                <g class="gpt" data-pt="hands">
+                  <circle class="gpt__wave" cx="248" cy="516" r="12"/><circle class="gpt__halo" cx="248" cy="516" r="26"/>
+                  <circle class="gpt__ring" cx="248" cy="516" r="12"/>
+                  <circle class="gpt__core" cx="248" cy="516" r="3.6"/>
+                </g>
+                <g class="gpt" data-pt="panel">
+                  <circle class="gpt__wave" cx="336" cy="212" r="12"/><circle class="gpt__halo" cx="336" cy="212" r="26"/>
+                  <circle class="gpt__ring" cx="336" cy="212" r="12"/>
+                  <circle class="gpt__core" cx="336" cy="212" r="3.6"/>
+                </g>
+                <g class="gpt" data-pt="globe">
+                  <circle class="gpt__wave" cx="330" cy="676" r="12"/><circle class="gpt__halo" cx="330" cy="676" r="26"/>
+                  <circle class="gpt__ring" cx="330" cy="676" r="12"/>
+                  <circle class="gpt__core" cx="330" cy="676" r="3.6"/>
+                </g>
+              </svg>
+            </div>
+            <ol class="gchapters" data-par="0.03">
+              <li class="gitem" data-glow="live" tabindex="0" style="--d:0.04; --ox:0%">
+                <span class="gitem__row"><span class="gitem__num">01</span><h3>Live surgeries</h3></span>
+                <p class="body">See advanced procedures performed live and understand the techniques behind them.</p>
+              </li>
+              <li class="gitem" data-glow="class" tabindex="0" style="--d:0.13; --ox:26%">
+                <span class="gitem__row"><span class="gitem__num">02</span><h3>Masterclasses &amp; workshops</h3></span>
+                <p class="body">Learn advanced techniques and clinical approaches directly from experts.</p>
+              </li>
+              <li class="gitem" data-glow="hands" tabindex="0" style="--d:0.22; --ox:7%">
+                <span class="gitem__row"><span class="gitem__num">03</span><h3>Hands-on courses</h3></span>
+                <p class="body">Turn knowledge into practical skills through immersive training.</p>
+              </li>
+              <li class="gitem" data-glow="panel" tabindex="0" style="--d:0.31; --ox:30%">
+                <span class="gitem__row"><span class="gitem__num">04</span><h3>Panels &amp; discussions</h3></span>
+                <p class="body">Challenge your thinking and discover new approaches to facial aesthetics.</p>
+              </li>
+              <li class="gitem" data-glow="globe" tabindex="0" style="--d:0.40; --ox:12%">
+                <span class="gitem__row"><span class="gitem__num">05</span><h3>Global network</h3></span>
+                <p class="body">Connect with peers and leading experts from across the industry.</p>
+              </li>
+            </ol>
+          </div>
+          <a class="btn-pill gain__cta" href="registration.html">Register now<span class="circle-arrow circle-arrow--sm" aria-hidden="true">&#8594;</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DOM tail · MEET OUR EXPERTS ===== -->
+    <section class="tail speakers" data-theme="light" id="speakers">
+      <div class="container speakers__head speakers__head--stacked">
+        <div data-reveal>
+          <svg class="motif" viewBox="0 0 140 60" aria-hidden="true"><path d="M2 56 C 44 10, 92 2, 138 30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <span class="label label--dim label--head">Meet our experts</span>
+          <h2 class="display-l" data-split><strong>150+</strong> international experts. One global stage.</h2>
+        </div>
+      </div>
+
+      <div class="cardrail docrail" id="speakersRail" aria-label="Faculty carousel">
+        <div class="docrail__track" id="docTrack">
+        <a class="scard" href="doctor.html?id=foad-nahai">
+          <span class="scard__media"><img src="img/nahai.jpg" alt="Foad Nahai" loading="lazy" /></span>
+          <span class="scard__badge" aria-hidden="true">→</span>
+          <span class="scard__panel">
+            <span class="heading scard__name">Foad Nahai</span>
+            <span class="scard__sub">International faculty</span>
+            <span class="scard__more">Learn more</span>
+          </span>
+        </a>
+        <a class="scard" href="doctor.html?id=neil-gordon">
+          <span class="scard__media"><img src="img/gordon.webp" alt="Neil Gordon" loading="lazy" /></span>
+          <span class="scard__badge" aria-hidden="true">→</span>
+          <span class="scard__panel">
+            <span class="heading scard__name">Neil Gordon</span>
+            <span class="scard__sub">International faculty</span>
+            <span class="scard__more">Learn more</span>
+          </span>
+        </a>
+        <a class="scard" href="doctor.html?id=steven-dayan">
+          <span class="scard__media"><img src="img/dayan.jpg" alt="Steven Dayan" loading="lazy" /></span>
+          <span class="scard__badge" aria-hidden="true">→</span>
+          <span class="scard__panel">
+            <span class="heading scard__name">Steven Dayan</span>
+            <span class="scard__sub">International faculty</span>
+            <span class="scard__more">Learn more</span>
+          </span>
+        </a>
+        <a class="scard" href="doctor.html?id=firas-hamdan">
+          <span class="scard__media"><img src="img/hamdan.jpg" alt="Firas Hamdan" loading="lazy" /></span>
+          <span class="scard__badge" aria-hidden="true">→</span>
+          <span class="scard__panel">
+            <span class="heading scard__name">Firas Hamdan</span>
+            <span class="scard__sub">International faculty</span>
+            <span class="scard__more">Learn more</span>
+          </span>
+        </a>
+        <a class="scard" href="doctor.html?id=dean-toriumi">
+          <span class="scard__media"><img src="img/toriumi.jpg" alt="Dean Toriumi" loading="lazy" /></span>
+          <span class="scard__badge" aria-hidden="true">→</span>
+          <span class="scard__panel">
+            <span class="heading scard__name">Dean Toriumi</span>
+            <span class="scard__sub">International faculty</span>
+            <span class="scard__more">Learn more</span>
+          </span>
+        </a>
+        <a class="scard" href="doctor.html?id=khaled-omar">
+          <span class="scard__media"><img src="img/omar.jpg" alt="Khaled Omar" loading="lazy" /></span>
+          <span class="scard__badge" aria-hidden="true">→</span>
+          <span class="scard__panel">
+            <span class="heading scard__name">Khaled Omar</span>
+            <span class="scard__sub">International faculty</span>
+            <span class="scard__more">Learn more</span>
+          </span>
+        </a>
+        <a class="scard scard--more" href="speakers.html">
+          <span class="display-m">150+</span>
+          <span class="label label--dim">International experts on one global stage</span>
+          <span class="circle-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+      </div>
+
+      <div class="container railside railside--under" data-reveal>
+        <div class="railnav" data-rail="#speakersRail" data-marquee="#docTrack">
+          <button class="circle-arrow railnav__btn" data-dir="-1" aria-label="Previous speakers">←</button>
+          <button class="circle-arrow railnav__btn" data-dir="1" aria-label="Next speakers">→</button>
+        </div>
+        <a class="pill-sm" href="speakers.html">View all speakers<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+        <!-- ===== section · WHO SHOULD ATTEND ===== -->
+    <section class="scene scene--dark scene--solid" data-theme="dark" id="who">
+      <div class="beat" data-beat>
+        <div class="beat__inner container">
+          <span class="label label--dim label--head">Who should attend?</span>
+          <h2 class="display-l" data-split-progress>Built for professionals who want to stay ahead.</h2>
+          <div class="whoscene" id="whoscene">
+            <ul class="whoscene__col whoscene__col--l" role="list">
+              <li class="whoitem" data-focus="surgeons" tabindex="0" style="--d:0.05">
+                <span class="label label--dim whoitem__num">01</span>
+                <span class="heading">Plastic surgeons</span>
+                <p class="body">Advanced surgical techniques &amp; live procedures</p>
+              </li>
+              <li class="whoitem" data-focus="derm" tabindex="0" style="--d:0.16">
+                <span class="label label--dim whoitem__num">02</span>
+                <span class="heading">Dermatologists</span>
+                <p class="body">The latest in non-surgical facial aesthetics</p>
+              </li>
+            </ul>
+            <div class="whoscene__stage" style="--d:0.04" data-par="-0.07" aria-hidden="true">
+              <img class="wv wv-base" src="img/model-hero.jpg?v=303" alt="" loading="lazy" />
+              <video class="wv wv-reel" id="whoReel" muted playsinline preload="none"
+                     aria-hidden="true" tabindex="-1">
+                <source src="media/hero-reel.mp4" type="video/mp4" />
+              </video>
+              <svg class="wv wv-anatomy" viewBox="0 0 630 840" fill="none">
+                <polyline points="355,112 412,178 416,258 382,332 338,424 306,508 332,568"/>
+                <polyline points="318,128 332,212 304,300 258,392 234,472 256,548 298,604"/>
+                <polyline class="wv-anatomy__dashed" points="308,468 268,532 233,592 214,658 236,724 282,776"/>
+              </svg>
+              <span class="wv wv-scan"></span>
+              <svg class="wv wv-marks" viewBox="0 0 630 840" fill="none">
+                <g class="wv-marks__pts">
+                  <circle cx="222" cy="206" r="3"/><circle cx="126" cy="318" r="3"/>
+                  <circle cx="132" cy="436" r="3"/><circle cx="222" cy="352" r="3"/>
+                  <circle cx="256" cy="556" r="3"/><circle cx="334" cy="178" r="3"/>
+                  <circle cx="264" cy="122" r="3"/>
+                </g>
+                <g class="wv-marks__ln">
+                  <line x1="222" y1="206" x2="334" y2="178" pathLength="1"/>
+                  <line x1="222" y1="206" x2="222" y2="352" pathLength="1"/>
+                  <line x1="222" y1="352" x2="256" y2="556" pathLength="1"/>
+                  <line x1="126" y1="318" x2="222" y2="352" pathLength="1"/>
+                  <line x1="132" y1="436" x2="256" y2="556" pathLength="1"/>
+                  <line x1="264" y1="122" x2="222" y2="206" pathLength="1"/>
+                </g>
+              </svg>
+              <svg class="wv wv-net" viewBox="0 0 630 840" fill="none">
+                <g class="wv-net__ln">
+<line x1="393.1" y1="321.9" x2="407" y2="334.3"/>
+<line x1="393.1" y1="321.9" x2="443.5" y2="347.0"/>
+<line x1="511.1" y1="279.5" x2="443.5" y2="347.0"/>
+<line x1="511.1" y1="279.5" x2="407" y2="334.3"/>
+<line x1="407" y1="334.3" x2="443.5" y2="347.0"/>
+<line x1="326.2" y1="300.4" x2="287.5" y2="278.8"/>
+<line x1="326.2" y1="300.4" x2="393.1" y2="321.9"/>
+<line x1="437.5" y1="426.8" x2="443.5" y2="347.0"/>
+<line x1="437.5" y1="426.8" x2="407" y2="334.3"/>
+<line x1="303.5" y1="206.5" x2="327.6" y2="178.9"/>
+<line x1="303.5" y1="206.5" x2="334" y2="178"/>
+<line x1="302.7" y1="434.3" x2="437.5" y2="426.8"/>
+<line x1="302.7" y1="434.3" x2="326.2" y2="300.4"/>
+<line x1="453.4" y1="88.8" x2="412.1" y2="96.8"/>
+<line x1="453.4" y1="88.8" x2="319.4" y2="76.8"/>
+<line x1="525.5" y1="504.1" x2="437.5" y2="426.8"/>
+<line x1="525.5" y1="504.1" x2="443.5" y2="347.0"/>
+<line x1="319.4" y1="76.8" x2="264" y2="122"/>
+<line x1="319.4" y1="76.8" x2="412.1" y2="96.8"/>
+<line x1="327.6" y1="178.9" x2="334" y2="178"/>
+<line x1="287.5" y1="278.8" x2="303.5" y2="206.5"/>
+<line x1="222" y1="206" x2="303.5" y2="206.5"/>
+<line x1="222" y1="206" x2="264" y2="122" pathLength="1"/>
+<line x1="264" y1="122" x2="327.6" y2="178.9"/>
+                </g>
+                <g class="wv-net__pts">
+<circle cx="393.1" cy="321.9" r="2" style="animation-delay:0.0s"/>
+<circle cx="511.1" cy="279.5" r="2" style="animation-delay:0.6s"/>
+<circle cx="407" cy="334.3" r="2" style="animation-delay:1.2s"/>
+<circle cx="326.2" cy="300.4" r="2" style="animation-delay:1.8s"/>
+<circle cx="437.5" cy="426.8" r="2" style="animation-delay:2.4s"/>
+<circle cx="303.5" cy="206.5" r="2" style="animation-delay:3.0s"/>
+<circle cx="302.7" cy="434.3" r="2" style="animation-delay:3.6s"/>
+<circle cx="453.4" cy="88.8" r="2" style="animation-delay:0.2s"/>
+<circle cx="525.5" cy="504.1" r="2" style="animation-delay:0.8s"/>
+<circle cx="443.5" cy="347.0" r="2" style="animation-delay:1.4s"/>
+<circle cx="319.4" cy="76.8" r="2" style="animation-delay:2.0s"/>
+<circle cx="412.1" cy="96.8" r="2" style="animation-delay:2.6s"/>
+<circle cx="327.6" cy="178.9" r="2" style="animation-delay:3.2s"/>
+<circle cx="287.5" cy="278.8" r="2" style="animation-delay:3.8s"/>
+<circle cx="222" cy="206" r="2" style="animation-delay:0.4s"/>
+<circle cx="264" cy="122" r="2" style="animation-delay:1.0s"/>
+<circle cx="334" cy="178" r="2" style="animation-delay:1.6s"/>
+                </g>
+              </svg>
+              <span class="wv-dust" style="left:18%;top:24%;animation-delay:0s"></span>
+              <span class="wv-dust" style="left:74%;top:16%;animation-delay:2.2s"></span>
+              <span class="wv-dust" style="left:64%;top:66%;animation-delay:4.1s"></span>
+              <span class="wv-dust" style="left:26%;top:74%;animation-delay:6s"></span>
+              <span class="wv-dust" style="left:48%;top:10%;animation-delay:7.4s"></span>
+            </div>
+            <ul class="whoscene__col whoscene__col--r" role="list">
+              <li class="whoitem" data-focus="aesthetic" tabindex="0" style="--d:0.27">
+                <span class="label label--dim whoitem__num">03</span>
+                <span class="heading">Aesthetic practitioners</span>
+                <p class="body">Hands-on techniques and practical learning</p>
+              </li>
+              <li class="whoitem" data-focus="residents" tabindex="0" style="--d:0.38">
+                <span class="label label--dim whoitem__num">04</span>
+                <span class="heading">Residents &amp; young professionals</span>
+                <p class="body">Learn, connect and build your future</p>
+              </li>
+            </ul>
+          </div>
+          <a class="btn-pill whoscene__cta" href="registration.html">Reserve your place<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== scene 5 · THE EVENT EXPERIENCE ===== -->
+    <section class="scene scene--dark" data-scene="days" data-theme="dark" id="events">
+      <div class="beat" data-beat>
+        <div class="beat__inner container">
+          <span class="label label--dim label--head">The event experience</span>
+          <h2 class="display-l" data-split-progress>Three days. One unforgettable experience.</h2>
+        </div>
+      </div>
+      <div class="beat" data-beat>
+        <div class="beat__inner container">
+          <div class="cardgrid cardgrid--3 lateshow" data-par="-0.045">
+            <article class="infocard infocard--dark">
+              <span class="label label--dim">Day 00 · 21 April</span>
+              <h3 class="heading">Pre-Summit day</h3>
+              <p class="body">Interactive live surgeries + 10+ hands-on courses + advanced masterclasses</p>
+            </article>
+            <article class="infocard infocard--dark">
+              <span class="label label--dim">Day 01 · 22 April</span>
+              <h3 class="heading">Main summit</h3>
+              <p class="body">International faculty + live demonstrations + workshops</p>
+            </article>
+            <article class="infocard infocard--dark">
+              <span class="label label--dim">Day 02 · 23 April</span>
+              <h3 class="heading">Main summit</h3>
+              <p class="body">Advanced sessions + panels + networking + innovation</p>
+            </article>
+          </div>
+          <a class="btn-ghost lateshow" href="agenda.html">Explore full programme</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== tail · SCIENTIFIC PARTNERS ===== -->
+    <section class="tail logos" data-theme="light" id="partners">
+      <div class="container logos__head">
+        <span class="label label--dim label--head" data-reveal>Scientific partners</span>
+      </div>
+      <div class="logorail" data-speed="78">
+        <div class="logorail__track" id="sciTrack">
+          <span class="logoplate" title="AACME — American Association of Continuing Medical Education"><img src="img/logos/aacme.png?v=303" alt="AACME — American Association of Continuing Medical Education" loading="lazy" /><span class="logoplate__name">AACME</span></span>
+          <span class="logoplate" title="BAPRAS — British Association of Plastic, Reconstructive and Aesthetic Surgeons"><img src="img/logos/barpas.png?v=303" alt="BAPRAS — British Association of Plastic, Reconstructive and Aesthetic Surgeons" loading="lazy" /><span class="logoplate__name">BAPRAS</span></span>
+          <span class="logoplate" title="Prague LAB — Aesthetic Dialogue"><img src="img/logos/aesthetic-dialogue.png?v=303" alt="Prague LAB — Aesthetic Dialogue" loading="lazy" /><span class="logoplate__name">Prague LAB</span></span>
+          <span class="logoplate" title="iClass Anatomy"><img src="img/logos/iclass-anatomy.png?v=303" alt="iClass Anatomy" loading="lazy" /><span class="logoplate__name">iClass Anatomy</span></span>
+          <span class="logoplate" title="FaceExpert Academy"><img src="img/logos/faceexpert.png?v=303" alt="FaceExpert Academy" loading="lazy" /><span class="logoplate__name">FaceExpert Academy</span></span>
+          <span class="logoplate" title="Alprino Academy"><img src="img/logos/alprino.png?v=303" alt="Alprino Academy" loading="lazy" /><span class="logoplate__name">Alprino Academy</span></span>
+          <span class="logoplate logoplate--ink" style="--plate: #01274B" title="Harley Academy"><img src="img/logos/harley-academy.png?v=303" alt="Harley Academy" loading="lazy" /><span class="logoplate__name">Harley Academy</span></span>
+          <span class="logoplate" title="SOMCEP — Société Marocaine des Chirurgiens Esthétiques Plasticiens"><img src="img/logos/somcep.png?v=303" alt="SOMCEP — Société Marocaine des Chirurgiens Esthétiques Plasticiens" loading="lazy" /><span class="logoplate__name">SOMCEP</span></span>
+          <span class="logoplate" title="Gulf FACE"><img src="img/logos/gulf-face.png?v=303" alt="Gulf FACE" loading="lazy" /><span class="logoplate__name">Gulf FACE</span></span>
+          <span class="logoplate" title="Dubai Face"><img src="img/logos/dubai-face.png?v=303" alt="Dubai Face" loading="lazy" /><span class="logoplate__name">Dubai Face</span></span>
+          <span class="logoplate" title="GAIA — Georgian Aesthetic International Association"><img src="img/logos/gaia.png?v=303" alt="GAIA — Georgian Aesthetic International Association" loading="lazy" /><span class="logoplate__name">GAIA</span></span>
+          <span class="logoplate" title="ACME — Academy for Continuing Medical Education"><img src="img/logos/acme.png?v=303" alt="ACME — Academy for Continuing Medical Education" loading="lazy" /><span class="logoplate__name">ACME</span></span>
+          <span class="logoplate" title="CAPSCO — Consortium of Aesthetic Plastic Surgery Clinic Owners"><img src="img/logos/capsco.png?v=303" alt="CAPSCO — Consortium of Aesthetic Plastic Surgery Clinic Owners" loading="lazy" /><span class="logoplate__name">CAPSCO</span></span>
+          <span class="logoplate" title="IAAPS — Indian Association of Aesthetic Plastic Surgeons"><img src="img/logos/iaaps.png?v=303" alt="IAAPS — Indian Association of Aesthetic Plastic Surgeons" loading="lazy" /><span class="logoplate__name">IAAPS</span></span>
+          <span class="logoplate" title="AASP — Association for Aesthetic Surgery Pakistan"><img src="img/logos/aasp.png?v=303" alt="AASP — Association for Aesthetic Surgery Pakistan" loading="lazy" /><span class="logoplate__name">AASP</span></span>
+          <span class="logoplate" title="AASMA — Arab Association of Surgical &amp; Medical Aesthetics"><img src="img/logos/aasma.png?v=303" alt="AASMA — Arab Association of Surgical &amp; Medical Aesthetics" loading="lazy" /><span class="logoplate__name">AASMA</span></span>
+          <span class="logoplate" title="SOAP-Meeting Bremen"><img src="img/logos/soap-meeting.png?v=303" alt="SOAP-Meeting Bremen" loading="lazy" /><span class="logoplate__name">SOAP Meeting</span></span>
+          <span class="logoplate" title="TAMAS — Tunisian Aesthetic Medicine and Anti-Aging Society"><img src="img/logos/tamas.png?v=303" alt="TAMAS — Tunisian Aesthetic Medicine and Anti-Aging Society" loading="lazy" /><span class="logoplate__name">TAMAS</span></span>
+          <span class="logoplate logoplate--mark" title="TSAPS — Tunisian Society of Aesthetic and Plastic Surgery"><span class="logoplate__mark">TSAPS</span><span class="logoplate__name">TSAPS</span></span>
+          <span class="logoplate logoplate--ink" style="--plate: #0C1014" title="Expert2Expert (E2E)"><img src="img/logos/expert2expert.png?v=303" alt="Expert2Expert (E2E)" loading="lazy" /><span class="logoplate__name">Expert2Expert</span></span>
+          <span class="logoplate" title="ISAPS — International Society of Aesthetic Plastic Surgery"><img src="img/logos/isaps.png?v=303" alt="ISAPS — International Society of Aesthetic Plastic Surgery" loading="lazy" /><span class="logoplate__name">ISAPS</span></span>
+          <span class="logoplate" title="EAFPS — European Academy of Facial Plastic Surgery"><img src="img/logos/eafps.png?v=303" alt="EAFPS — European Academy of Facial Plastic Surgery" loading="lazy" /><span class="logoplate__name">EAFPS</span></span>
+        </div>
+      </div>
+      <div class="railnav logorail__nav" data-marquee="#sciTrack" data-reveal>
+        <button class="circle-arrow railnav__btn" data-dir="-1" aria-label="Previous scientific partners">&#8592;</button>
+        <button class="circle-arrow railnav__btn" data-dir="1" aria-label="Next scientific partners">&#8594;</button>
+      </div>
+      <div class="container logos__foot">
+        <a class="btn-pill" href="exhibition.html">Become a Cairo FACE partner<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <!-- ===== tail · PRICING ===== -->
+    <section class="tail pricing" data-theme="light" id="pricing">
+      <div class="container pricing__head">
+        <div data-reveal>
+          <span class="label label--dim label--head">Your Cairo FACE experience starts here</span>
+          <h2 class="display-l" data-split>Choose how you want to experience Cairo FACE</h2>
+        </div>
+      </div>
+      <div class="container">
+        <div class="pricing__toggle" data-reveal role="tablist" aria-label="Registration type">
+          <button class="ptab is-active" data-plan="eg" role="tab" aria-selected="true"><strong>Egyptian</strong></button>
+          <button class="ptab" data-plan="int" role="tab" aria-selected="false"><strong>Non-Egyptian</strong></button>
+        </div>
+        <article class="price-card price-panel" data-panel="eg" data-reveal>
+          <i class="tick tick--corner" aria-hidden="true"></i>
+          <p class="price-line"><span class="body-l">Early bird — </span><span class="price">6,000 <small>EGP</small></span><span class="body-l"> (Egyptian).</span></p>
+          <p class="price-line"><strong class="body-l">Pre-Summit</strong><span class="body"> — Advanced Experience; 10+ Live Surgeries; Hands-on courses; Advanced Masterclasses : </span><span class="price">30,000 <small>EGP</small></span></p>
+        </article>
+        <article class="price-card price-panel" data-panel="int" data-reveal hidden>
+          <i class="tick tick--corner" aria-hidden="true"></i>
+          <p class="price-line"><span class="body-l">INTERNATIONAL — </span><span class="price">$500</span></p>
+          <p class="price-line"><strong class="body-l">Pre-Summit</strong><span class="body"> — Advanced Experience; 10+ Live Surgeries; Hands-on courses; Advanced Masterclasses : </span><span class="price">$1,000</span><span class="body">.</span></p>
+        </article>
+        <a class="btn-pill pricing__cta" data-reveal href="registration.html">Register now<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <!-- ===== tail · TESTIMONIALS + EVENT PHOTOS ===== -->
+    <section class="tail voices" data-theme="light" id="voices">
+      <div class="container pricing__head">
+        <div data-reveal>
+          <span class="label label--dim label--head">Don't take our word for it.</span>
+          <h2 class="display-l" data-split>Testimonials</h2>
+        </div>
+        <div class="railnav" id="voiceNav" data-rail="#quoteRail" data-reveal>
+          <button class="circle-arrow railnav__btn" data-dir="-1" aria-label="Previous testimonial">←</button>
+          <button class="circle-arrow railnav__btn" data-dir="1" aria-label="Next testimonial">→</button>
+        </div>
+      </div>
+      <div class="container">
+        <div class="pricing__toggle" id="voiceTabs" data-reveal role="tablist" aria-label="Testimonial type">
+          <button class="ptab is-active" data-tset="video" role="tab" aria-selected="true"><strong>Video testimonials</strong></button>
+          <button class="ptab" data-tset="written" role="tab" aria-selected="false"><strong>Written testimonials</strong></button>
+        </div>
+      </div>
+      <div class="cardrail cardrail--quotes" id="quoteRail" data-tpanel="video" tabindex="0" aria-label="Video testimonials, horizontally scrollable">
+      </div>
+      <div class="cardrail cardrail--quotes" id="writtenRail" data-tpanel="written" tabindex="0" aria-label="Written testimonials, horizontally scrollable" hidden>
+        <blockquote class="quotecard" data-reveal>
+          <p class="display-m">&ldquo;Cairo FACE is a fantastic opportunity to combine business, science and leisure tourism.&rdquo;</p>
+          <footer class="label label--dim">Dr. Matte Stefanelli</footer>
+        </blockquote>
+        <blockquote class="quotecard" data-reveal>
+          <p class="display-m">&ldquo;I met so many doctors who have innovative techniques, innovative procedures and innovative methods &mdash; everything is so new, and this is very good.&rdquo;</p>
+          <footer class="label label--dim">Dr. Kristina Pkhakadze</footer>
+        </blockquote>
+        <blockquote class="quotecard" data-reveal>
+          <p class="display-m">&ldquo;The live surgeries alone were worth the trip &mdash; being able to question the surgeon mid-procedure is rare.&rdquo;</p>
+          <footer class="label label--dim">Dr. Amira Najar</footer>
+        </blockquote>
+        <blockquote class="quotecard" data-reveal>
+          <p class="display-m">&ldquo;A genuinely international faculty, and an organisation that respects your time. I left with techniques I used the following week.&rdquo;</p>
+          <footer class="label label--dim">Dr. Hatim Droussi</footer>
+        </blockquote>
+      </div>
+      <div class="container photos" data-par="-0.05">
+        <div class="photos__head">
+          <span class="label label--dim label--head" data-reveal>Event photos</span>
+        </div>
+        <figure class="photo-feature" id="photoFan" data-reveal>
+          <span class="photo-fan photo-fan--l2" aria-hidden="true"></span>
+          <span class="photo-fan photo-fan--r2" aria-hidden="true"></span>
+          <span class="photo-fan photo-fan--l" aria-hidden="true"></span>
+          <span class="photo-fan photo-fan--r" aria-hidden="true"></span>
+          <img src="img/ev-hero.jpg?v=303" alt="Cairo FACE" loading="lazy" />
+          <button class="pill-sm photo-feature__cta" type="button" data-gallery>See all photos<span class="circle-arrow circle-arrow--sm" aria-hidden="true">&#8594;</span></button>
+        </figure>
+        <div class="railnav photos__nav" data-fan="#photoFan">
+          <button class="circle-arrow railnav__btn" data-dir="-1" aria-label="Previous photos">&#8592;</button>
+          <button class="circle-arrow railnav__btn" data-dir="1" aria-label="Next photos">&#8594;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== tail · TRUSTED BY ===== -->
+    <section class="tail endorse" data-theme="light" id="tailstart">
+      <div class="container">
+        <span class="label label--dim label--head" data-reveal>Endorsed by</span>
+      </div>
+      <div class="container endorse__grid" data-par="-0.04">
+        <article class="endorse__card endorse__card--org" data-reveal>
+          <i class="tick tick--corner" aria-hidden="true"></i>
+          <span class="endorse__logo"><img src="img/logos/isaps.png?v=303" alt="ISAPS" loading="lazy" /></span>
+          <h3 class="endorse__name">International Society of Aesthetic Plastic Surgery</h3>
+          <p class="body">The leading global organization representing board certified aesthetic plastic surgeons.</p>
+          <a class="pill-sm endorse__cta" href="https://www.isaps.org/" target="_blank" rel="noopener">Learn more<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
+        </article>
+        <article class="endorse__card endorse__card--org" data-reveal>
+          <i class="tick tick--corner" aria-hidden="true"></i>
+          <span class="endorse__logo"><img src="img/logos/eafps.png?v=303" alt="EAFPS" loading="lazy" /></span>
+          <h3 class="endorse__name">European Academy of Facial Plastic Surgery</h3>
+          <p class="body">A premier organization dedicated to advancing the art and science of facial plastic surgery in Europe.</p>
+          <a class="pill-sm endorse__cta" href="https://eafps.org/" target="_blank" rel="noopener">Learn more<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== tail · FAQ ===== -->
+    <section class="tail faq" data-theme="light" id="faq">
+      <div class="container">
+        <h2 class="display-l" data-split>FAQ</h2>
+      </div>
+      <div class="container faq__list">
+        <details class="faq__item" data-reveal>
+          <summary><span class="body-l">Who can attend Cairo FACE?</span><span class="circle-arrow circle-arrow--sm" aria-hidden="true">+</span></summary>
+          <p class="body">Plastic surgeons, dermatologists, aesthetic practitioners, and residents &amp; young professionals — anyone building a career in facial aesthetics.</p>
+        </details>
+        <details class="faq__item" data-reveal>
+          <summary><span class="body-l">How much does registration cost?</span><span class="circle-arrow circle-arrow--sm" aria-hidden="true">+</span></summary>
+          <p class="body">Egyptian: 6,000 EGP (Early Bird) and 30,000 EGP for the Pre-Summit. Non-Egyptian: $500, and $1,000 for the Pre-Summit.</p>
+        </details>
+        <details class="faq__item" data-reveal>
+          <summary><span class="body-l">What's included in my registration?</span><span class="circle-arrow circle-arrow--sm" aria-hidden="true">+</span></summary>
+          <p class="body">Live surgeries, masterclasses, 100+ workshops, panels and discussions, and global networking with 150+ international faculty. The Pre-Summit advanced experience — 10+ live surgeries, hands-on courses, and advanced masterclasses — is booked separately.</p>
+        </details>
+        <details class="faq__item" data-reveal>
+          <summary><span class="body-l">Where is Cairo FACE taking place?</span><span class="circle-arrow circle-arrow--sm" aria-hidden="true">+</span></summary>
+          <p class="body">At the Waldorf Astoria — Hilton Heliopolis in Cairo, Egypt, 21–23 April 2027.</p>
+        </details>
+        <details class="faq__item" data-reveal>
+          <summary><span class="body-l">What's the cancellation policy?</span><span class="circle-arrow circle-arrow--sm" aria-hidden="true">+</span></summary>
+          <p class="body">A cancellation policy is available for all registrations — contact <a class="u" href="mailto:info@cairoface.com">info@cairoface.com</a> for the full terms.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===== tail · FOOTER ===== -->
+    <footer class="footer" data-theme="dark">
+      <div class="container footer__grid">
+        <div class="footer__col footer__col--nav">
+          <span class="label label--dim">Navigation</span>
+          <div class="footer__links footer__links--one">
+            <a class="body-l" href="#top">Home</a>
+            <a class="body-l" href="about.html">About us</a>
+            <a class="body-l" href="register.html">Registration</a>
+            <a class="body-l" href="contact.html">Contact us</a>
+          </div>
+        </div>
+        <div class="footer__col footer__col--about">
+          <span class="label label--dim">About</span>
+          <div class="footer__links footer__links--one">
+            <a class="body-l" href="https://cairoface.com/privacy-policy" target="_blank" rel="noopener">Privacy policy</a>
+            <a class="body-l" href="https://cairoface.com/terms-and-conditions" target="_blank" rel="noopener">Terms of service</a>
+            <a class="body-l" href="#faq">Cancellation policy</a>
+            <a class="body-l" href="#faq">FAQ</a>
+          </div>
+        </div>
+        <div class="footer__col footer__col--contact">
+          <span class="label label--dim">Contact</span>
+          <div class="footer__links footer__links--one">
+            <a class="body-l" href="tel:+201555207091">+20 155 520 7091</a>
+            <a class="body-l" href="tel:+201507001301">+20 150 700 1301</a>
+            <a class="body-l" href="mailto:info@cairoface.com">info@cairoface.com</a>
+            <a class="body-l" href="https://maps.app.goo.gl/hJJjmoQEYGYazQLK7" target="_blank" rel="noopener">Show on the map</a>
+          </div>
+        </div>
+        <div class="footer__col footer__col--social">
+        <span class="label label--dim">Social media</span>
+        <div class="sociconrow">
+          <a class="socicon" href="https://www.instagram.com/cairo.face.summit/" target="_blank" rel="noopener" aria-label="Cairo FACE on Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a class="socicon" href="https://www.linkedin.com/company/cairo-face/" target="_blank" rel="noopener" aria-label="Cairo FACE on LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 8.5H3.9V20h3.04zM5.42 3.5a1.77 1.77 0 1 0 0 3.54 1.77 1.77 0 0 0 0-3.54z"/><path d="M14.9 8.26c-1.6 0-2.5.77-2.98 1.55V8.5H8.9c.04.86 0 11.5 0 11.5h3.02v-6.3c0-.28.02-.55.1-.75.22-.55.72-1.12 1.57-1.12 1.1 0 1.58.84 1.58 2.08V20H18.2v-6.43c0-3.23-1.72-4.73-3.3-4.73z"/></svg></a>
+          <a class="socicon socicon--wa" href="https://wa.me/qr/TYQGNUY3ONVZC1" target="_blank" rel="noopener" aria-label="Cairo FACE on WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.89-.79-1.48-1.76-1.66-2.06-.17-.3-.02-.46.13-.6.14-.14.3-.35.45-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.91-2.21-.25-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.07.15.2 2.1 3.2 5.08 4.49.7.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.89-9.88 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg></a>
+        </div>
+      </div>
+      <div class="footer__col footer__col--brand">
+        <img class="footer__logo" src="img/logo-white.png" alt="Cairo FACE" loading="lazy" />
+        <button class="pill-sm" id="to-top">Back to top<span class="circle-arrow circle-arrow--sm" aria-hidden="true">&#8593;</span></button>
+      </div>
+      </div>
+      <div class="container footer__legal">
+        <span class="label label--dim">All rights reserved @Cairo FACE</span>
+        <span class="label label--dim">Facial Aesthetics Conference &amp; Exhibition</span>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="js/doctors.js?v=303" defer></script>
+  <script src="js/main.js?v=303" defer></script>
+  <script src="js/face.js?v=303" defer></script>
+  <script type="module" src="js/film3d.js?v=303"></script>
+  <script src="js/contactdock.js?v=303" defer></script>
+  <script src="js/railnav.js?v=303" defer></script>
+  <script src="js/pageout.js?v=303" defer></script>
+  <script src="js/person-modal.js?v=303" defer></script>
+  <script src="js/gallery.js?v=303" defer></script>
+</body>
+</html>
