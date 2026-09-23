@@ -9,7 +9,8 @@
     "check": "node scripts/check-concepts.mjs",
     "smoke": "node scripts/smoke.mjs",
     "verify": "npm run build && npm run check && npm run smoke",
-    "deploy": "wrangler pages deploy site --project-name=redesign-concepts"
+    "deploy": "wrangler pages deploy site --project-name=redesign-concepts",
+    "fb:post": "node scripts/fb-post.mjs"
   },
   "engines": {
     "node": ">=18"
