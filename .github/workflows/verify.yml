@@ -18,6 +18,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Test the Facebook Page poster
+        run: npm run test:facebook
+
       - name: Install Chromium for the smoke test
         run: npx playwright install --with-deps chromium
 
