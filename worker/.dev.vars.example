@@ -4,11 +4,16 @@
 # console.anthropic.com > API keys
 ANTHROPIC_API_KEY=
 
-# Meta > WhatsApp > API Setup. Use a System User token, not the 24h temp one.
-WHATSAPP_TOKEN=
-
-# Meta > App settings > Basic > App secret. Signs every inbound webhook.
-WHATSAPP_APP_SECRET=
+# Meta app > App settings > Basic > App secret. Signs every inbound webhook.
+META_APP_SECRET=
 
 # Any random string you invent; paste the same value into Meta's webhook form.
-WHATSAPP_VERIFY_TOKEN=
+META_VERIFY_TOKEN=
+
+# --- Facebook Messenger ---
+# Meta app > Messenger > Messenger API Settings > Generate access tokens.
+MESSENGER_PAGE_TOKEN=
+
+# --- WhatsApp (optional; leave empty to skip) ---
+# Meta > WhatsApp > API Setup. Use a System User token, not the 24h temp one.
+WHATSAPP_TOKEN=

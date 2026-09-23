@@ -1,10 +1,11 @@
-import { describe, it, beforeEach } from 'node:test';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 
 import { verifySignature, timingSafeEqual } from '../src/signature.js';
 import { parseIncoming, chunkText, MAX_BODY_LENGTH } from '../src/whatsapp.js';
+import * as messenger from '../src/messenger.js';
 import { trimHistory } from '../src/conversation.js';
-import { parseAllowlist, isAllowed, normalizeNumber, loadConfig } from '../src/config.js';
+import { parseAllowlist, isAllowed, normalizeNumber, loadConfig, defaultSystemPrompt } from '../src/config.js';
 
 const APP_SECRET = 'test-app-secret';
 
@@ -42,6 +43,17 @@ function webhook(messages, contacts = []) {
     ],
   };
 }
+
+function pageWebhook(events) {
+  return { object: 'page', entry: [{ id: 'PAGE_ID', time: 1700000000000, messaging: events }] };
+}
+
+const pageMessage = (mid, psid, message) => ({
+  sender: { id: psid },
+  recipient: { id: 'PAGE_ID' },
+  timestamp: 1700000000000,
+  message: { mid, ...message },
+});
 
 describe('signature verification', () => {
   it('accepts a signature Meta would have produced', async () => {
@@ -107,6 +119,43 @@ describe('parsing the webhook envelope', () => {
   });
 });
 
+describe('parsing the Messenger envelope', () => {
+  it('pulls out a text message', () => {
+    const parsed = messenger.parseIncoming(pageWebhook([pageMessage('m.1', '24000000001', { text: 'hello' })]));
+    assert.deepEqual(parsed, [
+      { id: 'm.1', from: '24000000001', type: 'text', text: 'hello', timestamp: 1700000000000 },
+    ]);
+  });
+
+  it('ignores echoes of the page\'s own replies, so the bot never answers itself', () => {
+    const parsed = messenger.parseIncoming(
+      pageWebhook([pageMessage('m.2', 'PAGE_ID', { text: 'my reply', is_echo: true })]),
+    );
+    assert.deepEqual(parsed, []);
+  });
+
+  it('ignores delivery and read receipts, which carry no message', () => {
+    const payload = pageWebhook([
+      { sender: { id: '1' }, recipient: { id: 'PAGE_ID' }, delivery: { mids: ['m.1'] } },
+      { sender: { id: '1' }, recipient: { id: 'PAGE_ID' }, read: { watermark: 1 } },
+    ]);
+    assert.deepEqual(messenger.parseIncoming(payload), []);
+  });
+
+  it('keeps attachments, with empty text, so the caller can answer them', () => {
+    const parsed = messenger.parseIncoming(
+      pageWebhook([pageMessage('m.3', '1', { attachments: [{ type: 'image', payload: {} }] })]),
+    );
+    assert.equal(parsed[0].type, 'image');
+    assert.equal(parsed[0].text, '');
+  });
+
+  it('shrugs off payloads that are not ours', () => {
+    assert.deepEqual(messenger.parseIncoming(null), []);
+    assert.deepEqual(messenger.parseIncoming(webhook([{ id: 'w', from: '1', type: 'text' }])), []);
+  });
+});
+
 describe('chunking replies', () => {
   it('leaves a short reply alone', () => {
     assert.deepEqual(chunkText('hello'), ['hello']);
@@ -131,6 +180,12 @@ describe('chunking replies', () => {
     for (const chunk of chunks) {
       assert.ok(chunk.length <= MAX_BODY_LENGTH, `chunk of ${chunk.length} exceeds the limit`);
     }
+  });
+
+  it('honours Messenger\'s shorter limit when asked', () => {
+    const chunks = chunkText('word '.repeat(1000), messenger.MAX_BODY_LENGTH);
+    assert.ok(chunks.length > 1);
+    for (const chunk of chunks) assert.ok(chunk.length <= messenger.MAX_BODY_LENGTH);
   });
 
   it('hard-splits text with no break to split on', () => {
@@ -197,8 +252,40 @@ describe('configuration', () => {
     WHATSAPP_PHONE_NUMBER_ID: 'PNID',
   };
 
+  const messengerOnly = {
+    ANTHROPIC_API_KEY: 'sk-ant-test',
+    META_APP_SECRET: APP_SECRET,
+    META_VERIFY_TOKEN: 'verify',
+    MESSENGER_PAGE_TOKEN: 'page-token',
+  };
+
   it('names every missing binding at once', () => {
-    assert.throws(() => loadConfig({}), /ANTHROPIC_API_KEY.*WHATSAPP_PHONE_NUMBER_ID/s);
+    assert.throws(
+      () => loadConfig({}),
+      /ANTHROPIC_API_KEY.*META_APP_SECRET.*META_VERIFY_TOKEN.*MESSENGER_PAGE_TOKEN/s,
+    );
+  });
+
+  it('runs Messenger alone, with no WhatsApp settings at all', () => {
+    const config = loadConfig(messengerOnly);
+    assert.equal(config.messengerEnabled, true);
+    assert.equal(config.whatsappEnabled, false);
+    assert.equal(config.appSecret, APP_SECRET);
+  });
+
+  it('still accepts the original WhatsApp-only secret names', () => {
+    const config = loadConfig(complete);
+    assert.equal(config.whatsappEnabled, true);
+    assert.equal(config.messengerEnabled, false);
+    assert.equal(config.appSecret, APP_SECRET);
+    assert.equal(config.verifyToken, 'verify');
+  });
+
+  it('wants a phone number id once WhatsApp is switched on', () => {
+    assert.throws(
+      () => loadConfig({ ...messengerOnly, WHATSAPP_TOKEN: 'token' }),
+      /WHATSAPP_PHONE_NUMBER_ID/,
+    );
   });
 
   it('applies defaults for everything optional', () => {
@@ -208,7 +295,9 @@ describe('configuration', () => {
     assert.equal(config.maxTokens, 4096);
     assert.equal(config.webhookPath, '/webhook');
     assert.equal(config.historyMessages, 20);
-    assert.ok(config.systemPrompt.includes('WhatsApp'));
+    assert.equal(config.systemPrompt, null);
+    assert.ok(defaultSystemPrompt('whatsapp').includes('WhatsApp'));
+    assert.ok(defaultSystemPrompt('messenger').includes('Messenger'));
   });
 
   it('ignores a non-numeric override instead of producing NaN', () => {
@@ -281,5 +370,76 @@ describe('the request router', () => {
   it('reports misconfiguration instead of crashing', async () => {
     const response = await worker.fetch(new Request('https://bot.example/webhook'), {}, ctx);
     assert.equal(response.status, 500);
+  });
+});
+
+describe('the Messenger flow', () => {
+  let worker;
+  let config;
+  let pending;
+  let sent;
+  const realFetch = globalThis.fetch;
+
+  beforeEach(async () => {
+    worker = (await import('../src/index.js')).default;
+    config = {
+      ANTHROPIC_API_KEY: 'sk-ant-test',
+      META_APP_SECRET: APP_SECRET,
+      META_VERIFY_TOKEN: 'verify-me',
+      MESSENGER_PAGE_TOKEN: 'page-token',
+      MESSENGER_ALLOWED_IDS: '24000000001',
+    };
+    pending = [];
+    sent = [];
+    globalThis.fetch = async (url, init) => {
+      sent.push({ url: String(url), auth: init.headers.Authorization, body: JSON.parse(init.body) });
+      return new Response('{}', { status: 200 });
+    };
+  });
+
+  afterEach(() => {
+    globalThis.fetch = realFetch;
+  });
+
+  async function deliver(payload) {
+    const body = JSON.stringify(payload);
+    const request = new Request('https://bot.example/webhook', {
+      method: 'POST',
+      headers: { 'x-hub-signature-256': await sign(body) },
+      body,
+    });
+    const response = await worker.fetch(request, config, { waitUntil: (p) => pending.push(p) });
+    await Promise.all(pending);
+    return response;
+  }
+
+  it('answers an attachment through the Send API with the page token', async () => {
+    const response = await deliver(
+      pageWebhook([pageMessage('m.1', '24000000001', { attachments: [{ type: 'image', payload: {} }] })]),
+    );
+    assert.equal(response.status, 200);
+    assert.deepEqual(
+      sent.map((call) => call.body.sender_action ?? 'message'),
+      ['mark_seen', 'typing_on', 'message'],
+    );
+    const reply = sent.at(-1);
+    assert.equal(reply.url, 'https://graph.facebook.com/v23.0/me/messages');
+    assert.equal(reply.auth, 'Bearer page-token');
+    assert.deepEqual(reply.body.recipient, { id: '24000000001' });
+    assert.equal(reply.body.messaging_type, 'RESPONSE');
+    assert.match(reply.body.message.text, /only read text/);
+  });
+
+  it('stays silent for a sender who is not on the allowlist', async () => {
+    await deliver(pageWebhook([pageMessage('m.2', '99999', { text: 'hi' })]));
+    assert.deepEqual(sent, []);
+  });
+
+  it('ignores WhatsApp payloads when only Messenger is configured', async () => {
+    const response = await deliver(
+      webhook([{ id: 'wamid.1', from: '24000000001', type: 'image', image: { id: 'x' } }]),
+    );
+    assert.equal(response.status, 200);
+    assert.deepEqual(sent, []);
   });
 });

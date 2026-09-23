@@ -3,6 +3,8 @@
 A Cloudflare Worker that receives WhatsApp messages through the Meta Cloud API,
 asks Claude, and replies. It is self-contained in [`worker/`](../worker) and
 shares nothing with the redesign-outreach pipeline except the repository.
+The same Worker can answer a Facebook Page instead: see
+[MESSENGER-BOT.md](MESSENGER-BOT.md).
 
 ```
 you ──▶ WhatsApp ──▶ Meta Cloud API ──▶ Worker ──▶ Claude API
@@ -57,8 +59,8 @@ the four secrets and deploy:
 ```bash
 npx wrangler secret put ANTHROPIC_API_KEY
 npx wrangler secret put WHATSAPP_TOKEN
-npx wrangler secret put WHATSAPP_APP_SECRET
-npx wrangler secret put WHATSAPP_VERIFY_TOKEN   # any random string you invent
+npx wrangler secret put META_APP_SECRET
+npx wrangler secret put META_VERIFY_TOKEN       # any random string you invent
 
 npm run deploy
 ```
@@ -70,7 +72,7 @@ Deploy prints the Worker URL, e.g. `https://whatsapp-claude-bot.<you>.workers.de
 Under **WhatsApp → Configuration → Webhook**, click **Edit**:
 
 - **Callback URL** — your Worker URL with `/webhook` on the end
-- **Verify token** — the same string you gave `WHATSAPP_VERIFY_TOKEN`
+- **Verify token** — the same string you gave `META_VERIFY_TOKEN`
 
 Save. Meta immediately sends the `GET` handshake; the Worker echoes the
 challenge back and the field list appears. Subscribe to **messages** — that one
@@ -87,8 +89,8 @@ Secrets, set with `wrangler secret put`:
 | --- | --- |
 | `ANTHROPIC_API_KEY` | From [console.anthropic.com](https://console.anthropic.com/settings/keys) |
 | `WHATSAPP_TOKEN` | Meta access token used to send messages |
-| `WHATSAPP_APP_SECRET` | Signs inbound webhooks — this is what keeps the URL from being open to the world |
-| `WHATSAPP_VERIFY_TOKEN` | Shared string for the subscription handshake |
+| `META_APP_SECRET` | Signs inbound webhooks — this is what keeps the URL from being open to the world. `WHATSAPP_APP_SECRET` is accepted too |
+| `META_VERIFY_TOKEN` | Shared string for the subscription handshake. `WHATSAPP_VERIFY_TOKEN` is accepted too |
 
 Plain vars, in `wrangler.toml`:
 
@@ -149,7 +151,7 @@ traffic locally, expose it with a tunnel (`cloudflared tunnel --url
 http://localhost:8787`) and point the Meta webhook at the tunnel URL.
 
 ```bash
-npm test     # 31 tests, no network: signatures, parsing, chunking, routing
+npm test     # no network: signatures, parsing, chunking, routing
 ```
 
 ## Extending it

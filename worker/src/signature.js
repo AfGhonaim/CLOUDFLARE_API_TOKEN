@@ -1,5 +1,5 @@
 /**
- * Webhook authenticity for the Meta WhatsApp Cloud API.
+ * Webhook authenticity for Meta webhooks (WhatsApp Cloud API and Messenger).
  *
  * Meta signs every webhook POST with an HMAC-SHA256 of the *raw* request body,
  * keyed by the app secret, and sends it as `X-Hub-Signature-256: sha256=<hex>`.

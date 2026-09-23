@@ -82,7 +82,8 @@ Sending happens once, per company, after explicit approval.
 
 ## Also in this repository
 
-[`worker/`](worker) is a Cloudflare Worker that answers WhatsApp messages with
-Claude, through the Meta WhatsApp Cloud API. It shares nothing with the outreach
-pipeline — no data, no build step, its own dependencies — and is documented in
+[`worker/`](worker) is a Cloudflare Worker that answers Facebook Messenger and/or
+WhatsApp messages with Claude, through Meta's APIs. It shares nothing with the
+outreach pipeline — no data, no build step, its own dependencies — and is
+documented in [docs/MESSENGER-BOT.md](docs/MESSENGER-BOT.md) and
 [docs/WHATSAPP-BOT.md](docs/WHATSAPP-BOT.md).
