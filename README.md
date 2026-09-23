@@ -36,6 +36,7 @@ scripts/build-dashboard.mjs  regenerates the dashboard, validates the data
 scripts/check-concepts.mjs   fails the build if a disclaimer or the CTA scope is missing
 scripts/smoke.mjs            renders every concept in Chromium at 360/768/1440
 worker/                    unrelated: the WhatsApp bot (see below)
+scripts/facebook-post.mjs  unrelated: posts to a Facebook Page (see below)
 ```
 
 ## Blocked
@@ -86,3 +87,7 @@ Sending happens once, per company, after explicit approval.
 Claude, through the Meta WhatsApp Cloud API. It shares nothing with the outreach
 pipeline — no data, no build step, its own dependencies — and is documented in
 [docs/WHATSAPP-BOT.md](docs/WHATSAPP-BOT.md).
+
+[`scripts/facebook-post.mjs`](scripts/facebook-post.mjs) publishes text, link,
+and photo posts to a Facebook Page through the Graph API, now or scheduled. It
+previews unless given `--yes`. Setup is in [docs/FACEBOOK.md](docs/FACEBOOK.md).
