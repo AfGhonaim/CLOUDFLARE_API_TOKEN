@@ -1,8 +1,8 @@
 /**
  * The Claude call.
  *
- * Non-streaming on purpose: WhatsApp has no concept of a partial message, so
- * there is nothing to stream into — the reply is sent once it is complete.
+ * Non-streaming on purpose: neither WhatsApp nor Messenger has a concept of a
+ * partial message, so there is nothing to stream into — the reply is sent once it is complete.
  */
 
 import Anthropic from '@anthropic-ai/sdk';
@@ -18,14 +18,15 @@ const FALLBACK_BETA = 'server-side-fallback-2026-07-01';
 /**
  * @param {ReturnType<import('./config.js').loadConfig>} config
  * @param {Array<{role: 'user'|'assistant', content: string}>} history full thread, oldest first
+ * @param {string} systemPrompt
  */
-export async function askClaude(config, history) {
+export async function askClaude(config, history, systemPrompt) {
   const client = new Anthropic({ apiKey: config.anthropicApiKey, maxRetries: 2 });
 
   const response = await client.beta.messages.create({
     model: config.model,
     max_tokens: config.maxTokens,
-    system: config.systemPrompt,
+    system: systemPrompt,
     // Chat is latency-sensitive and rarely needs deep reasoning, so effort
     // defaults to "low"; raise CLAUDE_EFFORT for a bot that does harder work.
     output_config: { effort: config.effort },

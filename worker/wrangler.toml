@@ -11,16 +11,23 @@ binding = "CHATS"
 id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
 
 [vars]
-# --- WhatsApp ---
-# The "Phone number ID" from Meta > WhatsApp > API Setup. Not the phone number.
-WHATSAPP_PHONE_NUMBER_ID = "REPLACE_WITH_YOUR_PHONE_NUMBER_ID"
 GRAPH_API_VERSION = "v23.0"
 WEBHOOK_PATH = "/webhook"
 
-# Who may talk to the bot: comma-separated numbers in full international form.
-# Anything not listed is ignored, so a stranger who finds the number cannot
-# spend your API credits. Set it to "*" to deliberately run an open bot.
-ALLOWED_NUMBERS = "REPLACE_WITH_YOUR_NUMBER"
+# --- Facebook Messenger ---
+# Turned on by the MESSENGER_PAGE_TOKEN secret.
+# Who may talk to the bot: comma-separated page-scoped ids (PSIDs). You do not
+# know yours until you message the Page once — `npm run tail` then logs
+# "Ignoring messenger message from <PSID>". Paste it here and redeploy.
+# Set it to "*" to deliberately let anyone who messages the Page use the bot.
+MESSENGER_ALLOWED_IDS = ""
+
+# --- WhatsApp (optional) ---
+# Turned on by the WHATSAPP_TOKEN secret; leave these commented out to skip it.
+# The "Phone number ID" from Meta > WhatsApp > API Setup. Not the phone number.
+# WHATSAPP_PHONE_NUMBER_ID = "REPLACE_WITH_YOUR_PHONE_NUMBER_ID"
+# Comma-separated numbers in full international form, or "*".
+# ALLOWED_NUMBERS = "REPLACE_WITH_YOUR_NUMBER"
 
 # --- Claude ---
 CLAUDE_MODEL = "claude-opus-5"
@@ -35,4 +42,7 @@ HISTORY_TTL_SECONDS = "86400"
 # SYSTEM_PROMPT is optional; src/config.js ships a WhatsApp-tuned default.
 
 # Secrets are NOT set here. Use `wrangler secret put <NAME>` for each of:
-#   ANTHROPIC_API_KEY, WHATSAPP_TOKEN, WHATSAPP_APP_SECRET, WHATSAPP_VERIFY_TOKEN
+#   ANTHROPIC_API_KEY, META_APP_SECRET, META_VERIFY_TOKEN
+# plus one or both channels:
+#   MESSENGER_PAGE_TOKEN          (Facebook Messenger)
+#   WHATSAPP_TOKEN                (WhatsApp)

@@ -24,24 +24,24 @@ export function trimHistory(messages, maxMessages) {
   return trimmed;
 }
 
-export async function loadHistory(config, waId) {
+export async function loadHistory(config, contactKey) {
   if (!config.chats) return [];
-  const stored = await config.chats.get(HISTORY_PREFIX + waId, { type: 'json' });
+  const stored = await config.chats.get(HISTORY_PREFIX + contactKey, { type: 'json' });
   return Array.isArray(stored?.messages) ? stored.messages : [];
 }
 
-export async function saveHistory(config, waId, messages) {
+export async function saveHistory(config, contactKey, messages) {
   if (!config.chats) return;
   await config.chats.put(
-    HISTORY_PREFIX + waId,
+    HISTORY_PREFIX + contactKey,
     JSON.stringify({ messages: trimHistory(messages, config.historyMessages), updatedAt: Date.now() }),
     { expirationTtl: Math.max(config.historyTtlSeconds, MIN_TTL) },
   );
 }
 
-export async function clearHistory(config, waId) {
+export async function clearHistory(config, contactKey) {
   if (!config.chats) return;
-  await config.chats.delete(HISTORY_PREFIX + waId);
+  await config.chats.delete(HISTORY_PREFIX + contactKey);
 }
 
 /**
