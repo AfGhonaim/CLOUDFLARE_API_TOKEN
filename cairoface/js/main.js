@@ -6,6 +6,7 @@
   "use strict";
 
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var lite = document.documentElement.classList.contains("lite");
   var mqFlow = window.matchMedia("(max-width: 768px)");
   var vh = window.innerHeight;
 
@@ -90,10 +91,10 @@
   /* film splits live inside beats; tail splits reveal on viewport pass */
   var beatSplits = [];
   var tailSplits = [];
-  document.querySelectorAll("[data-split-progress]").forEach(function (el) {
+  document.querySelectorAll(lite ? "[data-none]" : "[data-split-progress]").forEach(function (el) {
     beatSplits.push({ el: el, beat: el.closest("[data-beat]"), chars: splitChars(el), lit: -1 });
   });
-  document.querySelectorAll("[data-split]").forEach(function (el) {
+  document.querySelectorAll(lite ? "[data-none]" : "[data-split]").forEach(function (el) {
     tailSplits.push({ el: el, chars: splitChars(el), lit: -1 });
   });
 
@@ -124,6 +125,7 @@
       });
     });
     CF.tailTop = tailEl ? tailEl.offsetTop : document.body.scrollHeight;
+    CF.frameDirty = true;
   }
   CF.measure = measure;
 
@@ -440,7 +442,9 @@
     { url: "https://youtu.be/8oVS-dnPylE", name: "The CairoFACE experience", quote: "“Every face has a story. Every moment leaves a mark.”" },
     { url: "https://youtu.be/qT0nvXh8fsg", name: "More than a congress", quote: "Three days. One unforgettable experience." },
     { url: "https://youtu.be/kWD2o55SZt0", name: "Official opening ceremony", quote: "Where the world's leading minds in facial aesthetics meet." },
-    { url: "https://youtu.be/0F1GqVavjiw", name: "Cadaver course — CairoFACE 2026", quote: "Turn knowledge into practical skills through immersive training." }
+    { url: "https://youtu.be/0F1GqVavjiw", name: "Cadaver course — CairoFACE 2026", quote: "Turn knowledge into practical skills through immersive training." },
+    { url: "https://youtu.be/zg2hZR_ZOs0", name: "Behind the scenes of the live surgeries", quote: "Watch every move, every decision and every detail unfold." },
+    { url: "https://youtu.be/c6PKIvG1HGM", name: "Inside the CairoFACE courses", quote: "Take a look at what happens inside the hands-on courses." }
   ];
   function videoEmbed(v) {
     var m = v.match(/(?:youtu\.be\/|[?&]v=|shorts\/|embed\/)([\w-]{6,})/);
@@ -507,9 +511,23 @@
         var p = reel.play();
         if (p && p.catch) p.catch(function () { /* autoplay refused: poster stays */ });
       }
-      reel.preload = "auto";
-      if (reel.readyState >= 3) { go(); }
-      else { reel.addEventListener("canplay", go, { once: true }); reel.load(); }
+      function begin() {
+        reel.preload = "auto";
+        if (reel.readyState >= 3) { go(); }
+        else { reel.addEventListener("canplay", go, { once: true }); reel.load(); }
+      }
+      /* Cloudflare Pages answers a Range request with the whole file (200, no Accept-Ranges).
+         iOS Safari — and some Android builds — will not stream a video from a server that cannot
+         range-request, so the clip sits on its first frame. It is only ~1 MB: fetch it once and
+         hand the element a local blob URL, which every browser plays. If the fetch fails, fall
+         back to the network source as before. */
+      var srcEl = reel.querySelector("source");
+      var reelURL = srcEl ? srcEl.getAttribute("src") : "";
+      if (window.fetch && reelURL && window.URL && URL.createObjectURL) {
+        fetch(reelURL).then(function (r) { if (!r.ok) throw new Error(r.status); return r.blob(); })
+          .then(function (b) { reel.src = URL.createObjectURL(b); begin(); })
+          .catch(begin);
+      } else { begin(); }
     }
     /* the hero is always above the fold, so arm it directly — an
        IntersectionObserver here simply never fired for this element, and
@@ -517,9 +535,35 @@
        window load so it does not compete with first paint. */
     if (document.readyState === "complete") setTimeout(armReel, 400);
     else window.addEventListener("load", function () { setTimeout(armReel, 400); });
+    /* Phones: the clip is 5 s and ramps dark -> bright. Looping it whole snapped back
+       to the dark first frame every 5 s (it landed right when part two of the hero
+       appeared and read as "the video starts again"). So it plays through ONCE for
+       the intro, then repeats only its bright part, from LOOP_FROM to the end: she
+       never drops back to the dark opening. Desktop keeps the plain loop. */
+    var phoneReel = window.matchMedia("(max-width: 768px)").matches;
+    if (phoneReel) {
+      /* The clip brightens from luma ~20 at 0 s to ~138 at 5 s (measured). 3.3 s is
+         already ~120, so repeating 3.3 s -> end keeps her bright with a barely
+         visible seam; 1.7 s was ~70 and jumped visibly on every repeat. */
+      var LOOP_FROM = 3.3;
+      reel.loop = false;
+      var watching = false;
+      var resume = function () { if (reel.paused && !reel.ended && !document.hidden) reel.play().catch(function () {}); };
+      var watchReel = function () {
+        if (reel.paused || reel.ended || document.hidden) { watching = false; return; }
+        /* jump back a hair before the end so there is no stall on the last frame */
+        if (reel.duration && reel.currentTime >= reel.duration - 0.05) reel.currentTime = LOOP_FROM;
+        requestAnimationFrame(watchReel);
+      };
+      reel.addEventListener("playing", function () { if (!watching) { watching = true; requestAnimationFrame(watchReel); } });
+      reel.addEventListener("ended", function () { reel.currentTime = LOOP_FROM; reel.play().catch(function () {}); });
+      /* a seek must never leave it parked on a dark frame: some phones pause after one */
+      reel.addEventListener("seeked", resume);
+      reel.addEventListener("pause", function () { setTimeout(resume, 60); });
+    }
     /* it loops, and the clip ramps dark -> bright, so dip across the seam */
     reel.addEventListener("timeupdate", function () {
-      if (!reel.duration) return;
+      if (!reel.duration || phoneReel) return;
       reel.classList.toggle("is-looping", reel.duration - reel.currentTime < 0.36);
     });
     reel.addEventListener("seeked", function () { reel.classList.remove("is-looping"); });
@@ -776,13 +820,11 @@
      loop); the arrows swap which four prints it is holding. */
   var fan = document.getElementById("photoFan");
   if (fan) {
-    /* [l, r, l2, r2, centre] — the four real Cairo FACE images the client
-       supplied. Four prints across five slots, so one repeats per set; the
-       repeat always sits in an outer slot, never beside its twin. */
+    /* [l, r, l2, r2, centre] — real photographs from Cairo FACE 2026, taken
+       from the summit's own Instagram posts (10 prints, two sets of five). */
     var SETS = [
-      ["img/ev-artwork.jpg?v=164", "img/ev-dates.jpg?v=164", "img/ev-abstract.jpg?v=164", "img/ev-artwork.jpg?v=164", "img/ev-hero.jpg?v=164"],
-      ["img/ev-hero.jpg?v=164", "img/ev-artwork.jpg?v=164", "img/ev-abstract.jpg?v=164", "img/ev-hero.jpg?v=164", "img/ev-dates.jpg?v=164"],
-      ["img/ev-abstract.jpg?v=164", "img/ev-hero.jpg?v=164", "img/ev-dates.jpg?v=164", "img/ev-abstract.jpg?v=164", "img/ev-artwork.jpg?v=164"]
+      ["img/event/ev-119.jpg", "img/event/ev-81.jpg", "img/event/ev-58.jpg", "img/event/ev-66.jpg", "img/event/ev-65.jpg"],
+      ["img/event/ev-76.jpg", "img/event/ev-70.jpg", "img/event/ev-111.jpg", "img/event/ev-102.jpg", "img/event/ev-52.jpg"]
     ];
     var order = [".photo-fan--l", ".photo-fan--r", ".photo-fan--l2", ".photo-fan--r2"];
     SETS.forEach(function (set) { set.forEach(function (src) { new Image().src = src; }); });
@@ -836,7 +878,7 @@
     if (!rail || reduced) return;
     var t = null, paused = false;
     function tick() {
-      if (paused || rail.hidden) return;
+      if (paused || rail.hidden || Date.now() - (+rail.dataset.navAt || 0) < 12000) return;
       var atEnd = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4;
       rail.scrollTo({ left: atEnd ? 0 : rail.scrollLeft + rail.clientWidth * 0.8, behavior: "smooth" });
     }
@@ -867,9 +909,36 @@
       var copy = el.cloneNode(true);
       copy.setAttribute("aria-hidden", "true");
       copy.tabIndex = -1;
+      /* A clone captures whatever state its original was in at this instant,
+         and nothing observes it afterwards - so a card cloned before it had
+         revealed kept `filter: saturate(.35)` for good, and the rail showed
+         some portraits in colour beside others in grey. The duplicate exists
+         to make the loop seamless, not to arrive a second time: freeze it in
+         the revealed state. */
+      revealWithin(copy);
       track.appendChild(copy);
     });
     track.dataset.looped = "1";
+
+    /* The originals have the mirror of the same problem. `.scard` reveals on a
+       vertical test - the observer's intersection, and the sweep's
+       `top < 88% of viewport` - but this rail scrolls sideways, so a card
+       parked off-screen to the right never intersects and never reveals. It
+       then slides into view already moving, and brightens mid-travel beside a
+       neighbour that is already lit. The rail is one object: once it is on
+       screen, every card in it is. */
+    if ("IntersectionObserver" in window) {
+      var railIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          railIO.unobserve(e.target);
+          revealWithin(track);
+        });
+      }, { threshold: 0.1 });
+      railIO.observe(rail);
+    } else {
+      revealWithin(track);
+    }
     var dur = parseInt(rail.getAttribute("data-speed"), 10);
     if (dur) track.style.setProperty("--dur", dur + "s");
     /* touch: hold to stop on a card, release to resume */
@@ -880,8 +949,6 @@
     rail.addEventListener("touchcancel", free, { passive: true });
   }
   if (!reduced) {
-    var docRail = document.querySelector(".docrail");
-    if (docRail) autoRail(docRail, ".docrail__track");
     document.querySelectorAll(".logorail").forEach(function (r) { autoRail(r, ".logorail__track"); });
   }
 
@@ -913,6 +980,12 @@
   [["whoscene", ".whoitem", "data-focus"], ["gainscene", ".gitem", "data-glow"]].forEach(function (cfg) {
     var scene = document.getElementById(cfg[0]);
     if (!scene) return;
+    /* Phones keep the face in ONE fixed, colourful state: the chapters do not
+       re-tone, re-zoom or re-light it as they change (that is a desktop effect) */
+    if (cfg[0] === "gainscene" && window.matchMedia("(max-width: 768px)").matches) {
+      scene.setAttribute("data-glow", "class");
+      return;
+    }
     var items = scene.querySelectorAll(cfg[1]);
     items.forEach(function (it) {
       function on() {
@@ -942,6 +1015,7 @@
   (function gainScroll() {
     var scene = document.getElementById("gainscene");
     if (!scene || reduced) return;
+    if (window.matchMedia("(max-width: 768px)").matches) return;   /* phones: fixed colourful face, see above */
     var items = [].slice.call(scene.querySelectorAll(".gitem"));
     var stage = scene.querySelector(".gainscene__stage");
     var svg = scene.querySelector(".gv-map");
@@ -1107,6 +1181,27 @@
   })();
 
 
+  /* ---------- desktop: pinned headings also settle as a timed character wave ----------
+     The pinned beats are short (the client asked for quick scrolling), so a scrub-driven reveal
+     is over within a few dozen pixels and reads as "no animation". Instead the heading types in
+     over ~1.4 s the moment it comes into view. */
+  if (!mqFlow.matches && !reduced && "IntersectionObserver" in window) {
+    var dWaveIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        dWaveIO.unobserve(e.target);
+        e.target.__waveDone = true;
+        var chars = e.target.querySelectorAll(".ch");
+        chars.forEach(function (ch2, i) {
+          ch2.style.transitionDelay = Math.min(i * 24, 1500) + "ms";
+          ch2.classList.add("on");
+        });
+        setTimeout(function () { chars.forEach(function (ch2) { ch2.style.transitionDelay = ""; }); }, 2400);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll("[data-split-progress]").forEach(function (el) { dWaveIO.observe(el); });
+  }
+
   /* ---------- mobile life: timed type waves + scenes that breathe ----------
      Small screens lack the long scrub distances and hover states that make
      desktop feel alive. Instead: headings settle as a timed character wave
@@ -1135,6 +1230,8 @@
     [["whoscene", ".whoitem", "data-focus"], ["gainscene", ".gitem", "data-glow"]].forEach(function (cfg) {
       var scene = document.getElementById(cfg[0]);
       if (!scene) return;
+      /* phones: the face stays fixed and colourful — no auto-cycling either */
+      if (cfg[0] === "gainscene" && window.matchMedia("(max-width: 768px)").matches) { scene.setAttribute("data-glow", "class"); return; }
       var items = scene.querySelectorAll(cfg[1]);
       var idx = 0, timer = null;
       function step() {
@@ -1248,15 +1345,32 @@
   var heroBeat = heroSec ? heroSec.querySelector("[data-beat]") : null;
   var activeIdx = -1;
 
+  /* Nothing here moves unless the page does. The loop used to read a few
+     dozen bounding rects every frame — even parked at the FAQ — which forces
+     layout each time (~70 ms of main thread per second on a desktop). Skip
+     the body while the scroll position is unchanged, no beat is still easing
+     toward its target, and nothing has invalidated the measurements. */
+  var lastY = -1, beatsSettled = false;
+  CF.frameDirty = true;
+  ["click", "keyup", "transitionend"].forEach(function (t) {
+    document.addEventListener(t, function () { CF.frameDirty = true; }, true);
+  });
+  window.addEventListener("load", function () { CF.frameDirty = true; });
+  /* a lazy image landing moves everything beneath it */
+  document.addEventListener("load", function () { CF.frameDirty = true; }, true);
+
   function frame() {
-    CF.y = window.scrollY;
+    var y0 = window.scrollY;
+    if (y0 === lastY && !CF.frameDirty && beatsSettled) { requestAnimationFrame(frame); return; }
+    lastY = y0; CF.frameDirty = false;
+    CF.y = y0;
     var sample = CF.y + vh * 0.5;
 
     /* depth: the header gains weight in motion; the footer contour drifts
        on its own plane */
     if (menuPill) menuPill.classList.toggle("scrolling", CF.y > 5);
     /* mobile depth: tagged layers drift by their distance to centre frame */
-    if (!reduced && mqFlow.matches) {
+    if (!reduced && !lite && mqFlow.matches) {
       for (var pe2 = 0; pe2 < parEls.length; pe2++) {
         var pr2 = parEls[pe2].el.getBoundingClientRect();
         if (pr2.bottom < -60 || pr2.top > vh + 60) continue;
@@ -1294,12 +1408,12 @@
     if (inTail) {
       if (activeIdx !== 99) {
         activeIdx = 99;
-        header.dataset.theme = CF.y + 80 >= document.querySelector(".footer").offsetTop ? "dark" : "light";
+        header.dataset.theme = CF.y + 80 >= document.querySelector(".footer").offsetTop ? "light" : "light";
         document.body.dataset.sceneTheme = "light";
         railDots.forEach(function (d, j) { d.setAttribute("aria-current", j === railDots.length - 1 ? "true" : "false"); });
       }
       /* footer flips the header back to dark as it arrives */
-      header.dataset.theme = CF.y + 100 >= document.querySelector(".footer").offsetTop - vh * 0.5 ? "dark" : "light";
+      header.dataset.theme = CF.y + 100 >= document.querySelector(".footer").offsetTop - vh * 0.5 ? "light" : "light";
     } else if (idx !== activeIdx && idx >= 0) {
       activeIdx = idx;
       header.dataset.theme = CF.scenes[idx].theme === "dark" ? "dark" : "light";
@@ -1310,13 +1424,31 @@
     /* the floating pill steps aside in scenes that carry their own CTAs,
        and whenever it would physically overlap any section button */
     if (stack) {
-      var pillHide = key === "hero" || key === "plan";
+      /* the floating Register pill stays on every section — it only steps aside where a Register
+         button is already on screen (so there are never two), in the hero, and over the footer */
+      var pillHide = key === "hero";
       if (!pillHide) {
-        var sr = stack.getBoundingClientRect();
-        for (var pc = 0; pc < pageCtas.length; pc++) {
-          var cr = pageCtas[pc].getBoundingClientRect();
-          if (cr.bottom > sr.top - 28 && cr.top < sr.bottom + 28 &&
-              cr.right > sr.left - 28 && cr.left < sr.right + 28) { pillHide = true; break; }
+        var regs = document.querySelectorAll('main a[href*="regist"], main button[data-register]');
+        for (var pc = 0; pc < regs.length; pc++) {
+          var cr = regs[pc].getBoundingClientRect();
+          if (cr.width && cr.bottom > 0 && cr.top < vh && cr.right > 0 && cr.left < innerWidth) { pillHide = true; break; }
+        }
+        var ft = document.querySelector(".footer");
+        if (ft && ft.getBoundingClientRect().top < vh) pillHide = true;
+        /* the two partner sections carry their own "Become a partner / sponsor" buttons — no floating pill over the logos */
+        ["#partners", "#sponsors"].forEach(function (sel) {
+          var ez = document.querySelector(sel);
+          if (!ez) return;
+          var zr = ez.getBoundingClientRect();
+          if (zr.top < vh && zr.bottom > 0) pillHide = true;
+        });
+        /* and never on top of any other section button */
+        if (!pillHide) {
+          var sr = stack.getBoundingClientRect();
+          for (var pq = 0; pq < pageCtas.length; pq++) {
+            var qr = pageCtas[pq].getBoundingClientRect();
+            if (qr.width && qr.bottom > sr.top - 24 && qr.top < sr.bottom + 24 && qr.right > sr.left - 24 && qr.left < sr.right + 24) { pillHide = true; break; }
+          }
         }
       }
       stack.classList.toggle("pillstack--hidden", pillHide);
@@ -1325,8 +1457,12 @@
     if (heroBeat) heroSec.classList.toggle("hero--p2", (heroBeat.__p || 0) > 0.28);
 
     /* beats: progress var + splits */
+    beatsSettled = true;
     if (!reduced && !document.body.classList.contains("film-flat-static")) {
       beatEls.forEach(function (b) {
+        /* lite: only the hero and the beat holding the reel video still scrub */
+        if (lite && b.__keepLite === undefined) b.__keepLite = !!(b.querySelector("#whoReel") || b.closest("#hero"));
+        if (lite && !b.__keepLite) return;
         var r = b.getBoundingClientRect();
         if (r.bottom < -vh || r.top > vh * 2) return;
         var denom = r.height - vh;
@@ -1343,6 +1479,7 @@
           p = prev + (p - prev) * 0.18;
           if (Math.abs(p - prev) < 0.0005) p = prev;
         }
+        if (b.__p === undefined || Math.abs(p - b.__p) > 0.0004) beatsSettled = false;
         b.style.setProperty("--bp", p.toFixed(3));
         b.__p = p;
       });
@@ -1376,7 +1513,17 @@
   }
 
   measure();
-  window.addEventListener("resize", measure);
+  /* Same toolbar story: a small height-only change keeps every measurement
+     valid (the scenes are sized in vh), so only refresh the viewport height. */
+  var mw = window.innerWidth, mh = window.innerHeight;
+  window.addEventListener("resize", function () {
+    if (window.innerWidth === mw && Math.abs(window.innerHeight - mh) < mh * 0.25) {
+      vh = window.innerHeight; CF.vh = vh; CF.frameDirty = true;
+      return;
+    }
+    mw = window.innerWidth; mh = window.innerHeight;
+    measure();
+  });
   window.addEventListener("load", measure);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   requestAnimationFrame(frame);
@@ -1388,4 +1535,124 @@
       window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
     });
   }
+})();
+
+/* founder card: a visible "flip" button (and a tap anywhere on touch) turns it; a one-time peek shows it can move */
+(function () {
+  var f = document.getElementById("leadFlip"), hint = document.getElementById("leadHint");
+  if (!f) return;
+  var touch = !window.matchMedia("(hover: hover)").matches;
+  var txt = hint && hint.querySelector(".leadflip__hint-t");
+  function label() {
+    var on = f.classList.contains("is-flipped");
+    if (txt) txt.textContent = on ? (touch ? "Tap to flip back" : "Flip back") : (touch ? "Tap to flip" : "Hover or click to flip");
+    if (hint) hint.setAttribute("aria-label", on ? "Flip back to Dr. Samir Ghoraba, Founder" : "Flip the card to meet Dr. Hani Nabil, Honorary President");
+  }
+  function toggle() { f.classList.toggle("is-flipped"); label(); }
+  label();
+  if (hint) hint.addEventListener("click", function (e) { e.stopPropagation(); toggle(); });
+  f.addEventListener("click", function (e) {
+    if (e.target.closest("a") && !f.classList.contains("is-flipped")) return;
+    if (e.target.closest("#leadHint")) return;
+    if (!touch) return;
+    toggle();
+  });
+  f.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+  /* peek: when the card first scrolls into view it tips over a little and back, so people know it turns */
+  if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var io = new IntersectionObserver(function (en) {
+      if (!en[0].isIntersecting || en[0].intersectionRatio < 0.6) return;
+      io.disconnect();
+      setTimeout(function () { f.classList.add("is-peek"); setTimeout(function () { f.classList.remove("is-peek"); }, 1300); }, 500);
+    }, { threshold: [0.6] });
+    io.observe(f);
+  }
+})();
+
+/* hero video (A to B): loads as a blob on iOS (Cloudflare Pages has no Range support there), then loops.
+   Autoplay can be refused (iOS Low Power Mode, data saver) — so it is retried on every sign of life
+   (canplay, first touch/scroll/click, tab shown) and, if the browser still will not PLAY it, the
+   playhead is stepped by hand, which iOS does allow. */
+(function () {
+  var v = document.getElementById("hpVideo");
+  if (!v) return;
+  v.muted = true; v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "");
+  var srcEl = v.querySelector("source"), url = srcEl && srcEl.getAttribute("src");
+  var manual = false, last = 0, raf = 0;
+  var play = function () { if (manual) return; var p = v.play(); if (p && p.catch) p.catch(function () {}); };
+  var ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  if (ios && window.fetch && url) {
+    fetch(url).then(function (r) { return r.ok ? r.blob() : Promise.reject(); })
+      .then(function (b) { v.src = URL.createObjectURL(new Blob([b], { type: "video/mp4" })); v.load(); play(); })
+      .catch(function () { play(); });
+  } else play();
+  ["canplay", "loadeddata"].forEach(function (ev) { v.addEventListener(ev, play); });
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) play(); });
+  ["touchstart", "pointerdown", "click", "scroll", "keydown"].forEach(function (ev) {
+    var once = function () { document.removeEventListener(ev, once, true); play(); };
+    document.addEventListener(ev, once, { capture: true, passive: true });
+  });
+
+  /* hand-stepped playback when play() is refused */
+  function tick(t) {
+    raf = requestAnimationFrame(tick);
+    if (document.hidden || !v.duration) return;
+    if (!v.paused) { cancelAnimationFrame(raf); manual = false; return; }   /* real playback took over */
+    if (t - last < 70) return;                                              /* ~14 steps/s keeps iOS seeks cheap */
+    var dt = last ? Math.min((t - last) / 1000, 0.2) : 0; last = t;
+    var nt = v.currentTime + dt;
+    try { v.currentTime = nt >= v.duration - 0.05 ? 0 : nt; } catch (e) {}
+  }
+  function startManual() {
+    if (manual || document.hidden || !v.paused || v.readyState < 2) return;
+    manual = true; last = 0; raf = requestAnimationFrame(tick);
+  }
+  setTimeout(startManual, 1800);
+  setTimeout(startManual, 4000);
+  v.addEventListener("play", function () { manual = false; cancelAnimationFrame(raf); });
+})();
+
+
+/* ---------- video-only intro ----------
+   The page opens on the hero video alone (no header, no copy, no dots); after ~5 s — or on the first
+   tap / scroll / key — the content fades in. Clicking the logo takes you back to the top and replays it. */
+(function () {
+  var INTRO_MS = 5000, MIN_MS = 1200;
+  var body = document.body, timer = 0, started = 0, armed = false;
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function release() {
+    clearTimeout(timer); armed = false;
+    body.classList.remove("intro");
+    if (window.CF) CF.frameDirty = true;
+  }
+  function run(replay) {
+    if (reduced) return;
+    clearTimeout(timer);
+    started = Date.now(); armed = true;
+    body.classList.add("intro");
+    var v = document.getElementById("hpVideo");
+    if (v && replay) { try { v.currentTime = 0; } catch (e) {} var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    timer = setTimeout(release, INTRO_MS);
+  }
+  window.CF = window.CF || {};
+  CF.runIntro = function () { run(true); };
+  if (body.classList.contains("intro")) run(false);
+  /* skip: any real input after a short beat */
+  ["pointerdown", "wheel", "keydown", "touchstart"].forEach(function (ev) {
+    window.addEventListener(ev, function () {
+      if (armed && Date.now() - started > MIN_MS) release();
+    }, { passive: true });
+  });
+  /* the logo (header + side menu) replays the intro on the home page */
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest("a.header__brand, .sidemenu__head a, .sidemenu a:has(.sidemenu__logo)");
+    if (!a) return;
+    var href = a.getAttribute("href") || "";
+    if (href !== "#top" && href !== "index.html" && href !== "/" && href !== "./") return;
+    e.preventDefault();
+    var menu = document.getElementById("sidemenu");
+    if (menu && menu.classList.contains("is-open")) { var cb = menu.querySelector(".sidemenu__close"); if (cb) cb.click(); }
+    window.scrollTo({ top: 0, behavior: "auto" });
+    run(true);
+  });
 })();

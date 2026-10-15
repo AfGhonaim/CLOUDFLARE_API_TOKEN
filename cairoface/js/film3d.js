@@ -12,24 +12,42 @@
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const canvas = document.getElementById("film");
 
+const PHONE_NO_GL = window.matchMedia("(max-width: 768px)").matches;   /* see below: no GL on phones */
 let THREE = null;
-if (!reduced && canvas) {
+/* lite (phones): no WebGL film — the flat gradients and native scrolling stay */
+const lite = document.documentElement.classList.contains("lite");
+if (!reduced && !lite && !PHONE_NO_GL && canvas) {
   try {
-    THREE = await import("https://unpkg.com/three@0.160.0/build/three.module.js");
+    THREE = await import("./vendor/three.module.js");
   } catch (e) {
     console.warn("film3d: three.js unavailable — flat gradients stay", e);
   }
 }
 
-if (THREE && canvas) {
+/* Phones: every section now has its own opaque white ground, so the WebGL film is never
+   visible there — and a full-screen GL canvas is the heaviest thing on a mid-range Android.
+   Keep the layout mode (pinned hero, scene map) but never create the renderer. */
+if (PHONE_NO_GL && canvas) {
+  const CFp = window.CF || {};
+  canvas.style.display = "none";
+  document.body.classList.remove("film-flat");
+  document.body.classList.add("film-gl");
+  if (CFp.measure) { CFp.measure(); requestAnimationFrame(() => CFp.measure()); }
+}
+
+if (THREE && canvas && !PHONE_NO_GL) {
   const CF = window.CF || { y: 0, vh: innerHeight, scenes: [], tailTop: 1e9 };
 
+  /* Phones: no MSAA and a lower pixel ratio. The film is a soft backdrop, so
+     the saving (a third of the fill cost) is invisible, and Safari keeps its
+     frame rate. */
+  const phone = window.matchMedia("(max-width: 768px), (pointer: coarse)").matches;
   const renderer = new THREE.WebGLRenderer({
     canvas,
-    antialias: true,
+    antialias: !phone,
     powerPreference: "high-performance",
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, phone ? 1.25 : 1.75));
 
   const scene = new THREE.Scene();
   const world = new THREE.Group();
@@ -40,17 +58,17 @@ if (THREE && canvas) {
 
   /* ---------- palette ---------- */
   const C = {
-    navy: new THREE.Color("#051C29"), /* matches img/face3-src.png ground exactly */
+    navy: new THREE.Color("#051C29"), /* matches img/face3-src.jpg ground exactly */
     deep: new THREE.Color("#16405F"),
     steel: new THREE.Color("#2F5B85"),
-    brand: new THREE.Color("#5288B0"),
-    pale: new THREE.Color("#EEF4F9"),
+    brand: new THREE.Color("#A83020"),
+    pale: new THREE.Color("#F5EBE0"),
     mist: new THREE.Color("#E7EFF6"),
     white: new THREE.Color("#FFFFFF"),
   };
   const SCENE_BG = {
     hero: C.navy,
-    manifesto: C.white, /* ramped from navy inside its range */
+    manifesto: C.deep, /* ramped from navy inside its range */
     numbers: C.pale,
     plan: C.steel,
     days: C.navy,
@@ -140,7 +158,11 @@ if (THREE && canvas) {
     depthWrite: false, blending: THREE.AdditiveBlending,
   }));
   glow.position.set(0, 0.6, -2);
-  bloomG.add(glow);
+  /* Phones skip the bloom. It is a screen-filling additive sprite (scaled up to
+     ~49x): a heavy overdraw that washed the stats scene out to light blue under
+     white text and showed as coloured blotches on iPhone GPUs. The scene keeps
+     its deep navy ground and the text stays readable. */
+  if (!phone) bloomG.add(glow);
   register("manifesto", bloomG);
 
   /* ---------- scene 3 · numbers: quiet rings ---------- */
@@ -207,7 +229,14 @@ if (THREE && canvas) {
     my = (e.clientY / innerHeight) * 2 - 1;
   });
 
+  let rw = 0, rh = 0;
   function resize() {
+    /* Mobile Safari fires resize continuously while its toolbar slides in and
+       out — the height changes by ~10% and nothing else does. Re-allocating
+       a full-screen WebGL buffer on each of those events was the scroll-up
+       lag. A height-only change of under a quarter keeps the buffer. */
+    if (rw && innerWidth === rw && Math.abs(innerHeight - rh) < rh * 0.25) return;
+    rw = innerWidth; rh = innerHeight;
     renderer.setSize(innerWidth, innerHeight, false);
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
@@ -243,10 +272,12 @@ if (THREE && canvas) {
       if (w > 0) {
         tmp.copy(SCENE_BG[entry.key] || C.pale);
         if (entry.key === "manifesto") {
-          /* the bloom ramp: white completes just as the hero's edge leaves,
-             so the crossfade rides the scene weights — no flash, no seam */
+          /* the ramp used to bloom to white here. The brief is that the
+             hero's blue carries on through this scene, so it now settles on
+             the brand deep instead - same easing, same seam handling, it
+             simply stops somewhere blue. */
           const pm = Math.max(0, Math.min(1, (sample - (start - vh * 0.4)) / (vh * 0.45)));
-          tmp.copy(C.navy).lerp(C.white, pm * pm * (3 - 2 * pm));
+          tmp.copy(C.navy).lerp(C.deep, pm * pm * (3 - 2 * pm));
         }
         bg.r += tmp.r * w; bg.g += tmp.g * w; bg.b += tmp.b * w;
         total += w;

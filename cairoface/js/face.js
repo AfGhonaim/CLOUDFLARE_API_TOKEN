@@ -1,5 +1,5 @@
 /* Cairo FACE — the hero visual (luxury facial-aesthetics composition).
-   Layer 1 is the reference artwork itself (img/face3-src.png, cropped to the
+   Layer 1 is the reference artwork itself (img/face3-src.jpg, cropped to the
    portrait side and edge-masked) — it is NEVER redrawn or altered. Above it,
    independent transparent layers animate:
      2 · facial-mapping lines (hand-set paths riding the artwork's own curves,
@@ -17,6 +17,21 @@
 
   var canvas = document.getElementById("faceCanvas");
   if (!canvas) return;
+  /* lite (phones): the still portrait behind the hero copy is enough */
+  if (document.documentElement.classList.contains("lite")) return;
+  /* Phones: the canvas is never shown (styles.css sets it to opacity 0 — the
+     hero is the model photograph now), so drawing it is pure waste of GPU
+     memory and battery. Release the intro gate on the same 3 s clock and stop. */
+  /* The hero is a photograph/video now and the CSS hides this layer (display: none on
+     .hero__face), which left the canvas 0x0 and made every frame throw
+     "createRadialGradient: non-finite" — thousands of errors a minute and wasted CPU. If the
+     layer is not displayed there is nothing to draw: release the intro gate and stop. */
+  var faceBox = canvas.parentElement;
+  var faceHidden = faceBox && window.getComputedStyle(faceBox).display === "none";
+  if (faceHidden || window.matchMedia("(max-width: 768px)").matches) {
+    /* the intro gate is owned by main.js (video-only intro) */
+    return;
+  }
 
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var ctx = canvas.getContext("2d");
@@ -40,10 +55,10 @@
   refImg.onerror = function () {
     /* a dropped request on a flaky connection must not leave the hero empty */
     if (imgTries++ < 4) setTimeout(function () {
-      refImg.src = "img/face3-src.png?r=" + imgTries;
+      refImg.src = "img/face3-src.jpg?r=" + imgTries;
     }, 700 * imgTries);
   };
-  refImg.src = "img/face3-src.png";
+  refImg.src = "img/face3-src.jpg";
   refImg.onload = function () {
     art.width = AW; art.height = IH;
     var a = art.getContext("2d");
@@ -324,9 +339,20 @@
 
   /* ---------- layout: image space → canvas ---------- */
   var dpr = 1, cw = 0, ch = 0, S = 0, OX = 0, OY = 0, alphaAll = 1, PAR = 1;
+  var lw = window.innerWidth, lh = window.innerHeight;
+  /* resize listener: mobile Safari's toolbar sliding in and out changes only
+     the height, by ~10%, and fires this continuously — rebuilding the canvas
+     each time was part of the scroll-up lag. Direct callers still get a full
+     layout(). */
+  function onResize() {
+    if (window.innerWidth === lw && Math.abs(window.innerHeight - lh) < lh * 0.25) return false;
+    lw = window.innerWidth; lh = window.innerHeight;
+    layout();
+    return true;
+  }
   function layout() {
     mobile = window.innerWidth <= 800;
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2);
     var box = canvas.parentElement.getBoundingClientRect();
     cw = Math.max(1, box.width); ch = Math.max(1, box.height);
     canvas.width = Math.round(cw * dpr);
@@ -360,7 +386,7 @@
       my = ((e.clientY - r.top) / r.height) * 2 - 1;
       mpx = e.clientX - r.left; mpy = e.clientY - r.top;
     });
-    window.addEventListener("resize", layout);
+    window.addEventListener("resize", onResize);
   }
 
   function scrollProgress() {
@@ -1063,7 +1089,7 @@
 
   if (reduced) {
     draw(0, 0);
-    window.addEventListener("resize", function () { layout(); draw(0, 0); });
+    window.addEventListener("resize", function () { if (onResize()) draw(0, 0); });
   } else {
     requestAnimationFrame(frame);
   }

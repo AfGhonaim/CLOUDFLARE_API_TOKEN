@@ -107,7 +107,7 @@
    flat navy gradient from reading as a dead background */
 .pdepth__glow {
   background:
-    radial-gradient(46% 40% at 18% 22%, rgba(82, 136, 176, 0.40), transparent 70%),
+    radial-gradient(46% 40% at 18% 22%, rgba(168, 48, 32, 0.40), transparent 70%),
     radial-gradient(40% 42% at 84% 74%, rgba(47, 102, 147, 0.34), transparent 72%);
   animation: moDrift 22s ease-in-out infinite alternate;
 }
@@ -198,7 +198,7 @@
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(38% 34% at var(--atmo-x, 16%) 18%, rgba(82, 136, 176, 0.16), transparent 70%),
+    radial-gradient(38% 34% at var(--atmo-x, 16%) 18%, rgba(168, 48, 32, 0.16), transparent 70%),
     radial-gradient(34% 38% at var(--atmo-x2, 88%) 82%, rgba(47, 102, 147, 0.13), transparent 72%);
   animation: moDrift 26s ease-in-out infinite alternate;
 }
@@ -239,7 +239,7 @@
   opacity: 0;
   background: radial-gradient(
     26% 46% at var(--hx, 50%) var(--hy, 50%),
-    rgba(82, 136, 176, 0.22),
+    rgba(168, 48, 32, 0.22),
     transparent 72%
   );
   transition: opacity 0.4s var(--ease-ui);

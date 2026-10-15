@@ -3,27 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico?v=r1" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=r1" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png?v=r1" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=r1" />
+  <meta name="theme-color" content="#0A1A28" />
   <title>Create an account — Cairo FACE World Summit 2027</title>
   <meta name="description" content="Create a Cairo FACE World Summit 2027 account to register, submit an abstract and plan your days." />
   <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
-  <link href="https://fonts.cdnfonts.com/css/graphik" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css?v=303" />
-  <link rel="stylesheet" href="css/pages.css?v=303" />
-  <link rel="stylesheet" href="css/motion.css?v=303" />
+  <link rel="stylesheet" href="css/styles.css?v=385" />
+  <link rel="stylesheet" href="css/pages.css?v=354" />
+  <link rel="stylesheet" href="css/motion.css?v=348" />
   <script>document.documentElement.classList.add("mo-ready");setTimeout(function(){if(!window.__mo)document.documentElement.classList.remove("mo-ready");},2500);</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="css/theme.css?v=133r" />
 </head>
 <body class="film-flat page">
-  <header class="header" id="header" data-theme="dark">
+  <header class="header" id="header" data-theme="light">
     <div class="nav-container">
       <div class="menu-pill" id="menuPill">
         <a class="header__brand" href="index.html" aria-label="Cairo FACE — home">
-          <img class="header__logo header__logo--full" src="img/logo-blue.png" alt="Cairo FACE" />
-          <img class="header__logo header__logo--mark" src="img/logo-white.png" alt="Cairo FACE" />
+          <img class="header__logo header__logo--full" src="img/logo-cface.png?v=r1" alt="Cairo FACE" />
+          <img class="header__logo header__logo--mark" src="img/logo-cface-white.png" alt="Cairo FACE" />
         </a>
         <nav class="header__nav" aria-label="Primary">
           <a class="navpill" href="agenda.html"><span class="navpill__flip"><span>Agenda</span><span aria-hidden="true">Agenda</span></span></a>
           <a class="navpill" href="abstract.html"><span class="navpill__flip"><span>Abstract</span><span aria-hidden="true">Abstract</span></span></a>
-          <a class="navpill" href="index.html#gain"><span class="navpill__flip"><span>Courses</span><span aria-hidden="true">Courses</span></span></a>
+          <a class="navpill" href="courses.html"><span class="navpill__flip"><span>Courses</span><span aria-hidden="true">Courses</span></span></a>
           <a class="navpill" href="index.html#events"><span class="navpill__flip"><span>Events</span><span aria-hidden="true">Events</span></span></a>
           <a class="navpill" href="speakers.html"><span class="navpill__flip"><span>Speakers</span><span aria-hidden="true">Speakers</span></span></a>
           <a class="navpill" href="exhibition.html"><span class="navpill__flip"><span>Exhibition</span><span aria-hidden="true">Exhibition</span></span></a>
@@ -46,13 +53,13 @@
     <div class="sidemenu__scrim" data-close></div>
     <nav class="sidemenu__panel" aria-label="Mobile">
       <div class="sidemenu__head">
-        <img class="sidemenu__logo" src="img/logo-white.png" alt="Cairo FACE" />
+        <img class="sidemenu__logo" src="img/logo-cface.png?v=r1" alt="Cairo FACE" />
         <button class="sidemenu__close" data-close aria-label="Close menu"><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
       </div>
       <div class="sidemenu__links">
         <a href="agenda.html">Agenda</a>
         <a href="abstract.html">Abstract</a>
-        <a href="index.html#gain">Courses</a>
+        <a href="courses.html">Courses</a>
         <a href="index.html#events">Events</a>
         <a href="speakers.html">Speakers</a>
         <a href="exhibition.html">Exhibition</a>
@@ -60,7 +67,7 @@
         <a href="about.html">About us</a>
       </div>
       <a class="btn-pill sidemenu__cta" href="registration.html">Register now<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
-      <p class="label label--dim sidemenu__meta">21–23 April 2027 · Cairo, Egypt</p>
+      <p class="label label--dim sidemenu__meta">April 21–23, 2027 · Cairo, Egypt</p>
     </nav>
   </div>
 
@@ -79,7 +86,7 @@
   <main>
   <section class="authshell" data-mode="signup">
     <span class="authshell__still" aria-hidden="true"></span>
-    <video class="authshell__reel" src="media/hero-reel.mp4" poster="img/cf-hero.jpg?v=303"
+    <video class="authshell__reel" src="media/hero-reel.mp4" poster="img/cf-hero.jpg?v=345"
            autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
     <span class="authshell__glow" aria-hidden="true"></span>
     <span class="authshell__grain" aria-hidden="true"></span>
@@ -186,7 +193,7 @@
 
           <div class="checkrow">
             <input type="checkbox" id="suTerms" name="terms" required />
-            <label for="suTerms">I agree to the <a class="authlink" href="https://cairoface.com/terms-and-conditions" target="_blank" rel="noopener">terms of service</a> and the <a class="authlink" href="https://cairoface.com/privacy-policy" target="_blank" rel="noopener">privacy policy</a>.</label>
+            <label for="suTerms">I agree to the <a class="authlink" href="terms.html" target="_blank" rel="noopener">terms of service</a> and the <a class="authlink" href="privacy.html" target="_blank" rel="noopener">privacy policy</a>.</label>
           </div>
 
           <div class="formactions">
@@ -199,7 +206,7 @@
           <a class="btn-pill" data-official href="https://cairoface.com/login" target="_blank" rel="noopener">Continue to create your account<span class="circle-arrow circle-arrow--sm" aria-hidden="true">&#8594;</span></a>
         </div>
 
-        <p class="authterms">By creating an account, you agree to our <a class="authlink" href="https://cairoface.com/terms-and-conditions" target="_blank" rel="noopener">Terms &amp; Service</a>.</p>
+        <p class="authterms">By creating an account, you agree to our <a class="authlink" href="terms.html" target="_blank" rel="noopener">Terms &amp; Service</a>.</p>
       </div>
       <div class="authpanel" data-panel="login">
         <h1>Log in to Cairo FACE</h1>
@@ -240,11 +247,11 @@
   </main>
 
 
-  <script src="js/doctors.js?v=303" defer></script>
-  <script src="js/page.js?v=303" defer></script>
-  <script src="js/motion.js?v=303" defer></script>
-  <script src="js/contactdock.js?v=303" defer></script>
-  <script src="js/auth.js?v=303" defer></script>
-  <script src="js/pageout.js?v=303" defer></script>
+  <script src="js/doctors.js?v=346" defer></script>
+  <script src="js/page.js?v=346" defer></script>
+  <script src="js/motion.js?v=345" defer></script>
+  <script src="js/contactdock.js?v=345" defer></script>
+  <script src="js/auth.js?v=345" defer></script>
+  <script src="js/pageout.js?v=345" defer></script>
 </body>
 </html>

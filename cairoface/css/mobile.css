@@ -1,0 +1,219 @@
+/* Cairo FACE — phone layer.
+   Loaded last, so it wins on source order. Everything here is scoped to
+   phones (<= 768px) and to the things that read badly there: a hero that sat
+   high, a founder photo unlike the other founders, an over-cropped face, cards
+   too big for the screen, pinned beats that spent a screen or two on one line,
+   and rails that ignored a swipe. Desktop is untouched. */
+@media (max-width: 768px) {
+
+  /* ---- auto landing: each swipe settles on a section top ----
+     `proximity`, not `mandatory`: sections taller than the screen must stay
+     scrollable, and the pinned film beats keep their scrub. */
+  /* Page-level snap is OFF. `proximity` snaps to the NEAREST section top when a
+     swipe ends, which is often the one above — the page pulled the reader back
+     up mid-scroll. The card rails keep their own horizontal snapping. */
+  html { scroll-snap-type: none; scroll-padding-top: 0; }
+
+  /* ---- hero: centred, on both axes ---- */
+  .beat__inner--hero { padding-block: 88px 96px; justify-content: center; }
+  .hero__copy, .hero__act { text-align: center; align-items: center; margin-inline: auto; }
+  .hero__act > * { margin-inline: auto; }
+  .hero__tags { justify-content: center; }
+  .hero__bg--model { background-size: auto 92%; background-position: 50% 46%; }
+
+  /* ---- hero video: smaller, centred behind the copy, with NO visible edges ----
+     The clip is 480x656, so a box ~330px wide plays at close to native sharpness.
+     The soft edge is a plain gradient OVERLAY that ends in the hero's own ground
+     colour, not a CSS mask + filter on the <video>: masking and filtering a video
+     forces iOS to render it off-screen every frame, which is what made the move
+     from part one to part two of the hero stutter. The overlay is fully solid at
+     the box's borders, so the video dissolves into the ground with no rectangle. */
+  .hero__reel {
+    top: 50%; left: 50%; right: auto; bottom: auto;
+    width: min(92vw, 350px); height: auto; aspect-ratio: 480 / 656;
+    transform: translate(-50%, -50%);
+    object-fit: cover; object-position: 50% 50%;
+    filter: none; -webkit-mask-image: none; mask-image: none;
+  }
+  .hero__reel.is-playing { opacity: 1; }
+  /* The intro shows her ALONE at full strength. The moment it ends (body.intro is
+     removed, which is when part one - title, tagline, tags - starts to appear) she
+     eases down to 50% and stays there through part two, so the copy reads easily. */
+  body:not(.intro) .hero__reel { opacity: 0.5 !important; transition: opacity 1.1s var(--ease-ui); }
+  .hero__bg::before {
+    content: ""; position: absolute; z-index: 2; pointer-events: none;
+    top: 50%; left: 50%; width: calc(min(92vw, 350px) + 8px); aspect-ratio: 480 / 656;   /* a hair larger than the video so no border row peeks out */
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse closest-side at 50% 50%, rgba(5, 28, 41, 0) 56%, rgba(5, 28, 41, 0.6) 78%, #051C29 100%);
+  }
+  .hero__bg { --veil: 0.1; }
+  /* The girl was dim because two dark scrims sat ON TOP of the video: the hero
+     background's own wash (up to 82% navy in the middle) and the centred copy
+     scrim (72%). Both are now light; the headline gets a soft shadow instead, so
+     the copy still wins over her without hiding her. */
+  .hero__bg::after { background: radial-gradient(ellipse 100% 70% at 50% 50%, rgba(5, 28, 41, 0.28) 0%, rgba(5, 28, 41, 0.12) 58%, rgba(5, 28, 41, 0) 100%); }
+  .hero__face::after { background: none; }
+  .hero__copy { text-shadow: 0 1px 14px rgba(5, 28, 41, 0.72), 0 0 3px rgba(5, 28, 41, 0.5); }
+  /* the two gradient-coloured lines have a transparent fill, so a text-shadow would
+     show THROUGH the letters and grey them; a drop-shadow follows the glyph shapes */
+  .hero__tagline, .hero__lead { text-shadow: none; filter: drop-shadow(0 1px 12px rgba(5, 28, 41, 0.85)); }
+
+  /* ---- what else ran under the scroll from part one to part two ---- */
+  .hero__bg--model { display: none; }                     /* the big drifting photo: the video's poster shows the same picture */
+  .hero__bg-layer:not(.hero__bg--model) { display: none; } /* hover-only backgrounds with filters: no hover on a phone */
+  .hero__tagline, .hero__lead { animation: none !important; }   /* a shine that repainted the text every frame */
+  .hero__act { will-change: transform, opacity; }         /* own compositor layers for the two acts */
+
+  /* ---- founder: the same portrait card as the rest of the rail ---- */
+  .leadfeature {
+    padding: 0; gap: 0; overflow: hidden; max-width: 320px; margin-inline: auto;
+    border-radius: 20px; box-shadow: none; border: 1px solid var(--hairline-light); background: #fff;
+  }
+  .leadfeature__flag {
+    position: relative; inset: auto; width: 100%; height: auto; aspect-ratio: 4 / 5;
+    margin: 0; border-radius: 0; box-shadow: none;
+  }
+  .leadfeature__flag img { object-position: 50% 18%; }
+  .leadfeature figcaption { padding: 16px 18px 20px; gap: 4px; }
+  .leadfeature figcaption .heading { font-size: 17px; }
+  .leadfeature .body { margin: 4px 0 12px; font-size: 14px; }
+
+  /* ---- courses (what you'll gain): the face, smaller and whole ---- */
+  .gainscene__stage {
+    aspect-ratio: 630 / 840; width: min(86vw, 380px); max-height: none; margin: 0 auto;   /* the desktop face is 380px wide */
+  }
+  .gv-base { object-position: 50% 50%; }   /* same crop as desktop */
+
+  /* The face stays in ONE fixed, colourful state on phones (main.js pins the
+     scene to "class"): no re-toning, no push-in, and the chapters below are not
+     dimmed or shrunk as the reader passes them. Those are desktop effects. */
+  .gainscene .gv-base {
+    --face-zoom: 1.02 !important; transition: none;
+    filter: grayscale(0) brightness(1.08) saturate(1.1) !important;
+  }
+  .gainscene[data-glow] .gitem { filter: none !important; }
+  .gainscene[data-glow] .gitem:not(.is-focus) .gitem__row { transform: none; }
+
+  /* ---- experts: smaller cards, two heads peek in ---- */
+  .docrail__track { --gap: 12px; padding-inline: 16px; }
+  /* The portraits are 9:16. A 9:13 card cropped the bottom off and scaled the
+     face up so the name sat over the mouth; matching the source shows the whole
+     head-and-shoulders and leaves the name on the torso. Narrower to keep the
+     card compact. Snap is mandatory so the first card is never left half cut. */
+  .docrail .scard { width: 56vw; max-width: 232px; border-radius: 20px; }   /* height follows the 4:5 photo + text panel */
+  .docrail { scroll-snap-type: x mandatory; }
+  .speakers { padding-block: 64px; }
+
+  /* ---- event experience: no two-screen pin for one headline ---- */
+  #events .beat, #events .beat:has(.cardgrid) { height: auto; }
+  #events .beat > .beat__inner { position: static; min-height: 0; padding-block: 48px; }
+  #events .beat:first-child > .beat__inner { padding-bottom: 8px; }
+  #events .beat:has(.cardgrid) > .beat__inner { padding-top: 16px; padding-bottom: 64px; gap: 16px; }
+
+  /* ---- scroll cost on iPhone ----
+     backdrop-filter re-samples and re-blurs whatever is behind the element
+     on every frame; the floating header sits over content that is always
+     moving, so it was the costliest single thing on a scrolling page. Solid
+     glass instead: same look, no per-frame blur. */
+  * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .header[data-theme="dark"] .menu-pill.scrolling { background: #071e32; }
+  .header[data-theme="light"] .menu-pill.scrolling { background: #ffffff; }
+
+  /* ---- rails answer a swipe ---- */
+  .leadrail { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }   /* no snap: it drifts on its own */
+  .leadrail::-webkit-scrollbar { display: none; }
+  .leadrail__track { animation: none; padding-inline: 16px; }
+  .leadrail .leadcard { scroll-snap-align: start; }
+  /* snap to the padded edge, not the raw one, or the gutter scrolls away */
+  .leadrail, .docrail { scroll-padding-inline: 16px; }
+  .leadrail__nav { justify-content: center; margin-top: 20px; }
+}
+
+/* ======================================================================
+   LITE BUILD — html.lite, set in <head> on phones (<= 768px).
+   Native scrolling, no 3D film (film3d.js and face.js stand down, so the
+   site's own flat mode applies: scenes on gradients, beats un-pinned), no
+   per-letter headline scrub, no scroll-driven parallax, no reel video, and
+   no ambient loops inside the scenes. Cards and sections still arrive once,
+   as they enter. Desktop is untouched.
+   ====================================================================== */
+/* (the who scene and the hero keep their own motion) */
+html.lite .scene:not(#who):not(#hero) *, html.lite .scene:not(#who):not(#hero) *::before, html.lite .scene:not(#who):not(#hero) *::after { animation: none !important; }
+html.lite [data-par] { transform: none !important; }
+html.lite .scene .gainscene__atmo, html.lite .scene .ga-haze { display: none; }
+
+/* every scene reads as one calm screen, not a two-screen pin */
+html.lite .scene:not(#hero) .beat__inner { padding-block: 56px; }
+html.lite #summit .beat__inner, html.lite #about .beat__inner { padding-block: 64px; }
+
+
+/* the pinned heights (145vh...) outrank the flat-mode auto height; in lite
+   nothing is pinned EXCEPT the hero, so every other beat is exactly its
+   content */
+html.lite .scene:not(#hero) .beat, html.lite .scene:not(#hero) .beat--tall,
+html.lite #summit .beat--tall, html.lite #events .beat { height: auto !important; min-height: 0 !important; }
+html.lite .scene:not(#hero) .beat__inner { position: static !important; }
+
+/* ---- the hero is the original: pinned, two acts, scrubbed by scroll ----
+   Flat mode (no WebGL film) would show both acts at once; these restore the
+   scrub formulas from styles.css with enough specificity to win. */
+html.lite #hero .beat--tall { height: 165vh !important; }
+html.lite #hero .beat__inner { position: sticky !important; top: 0; min-height: 100svh; padding-block: 88px 96px; }
+html.lite #hero .hero__copy { display: grid; }
+html.lite #hero .hero__act { position: relative; }
+html.lite #hero .hero__act--1 {
+  opacity: calc(1 - clamp(0, (var(--bp, 0) - 0.14) * 5, 1));
+  transform: translateY(calc(var(--bp, 0) * -130px));
+}
+html.lite #hero .hero__act--2 {
+  margin-top: 9vh;
+  opacity: calc(clamp(0, (var(--bp, 0) - 0.24) * 5, 1) - clamp(0, (var(--bp, 0) - 0.8) * 6, 1));
+  transform: translateY(calc(52px - clamp(0, (var(--bp, 0) - 0.24) * 5, 1) * 52px - clamp(0, (var(--bp, 0) - 0.8) * 6, 1) * 90px));
+  pointer-events: none;
+}
+html.lite #hero.hero--p2 .hero__act--1 { pointer-events: none; }
+html.lite #hero.hero--p2 .hero__act--2 { pointer-events: auto; }
+
+/* ---- client round: phone hero + footer ---- */
+@media (max-width: 768px) {
+  /* act 1: pills drop below the face instead of covering it */
+  .hero__tags { margin-top: clamp(72px, 16vh, 140px); }
+  /* act 2: smaller date card, bigger endorsement logos */
+  .hero__cal { transform: scale(.86); transform-origin: center top; margin-bottom: -10px; }
+  .hero__orgs { gap: 14px; }
+  .hero__orgs .orgchip { padding: 10px 16px; }
+  .hero__orgs .orgchip img { height: 44px; max-height: 44px; max-width: 120px; width: auto; }
+  /* the chat + register buttons no longer sit on the copyright line */
+  .footer__legal { padding-bottom: 96px; }
+}
+
+/* ---- phone footer: brand on top, two tidy link columns, contact card, social row ---- */
+@media (max-width: 768px) {
+  .footer { text-align: left; padding-top: 40px; }
+  .footer__grid { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
+  .footer__col { align-items: flex-start; gap: 10px; }
+  .footer__col--brand   { grid-column: 1 / -1; order: 0; flex-direction: row; justify-content: space-between; align-items: center; text-align: left; }
+  .footer__col--brand .footer__logo { width: 120px; }
+  .footer__col--nav     { grid-column: 1; order: 1; }
+  .footer__col--about   { grid-column: 2; order: 2; }
+  .footer__col--contact { grid-column: 1 / -1; order: 3; padding: 16px; background: var(--paper-2); border-radius: 16px; }
+  .footer__col--social  { grid-column: 1 / -1; order: 4; flex-direction: row; align-items: center; justify-content: space-between; }
+  .footer__col .label { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); opacity: 1; }
+  .footer__links { gap: 0; }
+  .footer__links a { font-size: 15px; padding-block: 8px; }
+  .footer__legal { align-items: flex-start; border-top: 1px solid rgba(12,24,40,.1); margin-top: 24px; padding-top: 16px; text-align: left; }
+}
+
+/* abstract page: the feature block's copy must not push past the screen edge */
+@media (max-width: 768px) {
+  .afeature__inner { grid-template-columns: minmax(0, 1fr); }
+  .afeature__copy, .afeature__copy h2, .afeature__copy p { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+}
+
+/* Android/phones: only the hero stays pinned. The numbers and "Why Cairo FACE" beats flow like
+   normal content — a pinned stage on a phone left a blank screen of scrolling after the copy
+   and fights Chrome's collapsing address bar. main.js reveals flowing beats on viewport entry. */
+@media (max-width: 768px) {
+  #summit .beat, #about .beat { height: auto !important; }
+  #summit .beat__inner, #about .beat__inner { position: static !important; min-height: 0 !important; padding-block: 64px !important; }
+}

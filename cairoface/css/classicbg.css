@@ -1,0 +1,92 @@
+/* =====================================================================
+   CLASSIC BACKGROUNDS — the exact section grounds from the Oct-1 version (fc7986d2),
+   on today's site: dark hero / dark "summit" / light "why" / dark "gain" / dark "who" / dark "event experience",
+   then the tinted + white tail. Content, videos, red accents and navy text are today's.
+   ===================================================================== */
+#hero { background: #051C29 !important; }
+#summit { background: linear-gradient(180deg, #051C29 0%, #16405F 62%, #16405F 100%) !important; color: #fff !important; }
+#about { background: #EEF4F9 !important; }
+#gain { background: linear-gradient(180deg, #2F5B85 0%, #16405F 100%) !important; color: #fff !important; }
+#who { background: #051C29 !important; color: #fff !important; }
+#events { background: radial-gradient(120% 74% at 50% 0%, rgba(82,136,176,.30) 0%, rgba(11,34,51,0) 62%), radial-gradient(80% 52% at 82% 88%, rgba(38,86,122,.24) 0%, rgba(11,34,51,0) 70%), linear-gradient(180deg, #0C2537 0%, #0B2233 46%, #081B29 100%) !important; color: #fff !important; position: relative; }
+#events::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0; background: linear-gradient(104deg, rgba(255,255,255,.05) 0%, rgba(255,255,255,0) 38%); }
+.tail--tint { background: #F2F6FA !important; }
+body:not(.film-gl) #summit, body:not(.film-gl) #gain, body:not(.film-gl) #who, body:not(.film-gl) #events { color: #fff !important; }
+/* dark sections: headings letters dim -> white, text, labels, cards */
+#summit [data-split-progress], #gain [data-split-progress], #who [data-split-progress], #events [data-split-progress] { --ch-dim: rgba(255,255,255,.28); --ch-lit: #fff; }
+#summit h2, #gain h2, #who h2, #events h2, #summit h3, #gain h3, #who h3, #events h3, #summit .heading, #who .heading, #events .heading { color: #fff; }
+#summit .label, #summit .label--dim, #gain .label, #gain .label--dim, #who .label, #who .label--dim, #events .label, #events .label--dim { color: #BFD9EC; opacity: 1; }
+#summit .label--head::before, #gain .label--head::before, #who .label--head::before, #events .label--head::before { background: #E05030; }
+#summit p, #summit .body, #summit .body-l, #gain .body, #gain .body-l, #gain .gainhead__lede, #who p, #who .body, #events .body, #events p { color: rgba(255,255,255,.78); }
+#summit strong, #who strong { color: #fff; }
+#summit .stat, #summit .stat *, #summit [class*="num"], #summit [class*="count"] { color: #fff; }
+#events .infocard { background: linear-gradient(155deg, rgba(255,255,255,.10), rgba(255,255,255,.03)); border: 1px solid rgba(255,255,255,.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 10px 30px rgba(2,12,20,.22); -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3); }
+#events .infocard .body { color: rgba(255,255,255,.74); }
+#events .infocard .label, #events .infocard .label--dim { color: #BFD9EC; }
+#who .whoitem h3, #who .whoitem .heading { color: #fff; }
+#who .whoitem p { color: rgba(255,255,255,.72); }
+#who .whoitem__n, #who [class*="whoitem"] [class*="num"] { color: #E05030; }
+#gain .gitem h3 { color: #F5EBE0; }
+#gain .gitem .body, #gain .gitem.is-focus .body { color: rgba(245,235,224,.78); }
+#gain .gitem__num { color: #F0D8C4; }
+#gain .gitem::after, #gain .gitem.is-focus::after { background: linear-gradient(90deg, rgba(240,216,196,.35), rgba(240,216,196,0)); }
+#gain .gconnect__line { stroke: rgba(240,216,196,.6); }
+#gain .gconnect__end { fill: #F0D8C4; }
+#gain .gpt__halo { fill: rgba(240,216,196,.12); } #gain .gpt__ring { stroke: rgba(240,216,196,.6); } #gain .gpt__core { fill: #F0D8C4; }
+#gain .gv-base { filter: none; }
+#gain .gainscene__atmo { display: block !important; }
+#summit .pill-sm, #gain .pill-sm, #who .pill-sm, #who .btn-pill + .pill-sm, #events .btn-ghost { color: #fff; border-color: rgba(255,255,255,.42); background: rgba(255,255,255,.06); }
+#summit .pill-sm .circle-arrow, #gain .pill-sm .circle-arrow, #who .pill-sm .circle-arrow { background: #A83020; color: #fff; }
+/* the video panel in Who should attend fades into the dark ground (edges already feathered) */
+#who .whoscene__stage { background: transparent !important; }
+
+/* =====================================================================
+   DARK HERO with the supplied A-to-B video, re-lit for a dark ground (subject cut from the white
+   frame and laid on the page's own #051C29, so there is no box and no border)
+   ===================================================================== */
+#hero, [data-scene="hero"] { --scan: 168, 224, 255; background: #051C29 !important; color: #fff !important; }
+.hp-zoom { animation: none !important; transform: none; }
+.hp-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; mix-blend-mode: normal !important; opacity: 1; transform: translateZ(0); }
+.hp-stage { -webkit-mask-image: none !important; mask-image: none !important; }
+.hp-stage::after { content: ""; position: absolute; inset: -1px; z-index: 2; pointer-events: none;
+  background:
+    linear-gradient(to right, #051C29 0%, rgba(5,28,41,0) 14%, rgba(5,28,41,0) 86%, #051C29 100%),
+    linear-gradient(to bottom, #051C29 0%, rgba(5,28,41,0) 16%, rgba(5,28,41,0) 84%, #051C29 100%) !important; }
+#hero .hp-vig { display: block !important; background: linear-gradient(90deg, rgba(5,28,41,.7) 0%, rgba(5,28,41,.3) 38%, transparent 58%) !important; }
+#hero .hero__act::before { display: none !important; }
+#hero .hero__title, #hero .hero__title-text, #hero .hero__welcome, #hero .hero__welcome strong, #hero .hero__cal .heading, #hero .hero__cal-days, #hero .hero__cal-month { color: #fff !important; }
+#hero .hero__tagline, #hero .hero__lead { background: none !important; -webkit-text-fill-color: #EAF2FB !important; color: #EAF2FB !important; }
+#hero .label, #hero .label--dim, #hero .hero__orgs-label, #hero .hero__cal .hero__cal-place .label, #hero .hero__cal .label--dim { color: rgba(234,242,251,.78) !important; }
+#hero .hero__tag { background: rgba(12,24,40,.55) !important; border: 1px solid rgba(var(--scan), .28); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #fff; }
+#hero .hero__cal { background: rgba(255,255,255,.08); border: 1px solid rgba(var(--scan), .24); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: none; }
+#hero .btn-ghost { color: #fff !important; border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.06); }
+#hero .hero__copy { text-shadow: 0 1px 14px rgba(5,28,41,.6); }
+#hero .orgplus { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.35); }
+@media (min-width: 1181px) and (min-aspect-ratio: 5/4) { .hp-stage { left: auto !important; right: -3% !important; top: 50% !important; width: calc(100svh * 16 / 9 * .95) !important; transform: translateY(-50%) !important; } }
+@media (min-width: 769px) and (max-width: 1180px) and (min-aspect-ratio: 5/4) { .hp-stage { left: auto !important; right: -6% !important; top: 50% !important; width: calc(100svh * 16 / 9 * .95) !important; transform: translateY(-50%) !important; } }
+/* phones / portrait: the video sits centred behind the copy — full strength at first, 45% once the copy is up */
+@media (max-width: 768px), (min-width: 769px) and (max-aspect-ratio: 5/4) {
+  .hp-stage { left: 50% !important; right: auto !important; top: 50% !important; width: 720px !important; transform: translate(-50%, -50%) !important; }
+  .hp-video { opacity: 1; transition: opacity 1.4s ease; }
+  body:not(.intro) .hp-video { opacity: .55; }
+  #hero .hp-vig { background: linear-gradient(180deg, rgba(5,28,41,.35) 0%, rgba(5,28,41,.4) 45%, rgba(5,28,41,.8) 100%) !important; }
+  #hero .hero__copy { text-shadow: 0 1px 12px rgba(5,28,41,.9), 0 0 3px rgba(5,28,41,.8); }
+}
+#summit dd, #summit .stat dd, #summit dd small, #summit .stat small { color: #fff; }
+#summit .motif { color: #8CCDE2; opacity: .5; }
+#summit .label--dim { color: #BFD9EC; }
+/* Who should attend (dark): beat the light-theme rules in theme.css */
+#who .whoitem .body { color: rgba(255,255,255,.74); }
+#who .whoitem .heading { color: #fff; }
+#who .whoitem.is-focus .heading { color: #CFE4F2; }
+#who .whoitem__num, #who .whoitem .whoitem__num { color: #E8A89A; }
+#who .whoitem.is-focus::after { background: #8CCDE2; }
+#who .whoitem::after { background: rgba(255,255,255,.2); }
+
+/* HERO copy centred on the page (desktop): the video becomes the full-bleed backdrop, the copy sits in the middle on a soft dark veil */
+@media (min-width: 769px) and (min-aspect-ratio: 5/4) {
+  .hp-stage { left: 50% !important; right: auto !important; top: 50% !important; width: max(100%, calc(100svh * 16 / 9)) !important; transform: translate(-50%, -50%) !important; }
+  #hero .hero__copy { max-width: 820px !important; margin-inline: auto !important; }
+  #hero .hp-vig { background: radial-gradient(ellipse 46% 62% at 50% 50%, rgba(5,28,41,.74) 0%, rgba(5,28,41,.55) 58%, rgba(5,28,41,.12) 100%) !important; }
+  #hero .hero__tags, #hero .hero__ctas, #hero .hero__orgs { justify-content: center; }
+}

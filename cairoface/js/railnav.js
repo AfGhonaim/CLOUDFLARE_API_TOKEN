@@ -21,6 +21,8 @@
 
       var mq = nav.getAttribute("data-marquee");
       var track = mq && document.querySelector(mq);
+      /* a marquee that is not animating (phones swipe it natively) is just a scroller */
+      if (track && getComputedStyle(track).animationName === "none") track = null;
       if (track) {
         var dur = parseFloat(getComputedStyle(track).animationDuration) || 72;
         var first = track.firstElementChild;
@@ -35,8 +37,18 @@
       var rail = document.querySelector(nav.getAttribute("data-rail"));
       if (!rail) return;
       var card = rail.firstElementChild;
-      var step = card ? card.getBoundingClientRect().width + 28 : rail.clientWidth * 0.8;
-      rail.scrollBy({ left: step * (+b.dataset.dir), behavior: reduced ? "auto" : "smooth" });
+      /* a rail whose only child is a flex track: the card is inside it */
+      if (card && card.childElementCount > 1 && card.scrollWidth > rail.clientWidth * 1.2 && card.getBoundingClientRect().width > rail.clientWidth * 1.2) card = card.firstElementChild;
+      var gapPx = card && card.parentElement ? (parseFloat(getComputedStyle(card.parentElement).columnGap) || 28) : 28;
+      var step = card ? card.getBoundingClientRect().width + gapPx : rail.clientWidth * 0.8;
+      /* the drift timer in main.js reads this so it stops fighting the arrows */
+      rail.dataset.navAt = Date.now();
+      var dir = +b.dataset.dir, max = rail.scrollWidth - rail.clientWidth;
+      var beh = reduced ? "auto" : "smooth";
+      /* wrap at the ends instead of leaving the arrow dead */
+      if (dir > 0 && rail.scrollLeft >= max - 4) rail.scrollTo({ left: 0, behavior: beh });
+      else if (dir < 0 && rail.scrollLeft <= 4) rail.scrollTo({ left: max, behavior: beh });
+      else rail.scrollBy({ left: step * dir, behavior: beh });
     });
   });
 
@@ -51,6 +63,9 @@
     });
   }
   syncNavs();
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("#voiceTabs")) setTimeout(syncNavs, 0);
+  });
   window.addEventListener("resize", syncNavs);
   window.addEventListener("load", syncNavs);
 })();

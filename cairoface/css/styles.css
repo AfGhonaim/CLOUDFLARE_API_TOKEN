@@ -2,23 +2,23 @@
    Cairo FACE World Summit 2027 — scroll-driven WebGL brand film
    Architecture per BUILD_SPEC: fixed canvas (z-0), DOM overlays
    (z-10), header (z-20), rail + CTA pill stack (z-30).
-   Identity unchanged: steel blue #5288B0 + white, circular shapes,
+   Identity unchanged: steel blue #A83020 + white, circular shapes,
    Graphik.
    ================================================================== */
 
 :root {
-  --accent: #5288B0;
-  --accent-strong: #2F6693;
-  --ink: #0A1A28;
+  --accent: #A83020;
+  --accent-strong: #7A2010;
+  --ink: #0C1828;
   --paper: #FFFFFF;
-  --paper-2: #F2F6FA;
-  --wash: rgba(82, 136, 176, 0.08);
+  --paper-2: #F5EBE0;
+  --wash: rgba(168, 48, 32, 0.08);
   --muted-light: rgba(10, 26, 40, 0.6);
   --muted-dark: rgba(255, 255, 255, 0.64);
-  --hairline-light: rgba(82, 136, 176, 0.35);
+  --hairline-light: rgba(168, 48, 32, 0.35);
   --hairline-dark: rgba(255, 255, 255, 0.22);
-  --panel-dark: rgba(15, 38, 58, 0.45);
-  --grad-footer: linear-gradient(180deg, #1B4363 0%, #16405F 55%, #0B2233 100%);
+  --panel-dark: rgba(30, 45, 64, 0.45);
+  --grad-footer: linear-gradient(180deg, #1E2D40 0%, #1E2D40 55%, #141828 100%);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-ui: cubic-bezier(0.4, 0, 0.2, 1);
@@ -39,8 +39,8 @@ html, body { overflow-x: clip; }
 
 body {
   background: var(--paper);
-  color: var(--ink);
-  font-family: "Graphik", Arial, sans-serif;
+  color: var(--navy);
+  font-family: "Outfit", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
@@ -70,7 +70,7 @@ img { max-width: 100%; display: block; }
 .body-l     { font-size: 19px; font-weight: 500; line-height: 1.4; }
 .body       { font-size: 16px; font-weight: 400; line-height: 1.5; }
 .label {
-  font-family: "Graphik", Arial, sans-serif;
+  font-family: "Outfit", Arial, sans-serif;
   font-size: 13px; font-weight: 500; line-height: 1.4;
   letter-spacing: 0.08em;
 }
@@ -96,7 +96,7 @@ img { max-width: 100%; display: block; }
   display: inline-flex; align-items: center; gap: 10px;
   height: 38px; padding-block: 0; padding-inline: 18px 4px; border-radius: 9999px;
   border: 1px solid var(--hairline-light);
-  font-family: "Graphik", Arial, sans-serif;
+  font-family: "Outfit", Arial, sans-serif;
   font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
   transition: border-color 0.3s var(--ease-ui);
   white-space: nowrap;
@@ -190,7 +190,7 @@ body:not(.film-gl) #film { display: none; }
   display: inline-flex; align-items: center; height: 40px; padding: 0 12px;
   border-radius: 12px;
   background: transparent;
-  font-family: "Graphik", Arial, sans-serif;
+  font-family: "Outfit", Arial, sans-serif;
   font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
   transition: background 0.2s var(--ease-ui);
 }
@@ -204,7 +204,7 @@ body:not(.film-gl) #film { display: none; }
 .nav-cta {
   display: inline-flex; align-items: center; height: 40px; padding: 0 16px;
   border-radius: 12px;
-  font-family: "Graphik", Arial, sans-serif;
+  font-family: "Outfit", Arial, sans-serif;
   font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
   white-space: nowrap;
   transition: background 0.35s cubic-bezier(0.6, 0.6, 0, 1), color 0.35s cubic-bezier(0.6, 0.6, 0, 1);
@@ -213,13 +213,13 @@ body:not(.film-gl) #film { display: none; }
 .nav-cta--primary:hover { background: var(--accent-strong); }
 .header[data-theme="dark"] .nav-cta--secondary { color: #fff; background: rgba(255, 255, 255, 0.1); }
 .header[data-theme="dark"] .nav-cta--secondary:hover { background: rgba(255, 255, 255, 0.18); }
-.header[data-theme="light"] .nav-cta--secondary { color: var(--ink); background: rgba(17, 24, 39, 0.05); }
+.header[data-theme="light"] .nav-cta--secondary { color: var(--navy); background: rgba(17, 24, 39, 0.05); }
 .header[data-theme="light"] .nav-cta--secondary:hover { background: rgba(17, 24, 39, 0.1); }
 
 .header[data-theme="dark"] { color: #fff; }
 .header[data-theme="dark"] .navpill { color: #fff; }
-.header[data-theme="light"] { color: var(--ink); }
-.header[data-theme="light"] .navpill { color: var(--ink); }
+.header[data-theme="light"] { color: var(--navy); }
+.header[data-theme="light"] .navpill { color: var(--navy); }
 
 /* ---------------- mobile menu button (shown ≤768px) ---------------- */
 .menu-btn {
@@ -229,7 +229,7 @@ body:not(.film-gl) #film { display: none; }
   background: var(--panel-dark);
   backdrop-filter: blur(12px);
 }
-.header[data-theme="light"] .menu-btn { background: rgba(82, 136, 176, 0.12); }
+.header[data-theme="light"] .menu-btn { background: rgba(168, 48, 32, 0.12); }
 .menu-btn__bar {
   position: absolute; left: 12px; right: 12px; height: 2px;
   border-radius: 2px; background: currentColor;
@@ -292,10 +292,10 @@ body.menu-open .sidemenu__panel { transform: translateX(0); }
   display: flex; justify-content: space-between; align-items: center;
   padding: 14px 4px;
   border-bottom: 1px dashed rgba(255, 255, 255, 0.14);
-  font-family: "Graphik", Arial, sans-serif;
+  font-family: "Outfit", Arial, sans-serif;
   font-size: 15px; font-weight: 500; letter-spacing: 0.08em;
 }
-.sidemenu__links a::after { content: "→"; font-family: "Graphik", sans-serif; opacity: 0.45; }
+.sidemenu__links a::after { content: "→"; font-family: "Outfit", sans-serif; opacity: 0.45; }
 .sidemenu__cta { margin-top: auto; justify-content: space-between; }
 .sidemenu__meta { margin-top: 16px; }
 
@@ -355,7 +355,7 @@ body[data-scene-theme="light"] .rail { --rail-dot: rgba(10, 26, 40, 0.5); }
   padding: 0 14px;
   border-radius: 9999px;
   background: var(--accent); color: #fff;
-  font-family: "Graphik", Arial, sans-serif;
+  font-family: "Outfit", Arial, sans-serif;
   font-size: 14px; font-weight: 600; letter-spacing: 0.04em;
   box-shadow: 0 10px 30px rgba(10, 26, 40, 0.25);
   transition: opacity 0.45s var(--ease-ui), transform 0.45s var(--ease-ui);
@@ -365,7 +365,7 @@ body[data-scene-theme="light"] .rail { --rail-dot: rgba(10, 26, 40, 0.5); }
   flex: 0 0 auto;
   width: 28px; height: 28px; border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.5);
-  font-family: "Graphik", sans-serif; font-size: 13px; line-height: 1;
+  font-family: "Outfit", sans-serif; font-size: 13px; line-height: 1;
   transition: transform 0.3s var(--ease-ui);
 }
 .pill-cta:hover .pill-cta__arrow { transform: translateX(3px); }
@@ -378,7 +378,7 @@ body[data-scene-theme="light"] .rail { --rail-dot: rgba(10, 26, 40, 0.5); }
 /* ---------------- scenes ---------------- */
 .scene { position: relative; z-index: 10; }
 .scene--dark { color: #fff; }
-.scene--white, .scene--pale { color: var(--ink); }
+.scene--white, .scene--pale { color: var(--navy); }
 
 /* 190vh meant 0.9 of a screen where the reader scrolls and nothing moves on
    to the next section. Measured across the page that was 5.8 screens of held
@@ -410,19 +410,19 @@ body[data-scene-theme="light"] .rail { --rail-dot: rgba(10, 26, 40, 0.5); }
 .beat__inner .body { max-width: 62ch; }
 
 /* a film-styled section with its own solid ground (no canvas behind) */
-.scene--solid { background: #051C29; }
+.scene--solid { background: #0C1828; }
 
 /* per-scene fallback + flat-mode backgrounds (canvas paints these live) */
 /* the hero ground is the artwork's ground exactly, and stays opaque even in
    GL mode — so the scroll transition can never lighten behind the artwork
    and reveal its rectangle */
 [data-scene="hero"]                         { background: #051C29; }
-body:not(.film-gl) [data-scene="manifesto"] { background: linear-gradient(180deg, #16405F 0%, #FFFFFF 26%, #FFFFFF 100%); }
-body:not(.film-gl) [data-scene="numbers"]   { background: #EEF4F9; }
-body:not(.film-gl) [data-scene="plan"]      { background: linear-gradient(180deg, #2F5B85 0%, #16405F 100%); }
-body:not(.film-gl) [data-scene="days"]      { background: #0B2233; }
-body:not(.film-gl) [data-scene="voices"]    { background: #E7EFF6; }
-body:not(.film-gl) [data-scene="abstract"]  { background: linear-gradient(180deg, #5288B0 0%, #2F5B85 100%); }
+body:not(.film-gl) [data-scene="manifesto"] { background: linear-gradient(180deg, #0C1828 0%, #1E2D40 62%, #1E2D40 100%); }
+body:not(.film-gl) [data-scene="numbers"]   { background: #F5EBE0; }
+body:not(.film-gl) [data-scene="plan"]      { background: linear-gradient(180deg, #2A3A50 0%, #1E2D40 100%); }
+body:not(.film-gl) [data-scene="days"]      { background: #141828; }
+body:not(.film-gl) [data-scene="voices"]    { background: #F5EBE0; }
+body:not(.film-gl) [data-scene="abstract"]  { background: linear-gradient(180deg, #A83020 0%, #2A3A50 100%); }
 body:not(.film-gl) .beat, body:not(.film-gl) .beat--tall { height: auto; }
 body:not(.film-gl) .beat__inner { position: static; min-height: 0; padding-block: 96px; }
 
@@ -465,7 +465,7 @@ body:not(.intro) .hero__act--1 > *:nth-child(5) { transition-delay: 0.52s; }
   border-radius: 12px;
   border: 1px dashed rgba(var(--tagc), 0.55);
   color: rgb(var(--tagc));
-  font-family: "Graphik", Arial, sans-serif;
+  font-family: "Outfit", Arial, sans-serif;
   font-size: 13px; font-weight: 500; letter-spacing: 0.08em;
   backdrop-filter: blur(6px);
 }
@@ -476,7 +476,7 @@ body:not(.intro) .hero__act--1 > *:nth-child(5) { transition-delay: 0.52s; }
 }
 .hero__tag::after {
   content: ""; position: absolute; inset: 0; z-index: 0;
-  background-image: linear-gradient(rgba(5, 28, 41, 0.42), rgba(5, 28, 41, 0.52)), var(--tagimg);
+  background-image: linear-gradient(rgba(12, 24, 40, 0.42), rgba(12, 24, 40, 0.52)), var(--tagimg);
   background-size: cover; background-position: center;
   opacity: 0; transform: scale(1.14);
   transition: opacity 0.5s var(--ease-ui), transform 3.5s var(--ease-out);
@@ -484,7 +484,7 @@ body:not(.intro) .hero__act--1 > *:nth-child(5) { transition-delay: 0.52s; }
 .hero__tag:hover::after { opacity: 1; transform: scale(1); }
 .hero__tag:hover { color: #fff; border-color: rgba(var(--tagc), 0.8); }
 .hero__tag--surgery  { --tagc: 132, 214, 202; --tagimg: url("../img/chip-surgery.jpg?v=60"); }
-.hero__tag--training { --tagc: 226, 195, 132; --tagimg: url("../img/chip-training.jpg?v=60"); }
+.hero__tag--training { --tagc: 82, 136, 176; --tagimg: url("../img/chip-training.jpg?v=60"); }
 .hero__tag--network  { --tagc: 148, 194, 232; --tagimg: url("../img/chip-network.jpg?v=60"); }
 
 /* …and the whole hero atmosphere follows the hovered chip: a full-stage
@@ -507,17 +507,17 @@ body:not(.intro) .hero__act--1 > *:nth-child(5) { transition-delay: 0.52s; }
 /* the surgery layer carries a real OR photograph — lighter blur and no
    brightness push, so the scene itself reads */
 .hero__bg--surgery  {
-  background-image: linear-gradient(rgba(8, 40, 52, 0.3), rgba(5, 28, 41, 0.58)), url("../img/chip-surgery.jpg?v=60");
+  background-image: linear-gradient(rgba(8, 40, 52, 0.3), rgba(12, 24, 40, 0.58)), url("../img/chip-surgery.jpg?v=60");
   filter: blur(9px) saturate(1.1);
 }
 /* the training layer is also a real photograph — same photographic recipe */
 .hero__bg--training {
-  background-image: linear-gradient(rgba(10, 44, 42, 0.3), rgba(5, 28, 41, 0.58)), url("../img/chip-training.jpg?v=60");
+  background-image: linear-gradient(rgba(10, 44, 42, 0.3), rgba(12, 24, 40, 0.58)), url("../img/chip-training.jpg?v=60");
   filter: blur(9px) saturate(1.1);
 }
 /* the networking layer is a real photograph too — photographic recipe */
 .hero__bg--network  {
-  background-image: linear-gradient(rgba(14, 36, 70, 0.3), rgba(5, 28, 41, 0.58)), url("../img/chip-network.jpg?v=60");
+  background-image: linear-gradient(rgba(14, 36, 70, 0.3), rgba(12, 24, 40, 0.58)), url("../img/chip-network.jpg?v=60");
   filter: blur(9px) saturate(1.1);
 }
 #hero:has(.hero__tag--surgery:hover)  .hero__bg--surgery,
@@ -567,15 +567,15 @@ body:not(.film-gl) .hero__copy { display: flex; flex-direction: column; align-it
 .chip-edition {
   align-self: center; white-space: nowrap;
   padding: 10px 18px; border-radius: 9999px;
-  background: rgba(218, 182, 110, 0.14);
-  border: 1px solid rgba(218, 182, 110, 0.55);
-  color: #E9CF9C;
+  background: rgba(168, 48, 32, 0.14);
+  border: 1px solid rgba(168, 48, 32, 0.55);
+  color: #BFE2EE;
   font-size: clamp(11px, 0.85vw, 14px); font-weight: 600;
   letter-spacing: 0.14em;
 }
 /* one moving-gradient treatment, shared by every hero headline that uses it */
 .hero__tagline, .hero__lead {
-  background: linear-gradient(100deg, #EAF3F8 0%, #8CCDE2 30%, #6FA3C7 50%, #EAF3F8 70%, #BFDCE9 100%);
+  background: linear-gradient(100deg, #F5EBE0 0%, #8CCDE2 30%, #6FA3C7 50%, #F5EBE0 70%, #BFDCE9 100%);
   background-size: 300% 100%;
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
@@ -609,11 +609,11 @@ body:not(.film-gl) .hero__copy { display: flex; flex-direction: column; align-it
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   flex: none; white-space: nowrap;
   gap: 2px; padding: 14px 22px;
-  background: rgba(82, 136, 176, 0.2);
+  background: rgba(168, 48, 32, 0.2);
   border-inline-end: 1px solid var(--hairline-dark);
 }
 .hero__cal-month {
-  font-family: "Graphik", Arial, sans-serif;
+  font-family: "Outfit", Arial, sans-serif;
   font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
   color: #BCD2E2;
 }
@@ -643,7 +643,7 @@ body:not(.film-gl) .hero__copy { display: flex; flex-direction: column; align-it
 .hero__face::after {
   content: "";
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 66% at 50% 46%, rgba(5, 28, 41, 0.68) 0%, rgba(5, 28, 41, 0.34) 55%, rgba(5, 28, 41, 0) 78%);
+  background: radial-gradient(ellipse 60% 66% at 50% 46%, rgba(12, 24, 40, 0.68) 0%, rgba(12, 24, 40, 0.34) 55%, rgba(12, 24, 40, 0) 78%);
 }
 @media (max-width: 600px) {
   /* the supporting sizes step down so the summit name clearly leads */
@@ -669,7 +669,7 @@ body:not(.film-gl) .hero__copy { display: flex; flex-direction: column; align-it
   display: inline-flex; align-items: center; gap: 10px;
   height: 48px; padding-block: 0; padding-inline: 24px 8px; border-radius: 9999px;
   background: var(--accent); color: #fff;
-  font-family: "Graphik", Arial, sans-serif;
+  font-family: "Outfit", Arial, sans-serif;
   font-size: 14px; font-weight: 600; letter-spacing: 0.08em;
   transition: background 0.3s var(--ease-ui);
 }
@@ -680,7 +680,7 @@ body:not(.film-gl) .hero__copy { display: flex; flex-direction: column; align-it
   display: inline-flex; align-items: center;
   height: 48px; padding: 0 24px; border-radius: 9999px;
   border: 1px solid var(--hairline-dark);
-  font-family: "Graphik", Arial, sans-serif;
+  font-family: "Outfit", Arial, sans-serif;
   font-size: 14px; font-weight: 600; letter-spacing: 0.08em;
   transition: border-color 0.3s var(--ease-ui), background 0.3s var(--ease-ui);
 }
@@ -791,6 +791,7 @@ strong { font-weight: 600; }
 /* ---------------- rail arrows ---------------- */
 .railside { display: flex; align-items: center; gap: 16px; }
 .railnav { display: flex; gap: 8px; }
+.railnav[hidden] { display: none; }
 .railnav__btn { transition: background 0.3s var(--ease-ui); }
 .railnav__btn:hover { background: var(--accent-strong); }
 
@@ -839,7 +840,7 @@ strong { font-weight: 600; }
   position: absolute; inset: 0; z-index: 0;
   border-radius: 18px;
   border: 6px solid #fff;
-  background: #0B2233 center/cover no-repeat;
+  background: #141828 center/cover no-repeat;
   background-image: url("../img/ev-artwork.jpg?v=164");
   box-shadow: 0 14px 34px rgba(10, 26, 40, 0.2);
   transform-origin: 50% 88%;
@@ -891,7 +892,7 @@ strong { font-weight: 600; }
   position: absolute; left: 50%;
   bottom: calc(16px + 50% * (1 - var(--deck, 1)) - var(--lift, 0px));
   transform: translateX(-50%);
-  border: 0; background: rgba(255, 255, 255, 0.92); color: #0A1A28;
+  border: 0; background: rgba(255, 255, 255, 0.92); color: var(--navy);
   backdrop-filter: blur(6px); white-space: nowrap;
 }
 .photo-feature__cta:hover { background: #fff; }
@@ -902,7 +903,7 @@ strong { font-weight: 600; }
   scroll-snap-align: start;
   display: flex; flex-direction: column; align-items: center; gap: 14px;
   padding: 16px 16px 24px; border-radius: 20px;
-  border: 1px solid rgba(82, 136, 176, 0.24);
+  border: 1px solid rgba(168, 48, 32, 0.24);
   background: linear-gradient(155deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.4));
   backdrop-filter: blur(14px) saturate(1.2);
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
@@ -912,12 +913,12 @@ strong { font-weight: 600; }
 .qvcard__poster {
   position: relative; width: 100%; aspect-ratio: 16 / 9;
   border-radius: 12px; overflow: hidden;
-  background: #0B2233 center/cover no-repeat;
+  background: #141828 center/cover no-repeat;
   display: flex; align-items: center; justify-content: center;
 }
 .qvcard__poster::before {
   content: ""; position: absolute; inset: 0;
-  background: rgba(5, 28, 41, 0.22);
+  background: rgba(12, 24, 40, 0.22);
   transition: background 0.35s var(--ease-ui);
 }
 .qvcard__play {
@@ -929,7 +930,7 @@ strong { font-weight: 600; }
   box-shadow: 0 10px 28px rgba(2, 12, 20, 0.35);
   transition: transform 0.35s var(--ease-out);
 }
-.qvcard:hover .qvcard__poster::before { background: rgba(5, 28, 41, 0.05); }
+.qvcard:hover .qvcard__poster::before { background: rgba(12, 24, 40, 0.05); }
 .qvcard:hover .qvcard__play { transform: scale(1.1); }
 .qvcard__title { font-size: clamp(18px, 1.8vw, 24px); }
 .qvcard__quote { color: var(--muted-light); max-width: 44ch; }
@@ -948,7 +949,7 @@ strong { font-weight: 600; }
 .vlb__close {
   position: absolute; top: 10px; right: 10px; z-index: 2;
   width: 42px; height: 42px; border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.92); color: #0A1A28; font-size: 22px; line-height: 1;
+  background: rgba(255, 255, 255, 0.92); color: var(--navy); font-size: 22px; line-height: 1;
 }
 body.vlb-open { overflow: hidden; }
 
@@ -964,7 +965,7 @@ body.vlb-open { overflow: hidden; }
      inside a 67px-tall pill */
   white-space: nowrap;
   border: 1px solid var(--hairline-light);
-  font-family: "Graphik", Arial, sans-serif;
+  font-family: "Outfit", Arial, sans-serif;
   font-size: 14px; letter-spacing: 0.08em;
   transition: background 0.3s var(--ease-ui), color 0.3s var(--ease-ui), border-color 0.3s var(--ease-ui);
 }
@@ -1015,7 +1016,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 
 /* the Cairo FACE contour motif — a cheek-line curve, the recurring signature */
 .motif { width: 108px; height: 46px; color: var(--accent); opacity: 0.55; flex: none; }
-.scene--dark .motif, .footer .motif { color: #9FC2DA; opacity: 0.4; }
+.scene--dark .motif, .footer .motif { color: #8CCDE2; opacity: 0.4; }
 
 /* speakers: portrait reveal — dim → clear, a contour light passes, name arrives */
 .scard__media::after {
@@ -1097,10 +1098,10 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
   padding: 6px var(--pad) 24px;
   -webkit-overflow-scrolling: touch;
 }
-.cardrail { scrollbar-width: thin; scrollbar-color: rgba(82, 136, 176, 0.3) transparent; }
+.cardrail { scrollbar-width: thin; scrollbar-color: rgba(168, 48, 32, 0.3) transparent; }
 .cardrail::-webkit-scrollbar { height: 4px; }
 .cardrail::-webkit-scrollbar-track { background: transparent; }
-.cardrail::-webkit-scrollbar-thumb { background: rgba(82, 136, 176, 0.3); border-radius: 9999px; }
+.cardrail::-webkit-scrollbar-thumb { background: rgba(168, 48, 32, 0.3); border-radius: 9999px; }
 /* the speaker card: a full-bleed portrait with a frosted panel resting on a
    progressive blur — name, role, and one clear action on the photo itself */
 .scard {
@@ -1108,7 +1109,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
   flex: none; width: min(408px, 80vw);
   aspect-ratio: 9 / 14;
   border-radius: 24px; overflow: hidden;
-  background: #0B2233;
+  background: #141828;
   scroll-snap-align: start;
   display: block;
 }
@@ -1148,7 +1149,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
   width: 100%; margin-top: 24px;
   display: flex; align-items: center; justify-content: center;
   height: 48px; border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.92); color: #0A1A28;
+  background: rgba(255, 255, 255, 0.92); color: var(--navy);
   font-size: 14px; font-weight: 600; letter-spacing: 0.04em;
   transition: background 0.3s var(--ease-ui);
 }
@@ -1156,7 +1157,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 .scard--more {
   display: flex; flex-direction: column;
   justify-content: center; align-items: center; text-align: center; gap: 16px;
-  background: linear-gradient(180deg, #16405F 0%, #0B2233 100%);
+  background: linear-gradient(180deg, #1E2D40 0%, #141828 100%);
   color: #fff; padding: 24px;
 }
 .scard--more .label--dim { color: rgba(255, 255, 255, 0.6); max-width: 22ch; }
@@ -1393,7 +1394,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
   html { scroll-padding-top: 92px; }
   /* centered copy needs a centered scrim, and clearance under the header */
   .hero__face::after {
-    background: radial-gradient(ellipse 120% 62% at 50% 44%, rgba(5, 28, 41, 0.72) 0%, rgba(5, 28, 41, 0.4) 58%, rgba(5, 28, 41, 0.05) 82%);
+    background: radial-gradient(ellipse 120% 62% at 50% 44%, rgba(12, 24, 40, 0.72) 0%, rgba(12, 24, 40, 0.4) 58%, rgba(12, 24, 40, 0.05) 82%);
   }
   .beat__inner--hero { padding-top: 76px; padding-bottom: 16px; }
   .hero__act { gap: 16px; }
@@ -1507,7 +1508,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
    (.display-l) → sub-headline (.body-l, 19/500) → body (.body, 16/400).
    Card titles sit between sub-headline and body — one spec for ALL cards. */
 .infocard h3 {
-  font-family: "Graphik", Arial, sans-serif;
+  font-family: "Outfit", Arial, sans-serif;
   font-size: clamp(17px, 1.35vw, 20px);
   font-weight: 500; line-height: 1.25; letter-spacing: -0.01em;
 }
@@ -1523,7 +1524,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
   border-style: solid;
 }
 .infocard {
-  border-color: rgba(82, 136, 176, 0.24);
+  border-color: rgba(168, 48, 32, 0.24);
   background: linear-gradient(155deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.4));
   backdrop-filter: blur(14px) saturate(1.2);
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
@@ -1542,7 +1543,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
   content: ""; position: absolute; z-index: 0;
   top: -34%; left: 50%; transform: translateX(-50%);
   width: 78%; aspect-ratio: 1; border-radius: 9999px;
-  background: radial-gradient(circle, rgba(82, 136, 176, 0.16), rgba(82, 136, 176, 0) 70%);
+  background: radial-gradient(circle, rgba(168, 48, 32, 0.16), rgba(168, 48, 32, 0) 70%);
   pointer-events: none;
   opacity: 0.75;
   transition: opacity 0.5s var(--ease-ui);
@@ -1566,7 +1567,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
   }
   .infocard:hover::before, .audience--rich li:hover::before { opacity: 1; }
   .infocard:hover {
-    border-color: rgba(82, 136, 176, 0.45);
+    border-color: rgba(168, 48, 32, 0.45);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 22px 48px rgba(10, 26, 40, 0.12);
   }
 }
@@ -1615,7 +1616,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 }
 .whoscene__stage::before {
   content: ""; position: absolute; inset: -14%;
-  background: radial-gradient(circle at 50% 42%, rgba(82, 136, 176, 0.16), rgba(82, 136, 176, 0) 64%);
+  background: radial-gradient(circle at 50% 42%, rgba(168, 48, 32, 0.16), rgba(168, 48, 32, 0) 64%);
   pointer-events: none;
 }
 /* film grain, barely there */
@@ -1641,7 +1642,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 }
 @keyframes who-breathe { 50% { transform: scale(1.02); } }
 .wv-anatomy polyline {
-  stroke: #D6E5EE; stroke-width: 1;
+  stroke: #DCE6EE; stroke-width: 1;
   stroke-dasharray: 5 7; stroke-linecap: round; stroke-linejoin: round;
   animation: who-dashdrift 36s linear infinite;
 }
@@ -1663,7 +1664,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 .wv-marks line { stroke: rgba(191, 226, 238, 0.4); stroke-width: 0.7; stroke-dasharray: 3 6; }
 .wv-net { opacity: 0.2; }
 .wv-net line { stroke: rgba(140, 205, 226, 0.4); stroke-width: 0.6; }
-.wv-net circle { fill: #AFDCEA; animation: who-tw 4s ease-in-out infinite; }
+.wv-net circle { fill: #BFE2EE; animation: who-tw 4s ease-in-out infinite; }
 @keyframes who-tw { 50% { fill-opacity: 0.25; } }
 .wv-dust {
   position: absolute; width: 3px; height: 3px; border-radius: 9999px;
@@ -1826,10 +1827,10 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
   font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
 }
 .gitem h3 {
-  font-family: "Graphik", Arial, sans-serif;
+  font-family: "Outfit", Arial, sans-serif;
   font-size: clamp(20px, 1.9vw, 27px);
   font-weight: 500; line-height: 1.2; letter-spacing: -0.01em;
-  color: #EDF4F8;
+  color: #F5EBE0;
 }
 .gitem .body {
   color: rgba(233, 242, 247, 0.52); font-size: 15px; max-width: 44ch;
@@ -1998,7 +1999,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 
 
 /* ================= faculty profile page (doctor.html) ================= */
-.doc-page { background: var(--bg-light, #F2F6F9); color: var(--ink); }
+.doc-page { background: var(--bg-light, #F5EBE0); color: var(--navy); }
 .docmain { padding-top: 148px; padding-bottom: 96px; }
 .doc-back { display: inline-block; margin-bottom: 32px; color: var(--muted-light); }
 .doc-back:hover { color: var(--accent-strong); }
@@ -2042,24 +2043,24 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 }
 
 
-/* ---- 2. hero -> summit: blend the seam instead of cutting it ---- */
-/* the hero now runs into "Our partners", so the blend belongs there.
-   (The old #summit::before band was left stranded over white and read as a
-   grey smear above the numbers.) */
+/* ---- 2. hero seam ----
+   There used to be a 180px dark-to-transparent band on #sponsors, because
+   "Our partners" sat directly under the hero and the blend belonged there.
+   That section has moved down the page, and the band moved with it: a dark
+   smear across white, in the middle of the page, exactly the failure its own
+   comment described when the band lived on #summit.
+
+   Nothing needs to blend now. The hero ends on #0C1828 and the section below
+   it starts on #0C1828, so the seam is already invisible. */
 #sponsors { position: relative; }
-#sponsors::before {
-  content: ""; position: absolute; inset: -1px 0 auto 0; height: 180px;
-  pointer-events: none; z-index: 0;
-  background: linear-gradient(180deg, #051C29 0%, rgba(11, 34, 51, 0.55) 38%, rgba(238, 244, 249, 0) 100%);
-}
 #sponsors > * { position: relative; z-index: 1; }
 
 /* ---- 7. event experience: a static designed ground, no drifting dots ---- */
 #events {
   background:
-    radial-gradient(120% 74% at 50% 0%, rgba(82, 136, 176, 0.30) 0%, rgba(11, 34, 51, 0) 62%),
+    radial-gradient(120% 74% at 50% 0%, rgba(168, 48, 32, 0.30) 0%, rgba(11, 34, 51, 0) 62%),
     radial-gradient(80% 52% at 82% 88%, rgba(38, 86, 122, 0.24) 0%, rgba(11, 34, 51, 0) 70%),
-    linear-gradient(180deg, #0C2537 0%, #0B2233 46%, #081B29 100%);
+    linear-gradient(180deg, #1E2D40 0%, #141828 46%, #081B29 100%);
 }
 /* one quiet diagonal sheen — fixed to the section, so it never animates */
 #events::before {
@@ -2165,7 +2166,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 .leadfeature .body { color: var(--muted-light); margin: 4px 0 8px; }
 .leadfeature__avatar, .leadcard__avatar {
   display: flex; align-items: center; justify-content: center;
-  border-radius: 9999px; background: linear-gradient(160deg, #5288B0, #2F5B85);
+  border-radius: 9999px; background: linear-gradient(160deg, #A83020, #2A3A50);
   color: #fff; font-weight: 600; letter-spacing: 0.02em;
 }
 .leadfeature__avatar { width: 148px; height: 148px; font-size: 40px; }
@@ -2240,7 +2241,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 .leadcard:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 18px 40px rgba(10,26,40,0.12); }
 .leadcard__media {
   position: relative; aspect-ratio: 4 / 5; overflow: hidden;
-  background: linear-gradient(160deg, #5288B0, #2F5B85);
+  background: linear-gradient(160deg, #A83020, #2A3A50);
   display: flex; align-items: center; justify-content: center;
 }
 .leadcard__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; display: block; transition: transform 1.2s var(--ease-out); }
@@ -2248,7 +2249,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 .leadcard__ini { color: #fff; font-size: 44px; font-weight: 600; letter-spacing: 0.02em; }
 .leadcard__media::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(5,28,41,0) 52%, rgba(5,28,41,0.55) 100%);
+  background: linear-gradient(180deg, rgba(12, 24, 40,0) 52%, rgba(12, 24, 40,0.55) 100%);
 }
 .leadcard__body { display: flex; flex-direction: column; gap: 4px; padding: 16px 18px 18px; align-items: flex-start; }
 .leadcard__name { font-size: 17px; }
@@ -2340,7 +2341,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 .pageout {
   position: fixed; inset: 0; z-index: 200;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px;
-  background: radial-gradient(120% 90% at 50% 45%, #0C2537 0%, #051C29 62%, #03141E 100%);
+  background: radial-gradient(120% 90% at 50% 45%, #1E2D40 0%, #0C1828 62%, #03141E 100%);
   opacity: 0; pointer-events: none;
   transition: opacity 0.4s var(--ease-ui);
 }
@@ -2396,8 +2397,18 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
     object-fit: cover; object-position: 50% 20%;
     -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 76%, transparent 100%);
     mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 76%, transparent 100%);
+    /* The base rule intersects TWO mask layers. This one declares a single
+       layer, and leaving `source-in` / `intersect` in place asks WebKit to
+       composite that layer against a second that does not exist - which iOS
+       Safari resolves as empty, so the reel renders fully transparent and the
+       hero shows no face at all. Desktop Chrome does not, which is why it only
+       failed on a phone. One layer needs no compositing. */
+    -webkit-mask-composite: source-over;
+    mask-composite: add;
   }
-  .hero__reel.is-playing { opacity: 0.6; }
+  /* it sits over a near-black ground behind the headline: at 0.6 the face was
+     barely legible on a phone in daylight */
+  .hero__reel.is-playing { opacity: 0.78; }
   .pageout__logo { width: min(300px, 78vw); }
 }
 
@@ -2549,10 +2560,10 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
   min-height: 296px;
   padding: 40px 44px 40px 288px;
   border-radius: 28px;
-  border: 1px solid rgba(82, 136, 176, 0.22);
+  border: 1px solid rgba(168, 48, 32, 0.22);
   background:
-    radial-gradient(120% 150% at 0% 0%, rgba(82, 136, 176, 0.14), rgba(255, 255, 255, 0) 55%),
-    linear-gradient(150deg, #ffffff 0%, #f5f9fc 58%, #eaf1f7 100%);
+    radial-gradient(120% 150% at 0% 0%, rgba(168, 48, 32, 0.14), rgba(255, 255, 255, 0) 55%),
+    linear-gradient(150deg, #ffffff 0%, #F5F9FC 58%, #F5EBE0 100%);
   box-shadow: 0 18px 46px rgba(10, 26, 40, 0.09);
   transition:
     transform 0.6s var(--ease-out),
@@ -2561,7 +2572,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 }
 .leadfeature:hover {
   transform: translateY(-4px);
-  border-color: rgba(82, 136, 176, 0.5);
+  border-color: rgba(168, 48, 32, 0.5);
   box-shadow: 0 30px 66px rgba(10, 26, 40, 0.16);
 }
 
@@ -2584,7 +2595,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
   left: 36px; top: -24px; bottom: -24px; width: 208px;
   border-radius: 22px;
   overflow: hidden;
-  background: linear-gradient(160deg, #5288B0, #2F5B85);
+  background: linear-gradient(160deg, #A83020, #2A3A50);
   box-shadow: 0 18px 40px rgba(10, 26, 40, 0.3);
   transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-ui);
 }
@@ -2596,7 +2607,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 /* depth at the foot of the flag so the badge always has something to sit on */
 .leadfeature__flag::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(180deg, rgba(5, 28, 41, 0.22) 0%, rgba(5, 28, 41, 0) 32%, rgba(5, 28, 41, 0.62) 100%);
+  background: linear-gradient(180deg, rgba(12, 24, 40, 0.22) 0%, rgba(12, 24, 40, 0) 32%, rgba(12, 24, 40, 0.62) 100%);
 }
 .leadfeature:hover .leadfeature__flag {
   transform: translateY(-5px);
@@ -2617,7 +2628,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
 .leadfeature figcaption { position: relative; z-index: 1; }
 .leadfeature figcaption .heading { font-size: clamp(22px, 2.2vw, 30px); line-height: 1.15; }
 .leadfeature .pill-sm { transition: background 0.35s var(--ease-ui), border-color 0.35s var(--ease-ui); }
-.leadfeature:hover .pill-sm { border-color: var(--accent); background: rgba(82, 136, 176, 0.08); }
+.leadfeature:hover .pill-sm { border-color: var(--accent); background: rgba(168, 48, 32, 0.08); }
 
 @media (max-width: 768px) {
   .leadfeature {
@@ -2713,7 +2724,7 @@ body:not(.film-gl) .cardgrid > *, body:not(.film-gl) .audience--rich > li { opac
    underneath. On a desktop it does not rise — the far pair deals downward as
    well as outward, 146px past the figure at full fan — so the arrows need
    that room or the prints land on top of them. */
-@media (min-width: 769px) { .photos__nav { margin-top: 150px; } }
+@media (min-width: 769px) { .photos__nav { margin-top: 0; } }
 
 
 /* ---- all six numbers on screen at once ----
@@ -2855,7 +2866,7 @@ body.pmodal-open { overflow: hidden; }
 .pmodal[hidden] { display: none; }
 .pmodal__scrim { position: absolute; inset: 0; background: rgba(6, 20, 32, 0.62); backdrop-filter: blur(3px); }
 .pmodal__panel {
-  position: relative; z-index: 1; background: #fff; color: var(--ink, #0A1A28);
+  position: relative; z-index: 1; background: #fff; color: var(--ink, #0C1828);
   width: min(620px, 100%); max-height: min(84vh, 760px); overflow-y: auto;
   border-radius: 20px; padding: 28px; box-shadow: 0 32px 80px rgba(6, 20, 32, 0.38);
   animation: pmIn 0.26s cubic-bezier(0.16, 1, 0.3, 1);
@@ -2864,9 +2875,9 @@ body.pmodal-open { overflow: hidden; }
 .pmodal__x {
   position: absolute; top: 14px; inset-inline-end: 14px; width: 34px; height: 34px; border-radius: 50%;
   border: 1px solid rgba(10, 26, 40, 0.14); background: #fff; cursor: pointer;
-  font-size: 20px; line-height: 1; color: #0A1A28; font-family: inherit;
+  font-size: 20px; line-height: 1; color: var(--navy); font-family: inherit;
 }
-.pmodal__x:hover { background: #F2F6F9; }
+.pmodal__x:hover { background: #F5EBE0; }
 .pmodal__head { display: flex; gap: 18px; align-items: center; padding-inline-end: 36px; }
 .pmodal__media {
   width: 96px; height: 96px; flex: 0 0 96px; border-radius: 50%; overflow: hidden;
@@ -2874,24 +2885,24 @@ body.pmodal-open { overflow: hidden; }
 }
 .pmodal__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .pmodal__id h2 { font-size: 25px; font-weight: 700; line-height: 1.15; }
-.pmodal__role { font-size: 14px; font-weight: 500; color: #2F6693; margin-top: 4px; }
+.pmodal__role { font-size: 14px; font-weight: 500; color: #7A2010; margin-top: 4px; }
 .pmodal__chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .pmodal__chip {
   font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 9999px;
-  background: rgba(47, 102, 147, 0.09); color: #2F6693;
+  background: rgba(47, 102, 147, 0.09); color: #7A2010;
 }
 .pmodal__bio { font-size: 15px; font-weight: 400; line-height: 1.6; color: #5B7184; margin-top: 20px; }
 .pmodal__note { font-size: 14px; color: #5B7184; margin-top: 20px; }
 .pmodal__sessions { margin-top: 24px; }
 .pmodal__sessions h3 {
-  font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #2F6693;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A2010;
 }
 .pmodal__sessions ol { list-style: none; margin: 12px 0 0; padding: 0; }
 .pmodal__sessions li {
   display: grid; grid-template-columns: 104px 1fr; gap: 14px;
   padding: 12px 0; border-top: 1px solid rgba(10, 26, 40, 0.1);
 }
-.pmodal__when { font-size: 13px; font-weight: 600; color: #2F6693; white-space: nowrap; }
+.pmodal__when { font-size: 13px; font-weight: 600; color: #7A2010; white-space: nowrap; }
 .pmodal__what { display: flex; flex-direction: column; gap: 3px; }
 .pmodal__what b { font-size: 15px; font-weight: 500; line-height: 1.4; }
 .pmodal__what span { font-size: 13px; color: #5B7184; }
@@ -3134,8 +3145,8 @@ body.pmodal-open { overflow: hidden; }
 /* on a light surface — the contact card */
 .socicon--ink {
   color: var(--accent-strong);
-  background: rgba(82, 136, 176, 0.10);
-  border-color: rgba(82, 136, 176, 0.24);
+  background: rgba(168, 48, 32, 0.10);
+  border-color: rgba(168, 48, 32, 0.24);
 }
 .socicon--ink:hover { color: #fff; }
 
@@ -3151,7 +3162,7 @@ body.pmodal-open { overflow: hidden; }
 .pgal__img {
   display: block; max-width: 100%; max-height: 68vh;
   width: auto; height: auto; object-fit: contain;
-  border-radius: 16px; background: #0B2233;
+  border-radius: 16px; background: #141828;
   box-shadow: 0 24px 60px rgba(3, 14, 22, 0.5);
 }
 .pgal__bar { display: flex; align-items: center; gap: 16px; }
@@ -3268,7 +3279,7 @@ body.pmodal-open { overflow: hidden; }
 /* 01 · the contour draws itself along the face as you scroll.
    pathLength="1" on every path means one formula fits them all. */
 .gv-lines path {
-  stroke: #D6E5EE; stroke-width: 1.1; stroke-linecap: round;
+  stroke: #DCE6EE; stroke-width: 1.1; stroke-linecap: round;
   stroke-dasharray: 1;
   stroke-dashoffset: calc(1 - var(--gp, 0));
 }
@@ -3296,7 +3307,7 @@ body.pmodal-open { overflow: hidden; }
   stroke-dasharray: 1; stroke-dashoffset: calc(1 - clamp(0, calc(var(--gp, 0) * 1.5), 1));
 }
 .gv-net circle {
-  fill: #AFDCEA;
+  fill: #BFE2EE;
   opacity: clamp(0, calc((var(--gp, 0) - 0.35 - var(--i, 0) * 0.07) * 8), 1);
 }
 
@@ -3428,3 +3439,182 @@ body.pmodal-open { overflow: hidden; }
   .gv-lines, .gv-scan, .gv-pts, .gv-net, .gv-orbit { transform: none; transition: none; }
   .gconnect__line { stroke-dashoffset: 0; }
 }
+
+/* ---- gala night (homepage tail) --------------------------------------
+   Same .tail rhythm and .infocard as its neighbours; only the head and the
+   button row need positioning, and both follow the .endorse pattern above. */
+.gala > .container { text-align: center; }
+.gala .cardgrid { margin-top: 32px; }
+.gala__foot { display: flex; justify-content: center; margin-top: 32px; }
+
+/* ---- founders page ---------------------------------------------------
+   .leadcard is declared twice: the later rule fixes it at 248px for the
+   homepage marquee, which inside a grid leaves each card stranded at the
+   left of its column. On this page the grid owns the width. */
+.leadgrid .leadcard { width: auto; }
+.founders__feature { padding-bottom: 0; }
+@media (max-width: 900px) { .leadgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .leadgrid { grid-template-columns: 1fr; } }
+.leadership__more { display: flex; justify-content: center; margin-top: 24px; }
+
+/* ---- gala page: the editions list ------------------------------------
+   A year rail rather than cards: each entry is one line of fact, and the
+   year is the thing the eye lands on. */
+.galayears { list-style: none; margin: 0; padding: 0; max-width: 72ch; margin-inline: auto; }
+.galayear {
+  display: grid; grid-template-columns: 96px 1fr; gap: 20px; align-items: baseline;
+  padding: 24px 0; border-top: 1px solid var(--hairline-light);
+}
+.galayear:last-child { border-bottom: 1px solid var(--hairline-light); }
+.galayear__y { font-size: 28px; font-weight: 700; color: var(--accent-strong); line-height: 1; }
+.galayear__name { font-size: 20px; font-weight: 700; line-height: 1.25; }
+.galayear__meta { font-size: 15px; line-height: 1.55; color: var(--muted-light); margin-top: 4px; }
+/* an edition with no record reads as an open slot, not as a styled fact */
+.galayear--open .galayear__y,
+.galayear--open .galayear__name { color: var(--muted-light); font-weight: 500; }
+@media (max-width: 620px) {
+  .galayear { grid-template-columns: 1fr; gap: 6px; padding: 20px 0; }
+  .galayear__y { font-size: 22px; }
+}
+
+/* The homepage ends on seven .tail sections in a row, all on white paper —
+   one undifferentiated stretch from the gala to the FAQ. Alternating the
+   ground the way about.html alternates --atmo/--tint gives the eye a seam.
+   Same token .tail.committee already uses. */
+.tail--tint { background: var(--paper-2); }
+
+
+/* ---- experts: one landing, not a loop ---------------------------------
+   The cards arrive once when the section lands (js/expertsnap.js adds
+   .is-landed), then rest. The rail is an ordinary scroller from there. */
+.docrail { overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; }
+.docrail::-webkit-scrollbar { display: none; }
+.docrail__track { animation: none; padding-inline: 32px; }
+.docrail .scard {
+  opacity: 0; transform: translateX(56px);
+  transition: opacity 0.7s var(--ease-ui), transform 0.9s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+.docrail.is-landed .scard { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .docrail .scard { opacity: 1; transform: none; transition: none; }
+}
+
+
+/* ---- pause ambient motion in sections far from the viewport ------------
+   js/pauseoffscreen.js sets .is-offscreen. Paused, not removed: the animation
+   resumes from where it stopped when the section comes back. */
+main > section.is-offscreen *,
+main > section.is-offscreen *::before,
+main > section.is-offscreen *::after { animation-play-state: paused !important; }
+
+/* the experts rail snaps to its padded edge, so the left gutter survives */
+.docrail { scroll-padding-inline: 32px; }
+
+
+
+/* ---- event photos: the shuffling deck (js/photodeck.js) --------------------
+   Prints are stacked in one cell and posed by the script (transform + opacity
+   only). No transitions here on purpose: the script eases everything itself. */
+.photos__controls { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 8px; }
+.pdeck { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; outline: none; }
+.pdeck__stage {
+  position: relative; width: 100%;
+  height: clamp(300px, 54vw, 500px);
+  display: grid; place-items: center;
+  user-select: none; -webkit-user-select: none;
+}
+.pdeck__card {
+  grid-area: 1 / 1; display: block; overflow: hidden;
+  width: clamp(200px, 56vw, 340px); aspect-ratio: 4 / 5;
+  border-radius: 20px;
+  box-shadow: 0 18px 44px rgba(10, 26, 40, 0.18);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+/* every print is pre-cropped 4:5 around its subject's face (face on the card's
+   vertical axis, about 40% down), so the card just shows the picture as is */
+.pdeck__card img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pdeck__cap { min-height: 2.6em; text-align: center; max-width: 46ch; }
+.pdeck:focus-visible .pdeck__stage { outline: 2px solid var(--accent); outline-offset: 8px; border-radius: 24px; }
+@media (prefers-reduced-motion: reduce) { .pdeck__card { transition: none; } }
+
+/* ---- centring: pictures and their captions sit on the axis of their block --
+   The endorsement cards left-aligned their logos and copy inside each card. */
+.endorse__card { align-items: center; text-align: center; }
+.endorse__logo { justify-content: center; }
+.endorse__card .body { margin-inline: auto; }
+
+/* ---- founder feature: one centred portrait card at every width ------------
+   It used to be a wide card with the photo hanging off its left edge, so the
+   picture sat off the page axis on desktop. Now the card is centred and the
+   photo is its full-bleed top, exactly like the founder cards in the rail. */
+.leadfeature {
+  display: block; padding: 0; min-height: 0; overflow: hidden;
+  width: min(360px, 100%); max-width: 360px; margin-inline: auto;
+  border-radius: 20px; box-shadow: 0 18px 46px rgba(10, 26, 40, 0.09);
+  border: 1px solid var(--hairline-light); background: #fff;
+}
+.leadfeature::before { display: none; }
+.leadfeature__flag {
+  display: block;   /* it is a <span>: aspect-ratio is ignored on an inline box */
+  position: relative; inset: auto; left: auto; top: auto; bottom: auto;
+  width: 100%; height: auto; aspect-ratio: 4 / 5; margin: 0;
+  border-radius: 0; box-shadow: none;
+}
+.leadfeature__flag img { object-position: 50% 18%; }
+.leadfeature:hover .leadfeature__flag { transform: none; }
+.leadfeature figcaption { padding: 16px 18px 20px; gap: 4px; }
+.leadfeature figcaption .heading { font-size: 17px; }
+.leadfeature .body { margin: 4px 0 12px; font-size: 14px; }
+
+/* ---- experts: the photo carries the Cairo FACE mark, the text sits BELOW it ---
+   The portraits now include the mark (top centre, like the leadership photos) and
+   the name / role / "Learn more" no longer overlay the face: same card anatomy as
+   the founders rail — a 4:5 photo on top, a white panel underneath. */
+.docrail .scard:not(.scard--more) {
+  display: flex; flex-direction: column; aspect-ratio: auto;
+  background: #fff; border: 1px solid var(--hairline-light);
+}
+.docrail .scard:not(.scard--more) .scard__media {
+  position: relative; inset: auto; flex: none; aspect-ratio: 7 / 10;   /* tall enough for the tightest portrait's chin */
+  background: linear-gradient(160deg, #A83020, #2A3A50);
+}
+.docrail .scard:not(.scard--more) .scard__media img { object-position: 50% 0; }
+.docrail .scard:not(.scard--more) .scard__panel {
+  position: static; padding: 16px 18px 18px; gap: 4px; color: var(--navy);
+}
+.docrail .scard:not(.scard--more) .scard__panel::before { display: none; }
+.docrail .scard:not(.scard--more) .scard__name { font-size: 18px; color: var(--navy); }
+.docrail .scard:not(.scard--more) .scard__sub { font-size: 13px; color: var(--muted-light); }
+.docrail .scard:not(.scard--more) .scard__more {
+  width: auto; height: auto; margin-top: 8px; padding: 0; background: none;
+  justify-content: flex-start; color: var(--accent-strong);
+  font-size: 13px; font-weight: 500; letter-spacing: 0;
+}
+.docrail .scard:not(.scard--more):hover .scard__more { background: none; text-decoration: underline; }
+
+
+/* attribution on the written testimonials: each quote links to its original public post */
+.quotecard__src { display: block; margin-top: 8px; font-size: 12px; letter-spacing: 0.02em; color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; }
+.quotecard__src:hover { color: var(--navy); }
+
+/* ---- shorter scroll (client: "too slow, need too much scrolling") ----
+   Pin distance (height - 100vh) cut by ~40% on every pinned beat, desktop. */
+@media (min-width: 769px) {
+  .beat { height: 130vh; }
+  .beat--tall { height: 141vh; }
+  #hero .beat--tall { height: 139vh; }
+  #about .beat { height: 118vh; }
+  #about .beat:has(.cardgrid) { height: 142vh; }
+  .beat:has(.cardgrid), .beat:has(.audience--rich), .beat:has(.whoscene) { height: 220vh; }
+  #who .beat { height: 142vh; }
+  #events .beat { height: 106vh; }
+  #events .beat:has(.cardgrid) { height: 127vh; }
+  #summit .beat--tall { height: 130vh; }
+}
+
+/* client: remove the blue corner point on cards */
+.tick, .tick--corner { display: none !important; }

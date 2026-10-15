@@ -2,7 +2,7 @@
    Any link to doctor.html?id=… and any .spk card opens a dialog instead of a
    page load. Content comes from window.CF_DOCTORS; the person's real sessions
    are looked up in window.CF_AGENDA, which is fetched on first open so the
-   18 KB programme is not loaded by every page. */
+   18 KB program is not loaded by every page. */
 (function () {
   "use strict";
 
@@ -18,7 +18,7 @@
       .toLowerCase().replace(/[^a-z ]/g, " ").replace(/\s+/g, " ").trim();
   }
 
-  /* every talk this person appears in, from the published programme */
+  /* every talk this person appears in, from the published program */
   function sessionsFor(name) {
     var ag = window.CF_AGENDA;
     if (!ag) return null;
@@ -94,9 +94,9 @@
     if (d.bio) html += '<p class="pmodal__bio">' + esc(d.bio) + "</p>";
 
     if (sess === null) {
-      html += '<p class="pmodal__note">Loading programme&hellip;</p>';
+      html += '<p class="pmodal__note">Loading program&hellip;</p>';
     } else if (sess.length) {
-      html += '<section class="pmodal__sessions"><h3>In the published programme</h3><ol>' +
+      html += '<section class="pmodal__sessions"><h3>In the published program</h3><ol>' +
         sess.map(function (s) {
           return "<li><span class='pmodal__when'>" + esc(t24(s.start)) + " &ndash; " + esc(t24(s.end)) +
                  "</span><span class='pmodal__what'><b>" + esc(s.title || "—") + "</b>" +
@@ -124,7 +124,7 @@
     document.body.classList.add("pmodal-open");
     panel.focus();
 
-    /* pull the programme once, then re-render so the sessions appear */
+    /* pull the program once, then re-render so the sessions appear */
     if (!window.CF_AGENDA && !agendaWanted) {
       agendaWanted = true;
       var s = document.createElement("script");

@@ -4,19 +4,22 @@
    see them at a slant, part-covered by each other. "See all photos" opens
    them full size in a dialog.
 
-   The four are the only event images Cairo FACE has published, and two of
-   them are announcement cards rather than photographs — so the alt text
-   says what each one actually is rather than describing an event that has
-   not happened yet. When real event photography arrives, add it to PHOTOS
-   and nothing else needs to change. */
+   These are real photographs from Cairo FACE 2026, taken from the summit's
+   own Instagram posts (each cropped to its subject). Add higher-resolution originals to
+   PHOTOS when the organisers supply them and nothing else needs to change. */
 (function () {
   "use strict";
 
   var PHOTOS = [
-    { src: "img/ev-hero.jpg",     alt: "Cairo FACE campaign image — a facial profile lit against a dark ground" },
-    { src: "img/ev-artwork.jpg",  alt: "Cairo FACE campaign image — a lantern-lit colonnade at dusk" },
-    { src: "img/ev-dates.jpg",    alt: "Cairo FACE 2027 dates — Live Surgeries Day on 21 April, main conference days 22–23 April" },
-    { src: "img/ev-abstract.jpg", alt: "Cairo FACE abstract submission deadline — 1 November 2026" }
+    { src: "img/event/deck-man65.jpg", alt: "A speaker presenting at Cairo FACE World Summit 2026" },
+    { src: "img/event/deck-curly.jpg", alt: "An attendee smiling during a session at Cairo FACE 2026" },
+    { src: "img/event/deck-spk76.jpg", alt: "A speaker on stage at Cairo FACE 2026" },
+    { src: "img/event/deck-entrance.jpg", alt: "An attendee arriving at the entrance of Cairo FACE 2026" },
+    { src: "img/event/deck-exhib.jpg", alt: "Delegates in conversation on the Cairo FACE 2026 exhibition floor" },
+    { src: "img/event/deck-nahai.jpg", alt: "A senior faculty member lecturing at Cairo FACE 2026" },
+    { src: "img/event/deck-chin.jpg", alt: "An attendee listening in a session at Cairo FACE 2026" },
+    { src: "img/event/deck-old52.jpg", alt: "A faculty member speaking at the podium, Cairo FACE 2026" },
+    { src: "img/event/deck-sami.jpg", alt: "A speaker at the podium, Cairo FACE 2026" }
   ];
 
   var trigger = document.querySelector("[data-gallery]");

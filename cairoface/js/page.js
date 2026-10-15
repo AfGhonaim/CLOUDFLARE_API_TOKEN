@@ -14,7 +14,7 @@
        to follow, or its links sit dark-on-dark over the hero */
     if (header && dark) {
       var navBottom = pill ? pill.getBoundingClientRect().bottom : 92;
-      header.dataset.theme = dark.getBoundingClientRect().bottom > navBottom ? "dark" : "light";
+      header.dataset.theme = dark.getBoundingClientRect().bottom > navBottom ? "light" : "light";
     }
   }
   onScroll();
