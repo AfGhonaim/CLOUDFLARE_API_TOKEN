@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="css/styles.css?v=372" />
   <link rel="stylesheet" href="css/mobile.css?v=27" />
-  <link rel="stylesheet" href="css/edit.css?v=e41" />
+  <link rel="stylesheet" href="css/edit.css?v=e42" />
 </head>
 <body class="film-flat">
   <script>
@@ -43,6 +43,7 @@
         <a class="header__brand" href="#top" aria-label="Cairo FACE — home">
           <img class="header__logo header__logo--full" src="img/logo-cface-blue.png?v=b1" alt="Cairo FACE — Facial Aesthetic Conference and Exhibition" />
           <img class="header__logo header__logo--mark" src="img/logo-cface-white.png" alt="Cairo FACE" />
+          <span class="header__word" aria-hidden="true">Cairo<strong>FACE</strong></span>
         </a>
         <nav class="header__nav" aria-label="Primary">
           <a class="navpill" href="agenda.html"><span class="navpill__flip"><span>Agenda</span><span aria-hidden="true">Agenda</span></span></a>
@@ -135,7 +136,7 @@
 
 <!-- ===== scene 1 · OPENING ===== -->
     <section class="scene scene--dark" data-scene="hero" data-theme="dark" id="hero">
-      <div class="beat beat--tall" data-beat>
+      <div class="beat beat--hero" data-beat>
         <div class="beat__inner beat__inner--hero container">
           <div class="hero__bg" aria-hidden="true">
             <span class="hero__bg-layer hero__bg--model"></span>
@@ -151,20 +152,13 @@
             <canvas id="faceCanvas" class="hero__face-canvas"></canvas>
           </div>
           <div class="hero__copy">
-          <div class="hero__act hero__act--1">
+          <!-- one hero: title, tagline, dates and the two calls to action, in a single screen -->
+          <div class="hero__act hero__act--1 hero__act--solo">
             <h1 class="hero__title">
               <span class="hero__title-text">Cairo FACE World Summit 2027</span>
             </h1>
             <p class="hero__tagline">Where the world's leading minds in facial aesthetics meet.</p>
-            <p class="body-l hero__welcome">Join <strong>3 days of</strong> cutting-edge education</p>
-            <div class="hero__tags" role="list">
-              <span class="hero__tag hero__tag--surgery" role="listitem"><span>Live surgery</span></span>
-              <span class="hero__tag hero__tag--training" role="listitem"><span>Advanced training</span></span>
-              <span class="hero__tag hero__tag--network" role="listitem"><span>Global networking</span></span>
-            </div>
-          </div>
-          <div class="hero__act hero__act--2">
-            <p class="hero__lead">with the leaders shaping the future of facial aesthetics.</p>
+            <p class="body-l hero__welcome">Join <strong>3 days of</strong> cutting-edge education with the leaders shaping the future of facial aesthetics.</p>
             <div class="hero__cal">
               <div class="hero__cal-date">
                 <span class="hero__cal-month">April 2027</span>
@@ -174,12 +168,6 @@
                 <span class="heading">Cairo, Egypt</span>
                 <span class="label label--dim">Waldorf Astoria — Hilton Heliopolis</span>
               </div>
-            </div>
-            <div class="hero__orgs" aria-label="Endorsed by">
-              <span class="label label--dim hero__orgs-label">Endorsed by</span>
-              <a class="orgchip" href="https://www.isaps.org/" target="_blank" rel="noopener"><img src="img/logos/isaps.png?v=345" alt="ISAPS — International Society of Aesthetic Plastic Surgery" loading="lazy" /></a>
-              <a class="orgchip" href="https://eafps.org/" target="_blank" rel="noopener"><img src="img/logos/eafps.png?v=345" alt="EAFPS — European Academy of Facial Plastic Surgery" loading="lazy" /></a>
-              <a class="orgplus" href="#tailstart" aria-label="See all our endorsements" title="See all endorsements"><span aria-hidden="true">+</span></a>
             </div>
             <div class="hero__ctas">
               <a class="btn-ghost" href="agenda.html">Explore the program</a>
@@ -206,35 +194,6 @@
             <div class="stat"><dt class="label label--dim">Cadaveric courses</dt><dd><span data-count="10">0</span>+</dd></div>
           </dl>
           <a class="pill-sm lateshow" href="#speakers">Meet the experts<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== scene 3 · WHY CAIRO FACE ===== -->
-    <section class="scene scene--pale" data-scene="numbers" data-theme="light" id="about">
-      <div class="beat" data-beat>
-        <div class="beat__inner beat__inner--left container">
-          <span class="label label--dim label--head">Why Cairo FACE?</span>
-          <h2 class="display-l manifesto" data-split-progress>
-            More than a conference. A complete facial aesthetics experience.
-          </h2>
-          <p class="body-l lateshow manifesto__vision">
-            <strong>Cairo FACE</strong> brings together the <strong>world's
-            leading surgeons, dermatologists, aesthetic practitioners and
-            innovators</strong> for an immersive experience combining advanced
-            science, live procedures and hands-on education.
-          </p>
-        </div>
-      </div>
-      <div class="beat" data-beat>
-        <div class="beat__inner container">
-          <div class="cardgrid cardgrid--4 lateshow" data-par="-0.045">
-<article class="infocard"><span class="infocard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="8" r="3.4"/><path d="M5 19c1.4-3.2 4-4.6 7-4.6s5.6 1.4 7 4.6"/></svg></span><h3 class="body-l">Learn from leading experts</h3><p class="body">Get insights from globally recognized surgeons and aesthetic specialists.</p></article>
-<article class="infocard"><span class="infocard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="3"/><path d="M4.5 12C6.6 8 9.1 6 12 6s5.4 2 7.5 6c-2.1 4-4.6 6-7.5 6s-5.4-2-7.5-6Z"/></svg></span><h3 class="body-l">See techniques live</h3><p class="body">Experience live surgeries, demonstrations, and real clinical discussions.</p></article>
-<article class="infocard"><span class="infocard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 17 17 7"/><path d="M14.5 7H17v2.5"/><circle cx="7" cy="17" r="2.6"/></svg></span><h3 class="body-l">Build practical skills</h3><p class="body">Develop your expertise through hands-on courses, masterclasses, and workshops.</p></article>
-<article class="infocard"><span class="infocard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="6" cy="7" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M7.8 8.4 10.8 16M16.4 7.6l-3.3 8.3M8.2 7.3l7.6-.9"/></svg></span><h3 class="body-l">Expand your network</h3><p class="body">Connect with thousands of professionals shaping the future of facial aesthetics.</p></article>
-          </div>
-          <a class="pill-sm lateshow" href="agenda.html">Explore the agenda<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
@@ -315,6 +274,36 @@
         </div>
       </div>
     </section>
+
+    <!-- ===== scene 3 · WHY CAIRO FACE ===== -->
+    <section class="scene scene--pale" data-scene="numbers" data-theme="light" id="about">
+      <div class="beat" data-beat>
+        <div class="beat__inner beat__inner--left container">
+          <span class="label label--dim label--head">Why Cairo FACE?</span>
+          <h2 class="display-l manifesto" data-split-progress>
+            More than a conference.<br />A complete facial aesthetics experience.
+          </h2>
+          <p class="body-l lateshow manifesto__vision">
+            <strong>Cairo FACE</strong> brings together the <strong>world's
+            leading surgeons, dermatologists, aesthetic practitioners and
+            innovators</strong> for an immersive experience &mdash; advanced
+            science, live procedures and hands-on education.
+          </p>
+        </div>
+      </div>
+      <div class="beat" data-beat>
+        <div class="beat__inner container">
+          <div class="cardgrid cardgrid--4 lateshow" data-par="-0.045">
+<article class="infocard"><span class="infocard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="8" r="3.4"/><path d="M5 19c1.4-3.2 4-4.6 7-4.6s5.6 1.4 7 4.6"/></svg></span><h3 class="body-l">Learn from leading experts</h3><p class="body">Get insights from globally recognized surgeons and aesthetic specialists.</p></article>
+<article class="infocard"><span class="infocard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="3"/><path d="M4.5 12C6.6 8 9.1 6 12 6s5.4 2 7.5 6c-2.1 4-4.6 6-7.5 6s-5.4-2-7.5-6Z"/></svg></span><h3 class="body-l">See techniques live</h3><p class="body">Experience live surgeries, demonstrations, and real clinical discussions.</p></article>
+<article class="infocard"><span class="infocard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 17 17 7"/><path d="M14.5 7H17v2.5"/><circle cx="7" cy="17" r="2.6"/></svg></span><h3 class="body-l">Build practical skills</h3><p class="body">Develop your expertise through hands-on courses, masterclasses, and workshops.</p></article>
+<article class="infocard"><span class="infocard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="6" cy="7" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M7.8 8.4 10.8 16M16.4 7.6l-3.3 8.3M8.2 7.3l7.6-.9"/></svg></span><h3 class="body-l">Expand your network</h3><p class="body">Connect with thousands of professionals shaping the future of facial aesthetics.</p></article>
+          </div>
+          <a class="pill-sm lateshow" href="agenda.html">Explore the agenda<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
 
     <!-- ===== tail · OUR LEADERSHIP ===== -->
     <section class="tail leadership" data-theme="light" id="leadership">
@@ -678,6 +667,44 @@
       </div>
     </section>
 
+    <!-- ===== section · UPCOMING EVENTS =====
+         One .upcard article per event. The grid reflows on its own, so adding
+         the next event means pasting another article — nothing else. -->
+    <section class="scene scene--dark scene--solid" data-theme="dark" id="upcoming">
+      <div class="beat" data-beat>
+        <div class="beat__inner container">
+          <span class="label label--dim label--head">Upcoming events</span>
+          <h2 class="display-l" data-split-progress>The evening that closes the summit.</h2>
+          <div class="cardgrid upnext lateshow" data-par="-0.045">
+
+            <article class="infocard infocard--dark upcard">
+              <div class="upcard__when" aria-hidden="true">
+                <span class="upcard__day">23</span>
+                <span class="upcard__month">April 2027</span>
+              </div>
+              <div class="upcard__body">
+                <span class="label label--dim upcard__kicker">Day 02 &middot; closing night</span>
+                <h3 class="heading upcard__title"><a href="gala.html">Gala night</a></h3>
+                <p class="body upcard__desc">An evening of elegance and music, with a performance by <strong>Omar Khairat</strong> &mdash; the evening that closes Cairo FACE.</p>
+                <dl class="upcard__meta">
+                  <div class="upcard__fact">
+                    <dt class="label label--dim">When</dt>
+                    <dd>23 April 2027 &middot; time to be announced</dd>
+                  </div>
+                  <div class="upcard__fact">
+                    <dt class="label label--dim">Venue</dt>
+                    <dd>The Capital Opera House<span class="upcard__sub">City of arts and culture, New Administrative Capital</span></dd>
+                  </div>
+                </dl>
+                <a class="btn-pill upcard__cta" href="registration.html">Reserve your seat<span class="circle-arrow circle-arrow--sm" aria-hidden="true">&rarr;</span></a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
 
     <!-- ===== tail · SCIENTIFIC PARTNERS ===== -->
     <section class="tail logos tail--tint" data-theme="light" id="partners">
@@ -776,8 +803,73 @@
       </div>
     </section>
 
+    <!-- ===== tail · TESTIMONIALS + EVENT PHOTOS ===== -->
+    <section class="tail voices tail--tint" data-theme="light" id="voices">
+      <div class="container pricing__head">
+        <div data-reveal>
+          
+          <svg class="motif" viewBox="0 0 140 60" aria-hidden="true"><path d="M2 56 C 44 10, 92 2, 138 30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <h2 class="display-l" data-split>Testimonials</h2>
+        </div>
+      </div>
+      <div class="container">
+        <div class="pricing__toggle" id="voiceTabs" data-reveal role="tablist" aria-label="Testimonial type">
+          <button class="ptab is-active" data-tset="video" role="tab" aria-selected="true"><strong>Video testimonials</strong></button>
+          <button class="ptab" data-tset="written" role="tab" aria-selected="false"><strong>Written testimonials</strong></button>
+        </div>
+      </div>
+      <div class="cardrail cardrail--quotes" id="quoteRail" data-tpanel="video" tabindex="0" aria-label="Video testimonials, horizontally scrollable">
+      </div>
+      <div class="cardrail cardrail--quotes" id="writtenRail" data-tpanel="written" tabindex="0" aria-label="Written testimonials, horizontally scrollable" hidden>
+        <blockquote class="quotecard" data-reveal>
+          <p class="display-m">&ldquo;An outstanding scientific gathering that brought together experts and innovators in aesthetic and regenerative medicine. These enriching days provided a valuable opportunity to update our knowledge, discover the latest advances, exchange experiences with colleagues, and further enhance the quality of care we offer our patients.&rdquo;</p>
+          <footer class="label label--dim">Dr. Amal Jennane &middot; Aesthetic &amp; regenerative medicine<a class="quotecard__src" href="https://www.instagram.com/dr.amal.jennane/reel/DZOKFA5ompC/" target="_blank" rel="noopener">View the original post &#8599;</a></footer>
+        </blockquote>
+        <blockquote class="quotecard" data-reveal>
+          <p class="display-m">&ldquo;We took pride in representing our country at the CairoFACE congress. As Turkish physicians, we made our mark at this valuable congress, which drew intense interest from around the world.&rdquo;</p>
+          <footer class="label label--dim">Medical Aesthetics Physicians, Turkey &middot; translated from Turkish<a class="quotecard__src" href="https://www.instagram.com/medikal_estetik_hekimleri/reel/DZAlFc2NVJi/" target="_blank" rel="noopener">View the original post &#8599;</a></footer>
+        </blockquote>
+        <blockquote class="quotecard" data-reveal>
+          <p class="display-m">&ldquo;One of the largest gatherings of the greatest minds in facial aesthetics. An incredible experience filled with learning, inspiration, and meaningful connections.&rdquo;</p>
+          <footer class="label label--dim">Dr. Samir Ghoraba &middot; Founder &amp; President<a class="quotecard__src" href="https://www.instagram.com/samirghoraba/reel/DZR6X5tod32/" target="_blank" rel="noopener">View the original post &#8599;</a></footer>
+        </blockquote>
+      </div>
+      <div class="container railside railside--under" data-reveal>
+        <div class="railnav" id="voiceNav" data-rail="#quoteRail">
+          <button class="circle-arrow railnav__btn" data-dir="-1" aria-label="Previous testimonial">←</button>
+          <button class="circle-arrow railnav__btn" data-dir="1" aria-label="Next testimonial">→</button>
+        </div>
+      </div>
+      <div class="container photos" data-par="-0.05">
+        <div class="photos__head">
+          <span class="label label--dim label--head" data-reveal>Event photos</span>
+        </div>
+        <figure class="pdeck" id="photoDeck" data-reveal aria-roledescription="carousel" aria-label="Event photos from Cairo FACE 2026">
+          <div class="pdeck__stage" id="photoDeckStage">
+            <span class="pdeck__card" data-alt="A speaker presenting at Cairo FACE World Summit 2026"><img src="img/event/deck-man65.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
+            <span class="pdeck__card" data-alt="An attendee smiling during a session at Cairo FACE 2026"><img src="img/event/deck-curly.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
+            <span class="pdeck__card" data-alt="A speaker on stage at Cairo FACE 2026"><img src="img/event/deck-spk76.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
+            <span class="pdeck__card" data-alt="An attendee arriving at the entrance of Cairo FACE 2026"><img src="img/event/deck-entrance.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
+            <span class="pdeck__card" data-alt="Delegates in conversation on the Cairo FACE 2026 exhibition floor"><img src="img/event/deck-exhib.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
+            <span class="pdeck__card" data-alt="A senior faculty member lecturing at Cairo FACE 2026"><img src="img/event/deck-nahai.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
+            <span class="pdeck__card" data-alt="An attendee listening in a session at Cairo FACE 2026"><img src="img/event/deck-chin.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
+            <span class="pdeck__card" data-alt="A faculty member speaking at the podium, Cairo FACE 2026"><img src="img/event/deck-old52.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
+            <span class="pdeck__card" data-alt="A speaker at the podium, Cairo FACE 2026"><img src="img/event/deck-sami.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
+          </div>
+          <figcaption class="pdeck__cap label label--dim" id="photoDeckCap" aria-live="polite"></figcaption>
+        </figure>
+        <div class="photos__controls" data-deck="#photoDeck">
+          <div class="railnav photos__nav">
+            <button class="circle-arrow railnav__btn" data-dir="-1" aria-label="Previous photo">&#8592;</button>
+            <button class="circle-arrow railnav__btn" data-dir="1" aria-label="Next photo">&#8594;</button>
+          </div>
+          <button class="pill-sm" type="button" data-gallery>See all photos<span class="circle-arrow circle-arrow--sm" aria-hidden="true">&#8594;</span></button>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== tail · PRICING ===== -->
-    <section class="tail pricing tail--tint" data-theme="light" id="pricing">
+    <section class="tail pricing" data-theme="light" id="pricing">
       <div class="container pricing__head">
         <div data-reveal>
           <span class="label label--dim label--head">Your Cairo FACE experience starts here</span>
@@ -860,71 +952,6 @@
           </article>
         </div>
         <a class="btn-pill pricing__cta" data-reveal href="registration.html">Register now<span class="circle-arrow circle-arrow--sm" aria-hidden="true">→</span></a>
-      </div>
-    </section>
-
-    <!-- ===== tail · TESTIMONIALS + EVENT PHOTOS ===== -->
-    <section class="tail voices" data-theme="light" id="voices">
-      <div class="container pricing__head">
-        <div data-reveal>
-          
-          <svg class="motif" viewBox="0 0 140 60" aria-hidden="true"><path d="M2 56 C 44 10, 92 2, 138 30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-          <h2 class="display-l" data-split>Testimonials</h2>
-        </div>
-      </div>
-      <div class="container">
-        <div class="pricing__toggle" id="voiceTabs" data-reveal role="tablist" aria-label="Testimonial type">
-          <button class="ptab is-active" data-tset="video" role="tab" aria-selected="true"><strong>Video testimonials</strong></button>
-          <button class="ptab" data-tset="written" role="tab" aria-selected="false"><strong>Written testimonials</strong></button>
-        </div>
-      </div>
-      <div class="cardrail cardrail--quotes" id="quoteRail" data-tpanel="video" tabindex="0" aria-label="Video testimonials, horizontally scrollable">
-      </div>
-      <div class="cardrail cardrail--quotes" id="writtenRail" data-tpanel="written" tabindex="0" aria-label="Written testimonials, horizontally scrollable" hidden>
-        <blockquote class="quotecard" data-reveal>
-          <p class="display-m">&ldquo;An outstanding scientific gathering that brought together experts and innovators in aesthetic and regenerative medicine. These enriching days provided a valuable opportunity to update our knowledge, discover the latest advances, exchange experiences with colleagues, and further enhance the quality of care we offer our patients.&rdquo;</p>
-          <footer class="label label--dim">Dr. Amal Jennane &middot; Aesthetic &amp; regenerative medicine<a class="quotecard__src" href="https://www.instagram.com/dr.amal.jennane/reel/DZOKFA5ompC/" target="_blank" rel="noopener">View the original post &#8599;</a></footer>
-        </blockquote>
-        <blockquote class="quotecard" data-reveal>
-          <p class="display-m">&ldquo;We took pride in representing our country at the CairoFACE congress. As Turkish physicians, we made our mark at this valuable congress, which drew intense interest from around the world.&rdquo;</p>
-          <footer class="label label--dim">Medical Aesthetics Physicians, Turkey &middot; translated from Turkish<a class="quotecard__src" href="https://www.instagram.com/medikal_estetik_hekimleri/reel/DZAlFc2NVJi/" target="_blank" rel="noopener">View the original post &#8599;</a></footer>
-        </blockquote>
-        <blockquote class="quotecard" data-reveal>
-          <p class="display-m">&ldquo;One of the largest gatherings of the greatest minds in facial aesthetics. An incredible experience filled with learning, inspiration, and meaningful connections.&rdquo;</p>
-          <footer class="label label--dim">Dr. Samir Ghoraba &middot; Founder &amp; President<a class="quotecard__src" href="https://www.instagram.com/samirghoraba/reel/DZR6X5tod32/" target="_blank" rel="noopener">View the original post &#8599;</a></footer>
-        </blockquote>
-      </div>
-      <div class="container railside railside--under" data-reveal>
-        <div class="railnav" id="voiceNav" data-rail="#quoteRail">
-          <button class="circle-arrow railnav__btn" data-dir="-1" aria-label="Previous testimonial">←</button>
-          <button class="circle-arrow railnav__btn" data-dir="1" aria-label="Next testimonial">→</button>
-        </div>
-      </div>
-      <div class="container photos" data-par="-0.05">
-        <div class="photos__head">
-          <span class="label label--dim label--head" data-reveal>Event photos</span>
-        </div>
-        <figure class="pdeck" id="photoDeck" data-reveal aria-roledescription="carousel" aria-label="Event photos from Cairo FACE 2026">
-          <div class="pdeck__stage" id="photoDeckStage">
-            <span class="pdeck__card" data-alt="A speaker presenting at Cairo FACE World Summit 2026"><img src="img/event/deck-man65.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
-            <span class="pdeck__card" data-alt="An attendee smiling during a session at Cairo FACE 2026"><img src="img/event/deck-curly.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
-            <span class="pdeck__card" data-alt="A speaker on stage at Cairo FACE 2026"><img src="img/event/deck-spk76.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
-            <span class="pdeck__card" data-alt="An attendee arriving at the entrance of Cairo FACE 2026"><img src="img/event/deck-entrance.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
-            <span class="pdeck__card" data-alt="Delegates in conversation on the Cairo FACE 2026 exhibition floor"><img src="img/event/deck-exhib.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
-            <span class="pdeck__card" data-alt="A senior faculty member lecturing at Cairo FACE 2026"><img src="img/event/deck-nahai.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
-            <span class="pdeck__card" data-alt="An attendee listening in a session at Cairo FACE 2026"><img src="img/event/deck-chin.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
-            <span class="pdeck__card" data-alt="A faculty member speaking at the podium, Cairo FACE 2026"><img src="img/event/deck-old52.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
-            <span class="pdeck__card" data-alt="A speaker at the podium, Cairo FACE 2026"><img src="img/event/deck-sami.jpg" alt="" width="640" height="800" decoding="async" draggable="false" /></span>
-          </div>
-          <figcaption class="pdeck__cap label label--dim" id="photoDeckCap" aria-live="polite"></figcaption>
-        </figure>
-        <div class="photos__controls" data-deck="#photoDeck">
-          <div class="railnav photos__nav">
-            <button class="circle-arrow railnav__btn" data-dir="-1" aria-label="Previous photo">&#8592;</button>
-            <button class="circle-arrow railnav__btn" data-dir="1" aria-label="Next photo">&#8594;</button>
-          </div>
-          <button class="pill-sm" type="button" data-gallery>See all photos<span class="circle-arrow circle-arrow--sm" aria-hidden="true">&#8594;</span></button>
-        </div>
       </div>
     </section>
 
