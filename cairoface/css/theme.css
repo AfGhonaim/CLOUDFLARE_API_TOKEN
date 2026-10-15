@@ -906,3 +906,97 @@ body { color: var(--navy); }
 
 /* phones: close the dead band between the end of the hero copy and the first section */
 @media (max-width: 768px) { #hero .beat--tall { height: 148vh !important; } }
+
+/* =======================================================================
+   Revisions — October 2026
+   1 · the hero is one screen
+   4 · the Upcoming events section
+   6 · the CairoFACE wordmark beside the mark on phones
+   ======================================================================= */
+
+/* ---- 1 · one hero ----------------------------------------------------
+   The opening used to be a 168vh scrub: act 1 (title, tagline, tags) rose
+   away while act 2 (dates, endorsements, buttons) arrived from below. The
+   two are now a single composition, so the beat is one screen and the act
+   holds still — no scrub, no handoff. The act keeps its --1 class purely
+   for the staggered arrival after the intro video. */
+#hero .beat--hero { height: 100svh; }
+body:not(.film-gl) #hero .beat--hero { height: auto; min-height: 100svh; }
+body:not(.film-gl) #hero .beat--hero .beat__inner {
+  min-height: 100svh; justify-content: center;
+  padding-block: clamp(88px, 12vh, 140px);
+}
+/* a short window (landscape phones) must not clip the one screen — let it grow */
+@media (max-height: 620px) {
+  #hero .beat--hero { height: auto; min-height: 100svh; }
+  #hero .beat--hero .beat__inner { padding-block: clamp(72px, 14vh, 110px); }
+}
+#hero .hero__act--solo {
+  position: static;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;      /* outlives .hero--p2, which main.js still sets */
+  margin-top: 0;
+  gap: clamp(16px, 2.4vh, 28px);   /* even spacing across the five blocks */
+}
+
+/* ---- 4 · upcoming events --------------------------------------------
+   One .upcard per event on the dark ground, reusing the glass card and its
+   light-blue halo. The grid is auto-fit, so a second and third event drop
+   in beside this one with no change here. */
+.upnext { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
+.upcard {
+  flex-direction: row; align-items: stretch; gap: 24px;
+  padding: 28px; text-align: left;
+}
+.upcard > * { position: relative; z-index: 1; }
+.upcard__when {
+  flex: 0 0 auto;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; min-width: 116px; padding: 18px 14px;
+  border-radius: 16px;
+  background: rgba(191, 217, 236, 0.1);
+  border: 1px solid rgba(191, 217, 236, 0.22);
+  color: #BFD9EC;
+}
+.upcard__day { font-size: 40px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+.upcard__month { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.82; }
+.upcard__body { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; min-width: 0; }
+.upcard__title { letter-spacing: -0.01em; }
+.upcard__title a { color: inherit; text-decoration: none; }
+.upcard__title a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.upcard__meta { display: flex; flex-wrap: wrap; gap: 12px 36px; margin: 2px 0 0; }
+.upcard__fact dt { margin-bottom: 4px; }
+.upcard__fact dd { margin: 0; color: #fff; font-size: 15px; line-height: 1.45; }
+.upcard__sub { display: block; color: rgba(255, 255, 255, 0.62); font-size: 13px; }
+.upcard__cta { margin-top: 8px; }
+@media (max-width: 720px) {
+  .upcard { flex-direction: column; gap: 18px; padding: 22px; }
+  .upcard__when {
+    flex-direction: row; align-items: baseline; gap: 10px;
+    min-width: 0; align-self: flex-start; padding: 10px 16px;
+  }
+  .upcard__day { font-size: 28px; }
+  .upcard__meta { gap: 12px 24px; }
+  .upcard__cta { align-self: stretch; justify-content: center; }
+}
+
+/* ---- 6 · the wordmark on phones --------------------------------------
+   The logo files are the round mark alone, so the name only reads on the
+   wide header. On phones the mark now carries the name beside it. */
+.header__word { display: none; }
+@media (max-width: 768px) {
+  .header__brand { gap: 10px; }
+  .header__word {
+    display: inline-block;
+    font-size: 15px; line-height: 1; white-space: nowrap;
+    letter-spacing: 0.14em; text-transform: uppercase; font-weight: 400;
+    color: var(--ink);
+  }
+  .header__word strong { font-weight: 700; }
+  .header[data-theme="dark"] .header__word { color: #fff; }
+}
+@media (max-width: 360px) {
+  .header__brand { gap: 8px; }
+  .header__word { font-size: 13px; letter-spacing: 0.1em; }
+}

@@ -13,16 +13,16 @@
 .tail--tint { background: #F2F6FA !important; }
 body:not(.film-gl) #summit, body:not(.film-gl) #gain, body:not(.film-gl) #who, body:not(.film-gl) #events { color: #fff !important; }
 /* dark sections: headings letters dim -> white, text, labels, cards */
-#summit [data-split-progress], #gain [data-split-progress], #who [data-split-progress], #events [data-split-progress] { --ch-dim: rgba(255,255,255,.28); --ch-lit: #fff; }
-#summit h2, #gain h2, #who h2, #events h2, #summit h3, #gain h3, #who h3, #events h3, #summit .heading, #who .heading, #events .heading { color: #fff; }
-#summit .label, #summit .label--dim, #gain .label, #gain .label--dim, #who .label, #who .label--dim, #events .label, #events .label--dim { color: #BFD9EC; opacity: 1; }
-#summit .label--head::before, #gain .label--head::before, #who .label--head::before, #events .label--head::before { background: #E05030; }
-#summit p, #summit .body, #summit .body-l, #gain .body, #gain .body-l, #gain .gainhead__lede, #who p, #who .body, #events .body, #events p { color: rgba(255,255,255,.78); }
+#summit [data-split-progress], #gain [data-split-progress], #who [data-split-progress], #events [data-split-progress], #upcoming [data-split-progress] { --ch-dim: rgba(255,255,255,.28); --ch-lit: #fff; }
+#summit h2, #gain h2, #who h2, #events h2, #upcoming h2, #summit h3, #gain h3, #who h3, #events h3, #upcoming h3, #summit .heading, #who .heading, #events .heading, #upcoming .heading { color: #fff; }
+#summit .label, #summit .label--dim, #gain .label, #gain .label--dim, #who .label, #who .label--dim, #events .label, #events .label--dim, #upcoming .label, #upcoming .label--dim { color: #BFD9EC; opacity: 1; }
+#summit .label--head::before, #gain .label--head::before, #who .label--head::before, #events .label--head::before, #upcoming .label--head::before { background: #E05030; }
+#summit p, #summit .body, #summit .body-l, #gain .body, #gain .body-l, #gain .gainhead__lede, #who p, #who .body, #events .body, #events p, #upcoming .body, #upcoming p { color: rgba(255,255,255,.78); }
 #summit strong, #who strong { color: #fff; }
 #summit .stat, #summit .stat *, #summit [class*="num"], #summit [class*="count"] { color: #fff; }
 #events .infocard { background: linear-gradient(155deg, rgba(255,255,255,.10), rgba(255,255,255,.03)); border: 1px solid rgba(255,255,255,.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 10px 30px rgba(2,12,20,.22); -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3); }
 #events .infocard .body { color: rgba(255,255,255,.74); }
-#events .infocard .label, #events .infocard .label--dim { color: #BFD9EC; }
+#events .infocard .label, #events .infocard .label--dim, #upcoming .infocard .label, #upcoming .infocard .label--dim { color: #BFD9EC; }
 #who .whoitem h3, #who .whoitem .heading { color: #fff; }
 #who .whoitem p { color: rgba(255,255,255,.72); }
 #who .whoitem__n, #who [class*="whoitem"] [class*="num"] { color: #E05030; }
